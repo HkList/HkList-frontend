@@ -23,6 +23,10 @@ export type SingleAccount = {
   uk: string
   switch: boolean
   reason: string
+  today_count: number
+  total_count: number
+  today_size: number | null
+  total_size: number | null
   prov:
     | null
     | '北京市'

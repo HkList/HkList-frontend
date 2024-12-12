@@ -48,7 +48,7 @@ import { type TableProps } from 'tdesign-vue-next'
 import AddAccount from './AddAccount.vue'
 import UpdateAccountProv from './UpdateAccountProv.vue'
 import { useAccountsStore } from '@/stores/accounts.ts'
-import { formatIsoString } from '@/utils/format.ts'
+import { formatBytes, formatIsoString } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
 
 const accountsStore = useAccountsStore()
@@ -61,6 +61,7 @@ const columns = ref<TableProps['columns']>([
     colKey: 'row-select',
     type: 'multiple',
     width: 50,
+    fixed: 'left',
   },
   {
     colKey: 'id',
@@ -83,8 +84,37 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
+    colKey: 'today_count',
+    title: '今日解析',
+    cell: (h, { row }) => (
+      <>
+        {row.today_count} ({formatBytes(row.today_size ?? 0)})
+      </>
+    ),
+    width: 150,
+    ellipsis: true,
+  },
+  {
+    colKey: 'total_count',
+    title: '总计解析',
+    cell: (h, { row }) => (
+      <>
+        {row.total_count} ({formatBytes(row.total_size ?? 0)})
+      </>
+    ),
+    width: 150,
+    ellipsis: true,
+  },
+  {
+    colKey: 'switch',
+    title: '账号状态',
+    cell: (h, { row }) => <>{row.switch ? '启用' : '禁用'}</>,
+    ellipsis: true,
+  },
+  {
     colKey: 'prov',
     title: '省份',
+    cell: (h, { row }) => <>{row.prov === null ? '未分配' : row.prov}</>,
     ellipsis: true,
   },
   {
@@ -100,15 +130,24 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
+    colKey: 'used_at',
+    title: '上次使用时间',
+    cell: (h, { row }) => <>{formatIsoString(row.used_at)}</>,
+    width: 175,
+    ellipsis: true,
+  },
+  {
     colKey: 'created_at',
     title: '创建时间',
     cell: (h, { row }) => <>{formatIsoString(row.created_at)}</>,
+    width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
     cell: (h, { row }) => <>{formatIsoString(row.updated_at)}</>,
+    width: 175,
     ellipsis: true,
   },
   {
