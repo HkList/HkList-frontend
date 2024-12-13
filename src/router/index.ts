@@ -79,7 +79,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path.includes('admin') && !localStorage.getItem('admin_password')) return next('/login')
+  if (localStorage.getItem('admin_password')) {
+    if (to.path.includes('login')) return next('/admin')
+  } else {
+    if (to.path.includes('admin')) return next('/login')
+  }
   next()
 })
 

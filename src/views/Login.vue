@@ -30,13 +30,11 @@ const { config } = storeToRefs(configStore)
 
 const router = useRouter()
 
-const formData: FormProps['data'] = ref({
+const formData = ref({
   admin_password: '',
 })
 
-const formRules: FormProps['rules'] = {
-  admin_password: [{ required: true, message: '请输入管理员密码' }],
-}
+const formRules: FormProps['rules'] = {}
 
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return

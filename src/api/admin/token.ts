@@ -16,7 +16,7 @@ export type SelectReq = PagenationReq & {
   direction: 'asc' | 'desc'
 }
 
-export interface SelectRes {
+export type SelectRes = {
   id: number
   token: string
   count: number
@@ -29,7 +29,7 @@ export interface SelectRes {
   expires_at: string
   created_at: string
   updated_at: string
-}
+}[]
 
 /** 获取 */
 export const select = (data: SelectReq) => {
@@ -65,7 +65,7 @@ export interface UpdateReq {
   day: number
   can_use_ip_count: number
   ip: string[]
-  expires_at: string
+  expires_at: string | null
   switch: boolean
   reason: string
   id: number[]
@@ -74,6 +74,17 @@ export interface UpdateReq {
 /** 更新 */
 export const update = (data: UpdateReq) => {
   return http.request<null>('patch', '/admin/token', { data })
+}
+
+export interface UpdateSwitchReq {
+  switch: boolean
+  reason: string
+  id: number[]
+}
+
+/** 更新 */
+export const updateSwitch = (data: UpdateSwitchReq) => {
+  return http.request<null>('patch', '/admin/token/switch', { data })
 }
 
 export interface RemoveReq {

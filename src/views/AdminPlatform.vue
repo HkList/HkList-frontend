@@ -50,7 +50,7 @@
 
 <script lang="ts" setup>
 import { KeyIcon, ListIcon, ToolsIcon, UserIcon, UserListIcon } from 'tdesign-icons-vue-next'
-import { useSelectMenu } from '@/utils/useSelectMenu.ts'
+import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
 import { useConfigStore } from '@/stores/config.ts'
 import { storeToRefs } from 'pinia'
 

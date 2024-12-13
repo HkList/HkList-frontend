@@ -52,7 +52,7 @@ import {
   type UpdateConfigReq,
 } from '@/api/admin/config/parse.ts'
 
-const formData: FormProps['data'] = ref<UpdateConfigReq>({
+const formData = ref<UpdateConfigReq>({
   parser_server: '',
   parser_password: '',
   parse_mode: 1,

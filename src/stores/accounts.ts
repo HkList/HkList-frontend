@@ -11,45 +11,19 @@ import {
   type UpdateReq,
 } from '@/api/admin/account.ts'
 import { formatTimestamp } from '@/utils/format.ts'
+import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 export const useAccountsStore = defineStore('accounts', () => {
-  const accountList = ref<SelectRes>([])
-  const pagination = ref<TableProps['pagination']>({
-    current: 1,
-    pageSize: 5,
-    total: 0,
-    onChange: (pageInfo) => {
-      pagination.value!.current = pageInfo.current
-      pagination.value!.pageSize = pageInfo.pageSize
-      selectReq.value.page = pageInfo.current
-      selectReq.value.size = pageInfo.pageSize
-      getAccounts()
-    },
-  })
-  const selectReq = ref<SelectReq>({
-    page: pagination.value?.current ?? 1,
-    size: pagination.value?.pageSize ?? 5,
-    column: 'id',
-    direction: 'asc',
-  })
+  const [selectReq, pagination, accountList, getAccounts] = useCommonStore<SelectReq, SelectRes>(
+    select,
+  )
 
   const selectedRowKeys = ref<number[]>([])
   const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
     selectedRowKeys.value = value as number[]
-  }
-
-  const expandedRowKeys = ref<number[]>([])
-  const handleExpandChange: TableProps['onExpandChange'] = (value, ctx) => {
-    expandedRowKeys.value = value as number[]
-  }
-
-  const getAccounts = async () => {
-    const res = await select(selectReq.value)
-    accountList.value = res.data.data
-    pagination.value!.total = res.data.total
   }
 
   const updateInfoSelection = async () => {
@@ -82,10 +56,7 @@ export const useAccountsStore = defineStore('accounts', () => {
 
   const isUpdateProvDialog = ref(false)
   const showUpdateProvDialog = () => (isUpdateProvDialog.value = true)
-  const hideUpdateProvDialog = async () => {
-    isUpdateProvDialog.value = false
-    await getAccounts()
-  }
+  const hideUpdateProvDialog = () => (isUpdateProvDialog.value = false)
   const selectedProv = ref<UpdateReq['prov']>(null)
   const updateProvSelection = async () => {
     if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
@@ -96,10 +67,7 @@ export const useAccountsStore = defineStore('accounts', () => {
 
   const isAddingAccount = ref(false)
   const showAddDialog = () => (isAddingAccount.value = true)
-  const hideAddDialog = async () => {
-    isAddingAccount.value = false
-    await getAccounts()
-  }
+  const hideAddDialog = async () => (isAddingAccount.value = false)
   const addAccountType = ref<InsertReq['account_type']>('cookie')
   const addAccountInput = ref({
     cookie: '',
@@ -143,6 +111,7 @@ export const useAccountsStore = defineStore('accounts', () => {
       save_cookie: '',
       download_cookie: '',
     }
+    await getAccounts()
   }
 
   const checkAccountBanStatus = async (event: PointerEvent, id: number) => {
@@ -167,8 +136,6 @@ export const useAccountsStore = defineStore('accounts', () => {
     selectReq,
     getAccounts,
 
-    expandedRowKeys,
-    handleExpandChange,
     selectedRowKeys,
     handleSelectChange,
 

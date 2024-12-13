@@ -31,16 +31,43 @@ body {
   margin-bottom: 10px;
 }
 
+.more-detail {
+  line-height: 22px;
+
+  ul {
+    padding: 0 10px;
+    list-style: none;
+    width: 99%;
+    display: flex;
+
+    > li:first-child {
+      font-weight: bold;
+      width: 100px;
+    }
+
+    > li:last-child {
+      width: calc(100% - 100px);
+    }
+  }
+}
+
+.t-dialog__position {
+  padding-top: 0 !important;
+  align-items: center !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-thumb {
   border: 2px solid transparent;
   background-clip: content-box;
   background-color: var(--td-scrollbar-color);
   border-radius: 15px;
 }
+
 ::-webkit-scrollbar-thumb:vertical:hover,
 ::-webkit-scrollbar-thumb:horizontal:hover {
   background-color: var(--td-scrollbar-hover-color);

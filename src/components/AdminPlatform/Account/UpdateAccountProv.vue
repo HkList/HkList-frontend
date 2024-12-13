@@ -42,7 +42,7 @@
       </t-form-item>
 
       <t-form-item label="选中的账号">
-        <t-input :value="selectedRowKeys.toString()" disabled />
+        <t-input :value="JSON.stringify(selectedRowKeys)" disabled />
       </t-form-item>
 
       <t-form-item>
@@ -66,7 +66,7 @@ const { isUpdateProvDialog, selectedProv, selectedRowKeys } = storeToRefs(accoun
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
   await accountsStore.updateProvSelection()
-  await accountsStore.hideUpdateProvDialog()
+  accountsStore.hideUpdateProvDialog()
 }
 </script>
 

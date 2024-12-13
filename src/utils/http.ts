@@ -2,7 +2,7 @@ import Axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, CustomParamsSerializer, Method } from 'axios'
 import { stringify } from 'qs'
 import NProgress from '@/utils/progress'
-import { $t } from '@/utils/i18n.ts'
+import { $t } from '@/utils/use/usei18n.ts'
 import { MessagePlugin } from 'tdesign-vue-next'
 import router from '@/router/index.ts'
 

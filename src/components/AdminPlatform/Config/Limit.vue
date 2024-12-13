@@ -44,7 +44,7 @@ import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { getConfig, updateConfig, type UpdateConfigReq } from '@/api/admin/config/limit.ts'
 import { GB } from '@/utils/format.ts'
 
-const formData: FormProps['data'] = ref<UpdateConfigReq>({
+const formData = ref<UpdateConfigReq>({
   max_once: 0,
   min_single_filesize: 0,
   max_single_filesize: 0,

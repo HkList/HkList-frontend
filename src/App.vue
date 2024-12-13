@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
-import { useDark } from '@/utils/useDark.ts'
+import { useDark } from '@/utils/use/useDark.ts'
 import { getRandomColor } from '@/utils/random.ts'
 import { useConfigStore } from '@/stores/config.ts'
 
@@ -30,13 +30,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
-.container {
-  padding: 20px;
-}
-
-.logo-text {
-  font-size: 20px;
-  letter-spacing: 2px;
-}
-</style>
+<style scoped></style>

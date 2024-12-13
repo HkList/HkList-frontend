@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { KeyIcon, HistoryIcon, AppIcon } from 'tdesign-icons-vue-next'
-import { useSelectMenu } from '@/utils/useSelectMenu.ts'
+import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
 import { useConfigStore } from '@/stores/config.ts'
 import { storeToRefs } from 'pinia'
 
