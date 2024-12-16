@@ -1,9 +1,16 @@
 <template>
   <t-layout>
     <t-aside>
-      <t-menu v-model="selectedMenu" @change="changeMenu">
+      <t-menu
+        v-model="selectedMenu"
+        @change="changeMenu"
+      >
         <template #logo>
-          <img height="28" :src="config.logo" alt="logo" />
+          <img
+            height="28"
+            :src="config.logo"
+            alt="logo"
+          />
           <p class="logo-text">{{ config.name }}</p>
         </template>
         <t-menu-item value="parse">

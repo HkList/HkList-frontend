@@ -3,9 +3,7 @@ import { ref, type Ref } from 'vue'
 import type { baseResponse } from '@/utils/http.ts'
 import type { BasePagenation } from '@/api/admin/pagenation.ts'
 
-export const useCommonStore = <SelectReq, SelectRes>(
-  select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>,
-) => {
+export const useCommonStore = <SelectReq, SelectRes>(select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>) => {
   const list = ref<SelectRes>([] as SelectRes)
 
   const pagination = ref<TableProps['pagination']>({
@@ -34,10 +32,5 @@ export const useCommonStore = <SelectReq, SelectRes>(
     pagination.value!.total = res.data.total
   }
 
-  return [selectReq, pagination, list, get] as [
-    Ref<SelectReq>,
-    Ref<TableProps['pagination']>,
-    Ref<SelectRes>,
-    () => Promise<void>,
-  ]
+  return [selectReq, pagination, list, get] as [Ref<SelectReq>, Ref<TableProps['pagination']>, Ref<SelectRes>, () => Promise<void>]
 }

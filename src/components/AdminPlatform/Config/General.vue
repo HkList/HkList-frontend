@@ -1,19 +1,41 @@
 <template>
   <t-card>
-    <t-form :data="formData" :rules="formRules" @submit="submitForm">
-      <t-form-item name="new_admin_password" label="新管理员密码">
-        <t-input v-model="formData.new_admin_password" type="password" />
+    <t-form
+      :data="formData"
+      :rules="formRules"
+      @submit="submitForm"
+    >
+      <t-form-item
+        name="new_admin_password"
+        label="新管理员密码"
+      >
+        <t-input
+          v-model="formData.new_admin_password"
+          type="password"
+        />
       </t-form-item>
 
-      <t-form-item name="parse_password" label="解析密码">
-        <t-input v-model="formData.parse_password" type="password" />
+      <t-form-item
+        name="parse_password"
+        label="解析密码"
+      >
+        <t-input
+          v-model="formData.parse_password"
+          type="password"
+        />
       </t-form-item>
 
-      <t-form-item name="show_announce" label="显示公告">
+      <t-form-item
+        name="show_announce"
+        label="显示公告"
+      >
         <t-switch v-model="formData.show_announce" />
       </t-form-item>
 
-      <t-form-item name="announce" label="公告">
+      <t-form-item
+        name="announce"
+        label="公告"
+      >
         <t-textarea v-model="formData.announce" />
       </t-form-item>
 
@@ -25,21 +47,35 @@
         <t-textarea v-model="formData.custom_button" />
       </t-form-item>
 
-      <t-form-item name="debug" label="启用调试模式">
+      <t-form-item
+        name="debug"
+        label="启用调试模式"
+      >
         <t-switch v-model="formData.debug" />
       </t-form-item>
 
-      <t-form-item name="name" label="站点名称">
+      <t-form-item
+        name="name"
+        label="站点名称"
+      >
         <t-input v-model="formData.name" />
       </t-form-item>
 
-      <t-form-item name="logo" label="站点Logo" help="请填写正确的URL">
+      <t-form-item
+        name="logo"
+        label="站点Logo"
+        help="请填写正确的URL"
+      >
         <t-input v-model="formData.logo" />
       </t-form-item>
 
       <t-form-item>
         <t-space size="small">
-          <t-button theme="primary" type="submit">提交</t-button>
+          <t-button
+            theme="primary"
+            type="submit"
+            >提交</t-button
+          >
         </t-space>
       </t-form-item>
     </t-form>

@@ -5,8 +5,7 @@ export const useSelectMenu = (jumpPath: string, defaultValue: string) => {
   const router = useRouter()
   const selectedMenu = ref(defaultValue)
   if (router.currentRoute.value.path.includes(jumpPath)) {
-    selectedMenu.value =
-      router.currentRoute.value.path.split(jumpPath).pop()?.slice(1) || defaultValue
+    selectedMenu.value = router.currentRoute.value.path.split(jumpPath).pop()?.slice(1) || defaultValue
   }
   const changeMenu = (value: string) => {
     selectedMenu.value = value

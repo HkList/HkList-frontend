@@ -2,33 +2,99 @@
   <t-card>
     <div class="buttons">
       <t-space size="small">
-        <t-select v-model="selectReq.column" @change="accountsStore.getAccounts">
-          <t-option label="按 id 排序" value="id" />
-          <t-option label="按 baidu_name 排序" value="baidu_name" />
-          <t-option label="按 uk 排序" value="uk" />
-          <t-option label="按 account_type 排序" value="account_type" />
-          <t-option label="按 account_data 排序" value="account_data" />
-          <t-option label="按 switch 排序" value="switch" />
-          <t-option label="按 reason 排序" value="reason" />
-          <t-option label="按 prov 排序" value="prov" />
-          <t-option label="按 used_at 排序" value="used_at" />
-          <t-option label="按 created_at 排序" value="created_at" />
-          <t-option label="按 updated_at 排序" value="updated_at" />
+        <t-select
+          v-model="selectReq.column"
+          @change="accountsStore.getAccounts"
+        >
+          <t-option
+            label="按 id 排序"
+            value="id"
+          />
+          <t-option
+            label="按 baidu_name 排序"
+            value="baidu_name"
+          />
+          <t-option
+            label="按 uk 排序"
+            value="uk"
+          />
+          <t-option
+            label="按 account_type 排序"
+            value="account_type"
+          />
+          <t-option
+            label="按 account_data 排序"
+            value="account_data"
+          />
+          <t-option
+            label="按 switch 排序"
+            value="switch"
+          />
+          <t-option
+            label="按 reason 排序"
+            value="reason"
+          />
+          <t-option
+            label="按 prov 排序"
+            value="prov"
+          />
+          <t-option
+            label="按 used_at 排序"
+            value="used_at"
+          />
+          <t-option
+            label="按 created_at 排序"
+            value="created_at"
+          />
+          <t-option
+            label="按 updated_at 排序"
+            value="updated_at"
+          />
         </t-select>
-        <t-select v-model="selectReq.direction" @change="accountsStore.getAccounts">
-          <t-option label="正序" value="asc" />
-          <t-option label="倒序" value="desc" />
+        <t-select
+          v-model="selectReq.direction"
+          @change="accountsStore.getAccounts"
+        >
+          <t-option
+            label="正序"
+            value="asc"
+          />
+          <t-option
+            label="倒序"
+            value="desc"
+          />
         </t-select>
-        <t-button theme="primary" @click="accountsStore.getAccounts">刷新列表</t-button>
-        <t-button theme="primary" @click="accountsStore.showAddAccountDialog">添加账号</t-button>
-        <t-button theme="danger" @click="accountsStore.deleteSelection">批量删除</t-button>
-        <t-button theme="primary" @click="accountsStore.updateInfoSelection">
+        <t-button
+          theme="primary"
+          @click="accountsStore.getAccounts"
+          >刷新列表</t-button
+        >
+        <t-button
+          theme="primary"
+          @click="accountsStore.showAddAccountDialog"
+          >添加账号</t-button
+        >
+        <t-button
+          theme="danger"
+          @click="accountsStore.deleteSelection"
+          >批量删除</t-button
+        >
+        <t-button
+          theme="primary"
+          @click="accountsStore.updateInfoSelection"
+        >
           批量更新账户信息
         </t-button>
-        <t-button theme="primary" @click="accountsStore.showUpdateSwitchDialog">
+        <t-button
+          theme="primary"
+          @click="accountsStore.showUpdateSwitchDialog"
+        >
           批量启用/禁用
         </t-button>
-        <t-button theme="primary" @click="accountsStore.showUpdateProvDialog">
+        <t-button
+          theme="primary"
+          @click="accountsStore.showUpdateProvDialog"
+        >
           批量更新省份
         </t-button>
       </t-space>
@@ -50,7 +116,10 @@
     >
       <template #expandedRow="{ row }">
         <div class="more-detail">
-          <ul v-for="(value, key) in row.account_data" :key="key">
+          <ul
+            v-for="(value, key) in row.account_data"
+            :key="key"
+          >
             <li>{{ key }}:</li>
             <li>{{ value }}</li>
           </ul>
@@ -162,7 +231,7 @@ const columns = ref<TableProps['columns']>([
     title: '操作',
     cell: (h, { row }) => (
       <t-button
-        theme="primary"
+        theme='primary'
         onClick={(event: PointerEvent) => accountsStore.checkAccountBanStatus(event, row.id)}
       >
         检查封禁状态

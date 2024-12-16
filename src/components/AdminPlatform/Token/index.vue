@@ -2,29 +2,90 @@
   <t-card>
     <div class="buttons">
       <t-space size="small">
-        <t-select v-model="selectReq.column" @change="tokensStore.getTokens">
-          <t-option label="按 id 排序" value="id" />
-          <t-option label="按 token 排序" value="token" />
-          <t-option label="按 count 排序" value="count" />
-          <t-option label="按 size 排序" value="size" />
-          <t-option label="按 day 排序" value="day" />
-          <t-option label="按 can_use_ip_count 排序" value="can_use_ip_count" />
-          <t-option label="按 ip 排序" value="ip" />
-          <t-option label="按 expires_at 排序" value="expires_at" />
-          <t-option label="按 created_at 排序" value="created_at" />
-          <t-option label="按 updated_at 排序" value="updated_at" />
+        <t-select
+          v-model="selectReq.column"
+          @change="tokensStore.getTokens"
+        >
+          <t-option
+            label="按 id 排序"
+            value="id"
+          />
+          <t-option
+            label="按 token 排序"
+            value="token"
+          />
+          <t-option
+            label="按 count 排序"
+            value="count"
+          />
+          <t-option
+            label="按 size 排序"
+            value="size"
+          />
+          <t-option
+            label="按 day 排序"
+            value="day"
+          />
+          <t-option
+            label="按 can_use_ip_count 排序"
+            value="can_use_ip_count"
+          />
+          <t-option
+            label="按 ip 排序"
+            value="ip"
+          />
+          <t-option
+            label="按 expires_at 排序"
+            value="expires_at"
+          />
+          <t-option
+            label="按 created_at 排序"
+            value="created_at"
+          />
+          <t-option
+            label="按 updated_at 排序"
+            value="updated_at"
+          />
         </t-select>
-        <t-select v-model="selectReq.direction" @change="tokensStore.getTokens">
-          <t-option label="正序" value="asc" />
-          <t-option label="倒序" value="desc" />
+        <t-select
+          v-model="selectReq.direction"
+          @change="tokensStore.getTokens"
+        >
+          <t-option
+            label="正序"
+            value="asc"
+          />
+          <t-option
+            label="倒序"
+            value="desc"
+          />
         </t-select>
-        <t-button theme="primary" @click="tokensStore.getTokens">刷新列表</t-button>
-        <t-button theme="primary" @click="tokensStore.showAddingTokenDialog">添加卡密</t-button>
-        <t-button theme="danger" @click="tokensStore.deleteSelection">批量删除</t-button>
-        <t-button theme="primary" @click="tokensStore.showUpdateSwitchDialog">
+        <t-button
+          theme="primary"
+          @click="tokensStore.getTokens"
+          >刷新列表</t-button
+        >
+        <t-button
+          theme="primary"
+          @click="tokensStore.showAddingTokenDialog"
+          >添加卡密</t-button
+        >
+        <t-button
+          theme="danger"
+          @click="tokensStore.deleteSelection"
+          >批量删除</t-button
+        >
+        <t-button
+          theme="primary"
+          @click="tokensStore.showUpdateSwitchDialog"
+        >
           批量启用/禁用
         </t-button>
-        <t-button theme="primary" @click="tokensStore.showEditDialog">批量更新</t-button>
+        <t-button
+          theme="primary"
+          @click="tokensStore.showEditDialog"
+          >批量更新</t-button
+        >
       </t-space>
     </div>
     <AddToken />
@@ -144,9 +205,7 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'expires_at',
     title: '过期时间',
-    cell: (h, { row }) => (
-      <>{row.expires_at === null ? '未使用' : formatIsoString(row.expires_at)}</>
-    ),
+    cell: (h, { row }) => <>{row.expires_at === null ? '未使用' : formatIsoString(row.expires_at)}</>,
     width: 175,
     ellipsis: true,
   },
@@ -169,7 +228,7 @@ const columns = ref<TableProps['columns']>([
     title: '操作',
     cell: (h, { row }) => (
       <t-button
-        theme="primary"
+        theme='primary'
         onClick={(event: PointerEvent) => tokensStore.showEditDialog(event, row.id)}
       >
         编辑

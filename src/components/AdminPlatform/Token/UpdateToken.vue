@@ -1,27 +1,69 @@
 <template>
-  <t-dialog v-model:visible="isEditDialog" header="更新卡密" :footer="false">
-    <t-form @submit="submitForm" :data="updateReq" :rules="formRules">
-      <t-form-item name="count" label="次数配额">
-        <t-input-number :min="1" v-model="updateReq.count" />
+  <t-dialog
+    v-model:visible="isEditDialog"
+    header="更新卡密"
+    :footer="false"
+  >
+    <t-form
+      @submit="submitForm"
+      :data="updateReq"
+      :rules="formRules"
+    >
+      <t-form-item
+        name="count"
+        label="次数配额"
+      >
+        <t-input-number
+          :min="1"
+          v-model="updateReq.count"
+        />
       </t-form-item>
 
-      <t-form-item name="size" label="大小配额(GB)">
-        <t-input-number :min="1" v-model="updateReq.size" />
+      <t-form-item
+        name="size"
+        label="大小配额(GB)"
+      >
+        <t-input-number
+          :min="1"
+          v-model="updateReq.size"
+        />
       </t-form-item>
 
-      <t-form-item name="day" label="时间配额">
-        <t-input-number :min="1" v-model="updateReq.day" />
+      <t-form-item
+        name="day"
+        label="时间配额"
+      >
+        <t-input-number
+          :min="1"
+          v-model="updateReq.day"
+        />
       </t-form-item>
 
-      <t-form-item name="can_use_ip_count" label="IP配额">
-        <t-input-number :min="1" v-model="updateReq.can_use_ip_count" />
+      <t-form-item
+        name="can_use_ip_count"
+        label="IP配额"
+      >
+        <t-input-number
+          :min="1"
+          v-model="updateReq.can_use_ip_count"
+        />
       </t-form-item>
 
-      <t-form-item name="ip" label="已绑IP" help="回车添加">
-        <t-tag-input :value="updateReq.ip" @change="onChange" />
+      <t-form-item
+        name="ip"
+        label="已绑IP"
+        help="回车添加"
+      >
+        <t-tag-input
+          :value="updateReq.ip"
+          @change="onChange"
+        />
       </t-form-item>
 
-      <t-form-item name="expires_at" label="过期时间">
+      <t-form-item
+        name="expires_at"
+        label="过期时间"
+      >
         <t-date-picker
           v-model="updateReq.expires_at"
           enable-time-picker
@@ -31,22 +73,39 @@
         />
       </t-form-item>
 
-      <t-form-item name="switch" label="启用">
+      <t-form-item
+        name="switch"
+        label="启用"
+      >
         <t-switch v-model="updateReq.switch" />
       </t-form-item>
 
-      <t-form-item name="reason" label="原因">
+      <t-form-item
+        name="reason"
+        label="原因"
+      >
         <t-input v-model="updateReq.reason" />
       </t-form-item>
 
       <t-form-item label="选中的账号">
-        <t-input :value="JSON.stringify(updateReq.id)" disabled />
+        <t-input
+          :value="JSON.stringify(updateReq.id)"
+          disabled
+        />
       </t-form-item>
 
       <t-form-item>
         <t-space size="small">
-          <t-button theme="default" @click="tokensStore.hideEditDialog">取消</t-button>
-          <t-button theme="primary" type="submit">提交</t-button>
+          <t-button
+            theme="default"
+            @click="tokensStore.hideEditDialog"
+            >取消</t-button
+          >
+          <t-button
+            theme="primary"
+            type="submit"
+            >提交</t-button
+          >
         </t-space>
       </t-form-item>
     </t-form>

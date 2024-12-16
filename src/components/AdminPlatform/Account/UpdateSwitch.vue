@@ -1,18 +1,40 @@
 <template>
-  <t-dialog v-model:visible="isUpdateSwitch" header="更新账号" :footer="false">
-    <t-form @submit="submitForm" :data="updateSwitchReq" :rules="formRules">
-      <t-form-item label="启用" name="switch">
+  <t-dialog
+    v-model:visible="isUpdateSwitch"
+    header="更新账号"
+    :footer="false"
+  >
+    <t-form
+      @submit="submitForm"
+      :data="updateSwitchReq"
+      :rules="formRules"
+    >
+      <t-form-item
+        label="启用"
+        name="switch"
+      >
         <t-switch v-model="updateSwitchReq.switch" />
       </t-form-item>
 
       <t-form-item label="选中的账号">
-        <t-input :value="JSON.stringify(selectedRowKeys)" disabled />
+        <t-input
+          :value="JSON.stringify(selectedRowKeys)"
+          disabled
+        />
       </t-form-item>
 
       <t-form-item>
         <t-space size="small">
-          <t-button theme="default" @click="accountsStore.hideUpdateSwitchDialog">取消</t-button>
-          <t-button theme="primary" type="submit">提交</t-button>
+          <t-button
+            theme="default"
+            @click="accountsStore.hideUpdateSwitchDialog"
+            >取消</t-button
+          >
+          <t-button
+            theme="primary"
+            type="submit"
+            >提交</t-button
+          >
         </t-space>
       </t-form-item>
     </t-form>

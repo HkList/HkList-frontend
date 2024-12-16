@@ -17,9 +17,7 @@ import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 export const useAccountsStore = defineStore('accounts', () => {
-  const [selectReq, pagination, accountList, getAccounts] = useCommonStore<SelectReq, SelectRes>(
-    select,
-  )
+  const [selectReq, pagination, accountList, getAccounts] = useCommonStore<SelectReq, SelectRes>(select)
 
   const selectedRowKeys = ref<number[]>([])
   const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {

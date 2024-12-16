@@ -1,16 +1,42 @@
 <template>
   <t-card>
-    <t-form :data="formData" :rules="formRules" @submit="submitForm" :labelWidth="230">
-      <t-form-item name="max_once" label="单次最大能解析多少文件">
-        <t-input-number :min="0" v-model="formData.max_once" auto-width />
+    <t-form
+      :data="formData"
+      :rules="formRules"
+      @submit="submitForm"
+      :labelWidth="230"
+    >
+      <t-form-item
+        name="max_once"
+        label="单次最大能解析多少文件"
+      >
+        <t-input-number
+          :min="0"
+          v-model="formData.max_once"
+          auto-width
+        />
       </t-form-item>
 
-      <t-form-item name="min_single_filesize" label="单次最小能解析的文件大小 (GB)">
-        <t-input-number :min="0" v-model="formData.min_single_filesize" auto-width />
+      <t-form-item
+        name="min_single_filesize"
+        label="单次最小能解析的文件大小 (GB)"
+      >
+        <t-input-number
+          :min="0"
+          v-model="formData.min_single_filesize"
+          auto-width
+        />
       </t-form-item>
 
-      <t-form-item name="max_single_filesize" label="单次最大能解析的文件大小 (GB)">
-        <t-input-number :min="0" v-model="formData.max_single_filesize" auto-width />
+      <t-form-item
+        name="max_single_filesize"
+        label="单次最大能解析的文件大小 (GB)"
+      >
+        <t-input-number
+          :min="0"
+          v-model="formData.max_single_filesize"
+          auto-width
+        />
       </t-form-item>
 
       <t-form-item
@@ -18,20 +44,34 @@
         label="单个账号每日最大解析量 (GB)"
         help="不是用户,是后台设置的解析账号"
       >
-        <t-input-number :min="0" v-model="formData.max_download_daily_pre_account" auto-width />
+        <t-input-number
+          :min="0"
+          v-model="formData.max_download_daily_pre_account"
+          auto-width
+        />
       </t-form-item>
 
-      <t-form-item name="limit_cn" label="仅限中国用户使用">
+      <t-form-item
+        name="limit_cn"
+        label="仅限中国用户使用"
+      >
         <t-switch v-model="formData.limit_cn" />
       </t-form-item>
 
-      <t-form-item name="limit_prov" label="对解析账号做市级分组">
+      <t-form-item
+        name="limit_prov"
+        label="对解析账号做市级分组"
+      >
         <t-switch v-model="formData.limit_prov" />
       </t-form-item>
 
       <t-form-item>
         <t-space size="small">
-          <t-button theme="primary" type="submit">提交</t-button>
+          <t-button
+            theme="primary"
+            type="submit"
+            >提交</t-button
+          >
         </t-space>
       </t-form-item>
     </t-form>

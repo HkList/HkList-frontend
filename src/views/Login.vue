@@ -1,15 +1,31 @@
 <template>
   <t-layout>
     <t-card class="login">
-      <h1><img :src="config.logo" alt="logo" /></h1>
+      <h1>
+        <img
+          :src="config.logo"
+          alt="logo"
+        />
+      </h1>
       <h2>登陆 | {{ config.name }}</h2>
-      <t-form :data="formData" :rules="formRules" @submit="submitForm">
-        <t-form-item name="admin_password" label="管理员密码">
+      <t-form
+        :data="formData"
+        :rules="formRules"
+        @submit="submitForm"
+      >
+        <t-form-item
+          name="admin_password"
+          label="管理员密码"
+        >
           <t-input v-model="formData.admin_password" />
         </t-form-item>
         <t-form-item>
           <t-space size="small">
-            <t-button theme="primary" type="submit">提交</t-button>
+            <t-button
+              theme="primary"
+              type="submit"
+              >提交</t-button
+            >
           </t-space>
         </t-form-item>
       </t-form>

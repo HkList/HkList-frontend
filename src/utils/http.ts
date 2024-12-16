@@ -97,11 +97,7 @@ class Http {
   }
 
   /** 通用请求工具函数 */
-  public request<T>(
-    method: Method,
-    url: string,
-    param?: AxiosRequestConfig,
-  ): Promise<baseResponse<T>> {
+  public request<T>(method: Method, url: string, param?: AxiosRequestConfig): Promise<baseResponse<T>> {
     return Http.axiosInstance.request({
       method,
       url,
