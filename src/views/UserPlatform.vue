@@ -26,13 +26,9 @@
         </t-menu-item>
       </t-menu>
     </t-aside>
-    <t-layout>
-      <t-content>
-        <div class="container">
-          <RouterView />
-        </div>
-      </t-content>
-    </t-layout>
+    <t-content>
+      <RouterView />
+    </t-content>
   </t-layout>
 </template>
 
@@ -44,6 +40,7 @@ import { storeToRefs } from 'pinia'
 
 const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
+
 const [selectedMenu, changeMenu] = useSelectMenu('user', 'parse')
 </script>
 

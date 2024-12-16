@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <t-card> BlackList </t-card>
 </template>
 
 <script lang="ts" setup></script>
