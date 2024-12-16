@@ -1,5 +1,5 @@
 <template>
-  <t-dialog v-model:visible="isAddingAccount" header="添加账号" :footer="false">
+  <t-dialog v-model:visible="isAddAccount" header="添加账号" :footer="false">
     <t-form :data="addAccountInput" :rules="formRules" @submit="submitForm" :labelWidth="130">
       <t-form-item label="账号类型">
         <t-select v-model="addAccountType">
@@ -44,7 +44,7 @@
 
       <t-form-item>
         <t-space size="small">
-          <t-button theme="default" @click="accountsStore.hideAddDialog">取消</t-button>
+          <t-button theme="default" @click="accountsStore.hideAddAccountDialog">取消</t-button>
           <t-button theme="primary" type="submit">提交</t-button>
         </t-space>
       </t-form-item>
@@ -58,7 +58,7 @@ import { useAccountsStore } from '@/stores/accounts.ts'
 import { storeToRefs } from 'pinia'
 
 const accountsStore = useAccountsStore()
-const { isAddingAccount, addAccountType, addAccountInput } = storeToRefs(accountsStore)
+const { isAddAccount, addAccountType, addAccountInput } = storeToRefs(accountsStore)
 
 const formRules: FormProps['rules'] = {
   cookie: [{ required: true, message: 'Cookie不能为空' }],

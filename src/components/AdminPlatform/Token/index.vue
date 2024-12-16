@@ -89,13 +89,29 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'switch',
     title: '状态',
-    cell: (h, { row }) => <>{row.switch ? '启用' : '禁用'}</>,
+    cell: (h, { row }) => <>{row.switch ? '启用' : `禁用 (${row.reason})`}</>,
     ellipsis: true,
   },
   {
-    colKey: 'reason',
-    title: '禁用原因',
-    cell: (h, { row }) => <>{row.reason === '' ? '未禁用' : row.reason}</>,
+    colKey: 'today_count',
+    title: '今日解析',
+    cell: (h, { row }) => (
+      <>
+        {row.today_count} ({formatBytes(row.today_size ?? 0)})
+      </>
+    ),
+    width: 150,
+    ellipsis: true,
+  },
+  {
+    colKey: 'total_count',
+    title: '总计解析',
+    cell: (h, { row }) => (
+      <>
+        {row.total_count} ({formatBytes(row.total_size ?? 0)})
+      </>
+    ),
+    width: 150,
     ellipsis: true,
   },
   {
@@ -109,12 +125,14 @@ const columns = ref<TableProps['columns']>([
     colKey: 'count',
     title: '次数配额',
     cell: (h, { row }) => <>{row.count} 次</>,
+    width: 90,
     ellipsis: true,
   },
   {
     colKey: 'day',
     title: '时间配额',
     cell: (h, { row }) => <>{row.day} 天</>,
+    width: 90,
     ellipsis: true,
   },
   {

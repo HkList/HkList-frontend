@@ -5,7 +5,7 @@ import type { BasePagenation } from '@/api/admin/pagenation.ts'
 
 export const useCommonStore = <SelectReq, SelectRes>(
   select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>,
-): [Ref<SelectReq>, Ref<TableProps['pagination']>, Ref<SelectRes>, () => Promise<void>] => {
+) => {
   const list = ref<SelectRes>([] as SelectRes)
 
   const pagination = ref<TableProps['pagination']>({
@@ -34,6 +34,10 @@ export const useCommonStore = <SelectReq, SelectRes>(
     pagination.value!.total = res.data.total
   }
 
-  // @ts-expect-error 不会改😭
-  return [selectReq, pagination, list, get]
+  return [selectReq, pagination, list, get] as [
+    Ref<SelectReq>,
+    Ref<TableProps['pagination']>,
+    Ref<SelectRes>,
+    () => Promise<void>,
+  ]
 }

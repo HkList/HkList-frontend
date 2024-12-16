@@ -29,6 +29,10 @@ export type SelectRes = {
   expires_at: string
   created_at: string
   updated_at: string
+  total_count: number
+  total_size: number | null
+  today_count: number
+  today_size: number | null
 }[]
 
 /** 获取 */

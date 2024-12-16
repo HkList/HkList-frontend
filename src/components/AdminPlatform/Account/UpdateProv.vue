@@ -1,8 +1,8 @@
 <template>
   <t-dialog v-model:visible="isUpdateProvDialog" header="更新账号省份" :footer="false">
-    <t-form @submit="submitForm" :labelWidth="130">
-      <t-form-item label="省份">
-        <t-select v-model="selectedProv">
+    <t-form @submit="submitForm" :data="updateProvReq" :rules="formRules" :labelWidth="130">
+      <t-form-item label="省份" name="prov">
+        <t-select v-model="updateProvReq.prov">
           <t-option label="未分配" :value="null" />
           <t-option label="北京市" :value="'北京市'" />
           <t-option label="天津市" :value="'天津市'" />
@@ -61,7 +61,9 @@ import { useAccountsStore } from '@/stores/accounts.ts'
 import { storeToRefs } from 'pinia'
 
 const accountsStore = useAccountsStore()
-const { isUpdateProvDialog, selectedProv, selectedRowKeys } = storeToRefs(accountsStore)
+const { isUpdateProvDialog, updateProvReq, selectedRowKeys } = storeToRefs(accountsStore)
+
+const formRules: FormProps['rules'] = {}
 
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return

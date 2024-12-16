@@ -33,20 +33,6 @@ export const useAccountsStore = defineStore('accounts', () => {
     await getAccounts()
   }
 
-  const enableSelection = async () => {
-    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
-    await update({ id: selectedRowKeys.value, switch: true })
-    MessagePlugin.success('启用成功')
-    await getAccounts()
-  }
-
-  const disableSelection = async () => {
-    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
-    await update({ id: selectedRowKeys.value, switch: false })
-    MessagePlugin.success('禁用成功')
-    await getAccounts()
-  }
-
   const deleteSelection = async () => {
     if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
     await remove({ id: selectedRowKeys.value })
@@ -54,20 +40,37 @@ export const useAccountsStore = defineStore('accounts', () => {
     await getAccounts()
   }
 
+  const isUpdateSwitch = ref(false)
+  const updateSwitchReq = ref<UpdateReq>({
+    id: [],
+    switch: false,
+  })
+  const showUpdateSwitchDialog = () => (isUpdateSwitch.value = true)
+  const hideUpdateSwitchDialog = () => (isUpdateSwitch.value = false)
+  const updateSwitch = async () => {
+    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
+    await update({ ...updateSwitchReq.value, id: selectedRowKeys.value })
+    MessagePlugin.success('更新成功')
+    await getAccounts()
+  }
+
   const isUpdateProvDialog = ref(false)
   const showUpdateProvDialog = () => (isUpdateProvDialog.value = true)
   const hideUpdateProvDialog = () => (isUpdateProvDialog.value = false)
-  const selectedProv = ref<UpdateReq['prov']>(null)
+  const updateProvReq = ref<UpdateReq>({
+    id: [],
+    prov: null,
+  })
   const updateProvSelection = async () => {
     if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
-    await update({ id: selectedRowKeys.value, prov: selectedProv.value })
+    await update({ ...updateProvReq.value, id: selectedRowKeys.value })
     MessagePlugin.success('更新省份成功')
     await getAccounts()
   }
 
-  const isAddingAccount = ref(false)
-  const showAddDialog = () => (isAddingAccount.value = true)
-  const hideAddDialog = async () => (isAddingAccount.value = false)
+  const isAddAccount = ref(false)
+  const showAddAccountDialog = () => (isAddAccount.value = true)
+  const hideAddAccountDialog = async () => (isAddAccount.value = false)
   const addAccountType = ref<InsertReq['account_type']>('cookie')
   const addAccountInput = ref({
     cookie: '',
@@ -131,30 +134,34 @@ export const useAccountsStore = defineStore('accounts', () => {
   }
 
   return {
-    accountList,
     pagination,
     selectReq,
+    accountList,
     getAccounts,
 
     selectedRowKeys,
     handleSelectChange,
 
-    deleteSelection,
-    enableSelection,
-    disableSelection,
     updateInfoSelection,
+    deleteSelection,
 
-    selectedProv,
+    isUpdateSwitch,
+    updateSwitchReq,
+    showUpdateSwitchDialog,
+    hideUpdateSwitchDialog,
+    updateSwitch,
+
     isUpdateProvDialog,
+    updateProvReq,
     showUpdateProvDialog,
     hideUpdateProvDialog,
     updateProvSelection,
 
-    isAddingAccount,
+    isAddAccount,
     addAccountType,
     addAccountInput,
-    showAddDialog,
-    hideAddDialog,
+    showAddAccountDialog,
+    hideAddAccountDialog,
     addAccount,
 
     checkAccountBanStatus,

@@ -20,18 +20,22 @@
           <t-option label="倒序" value="desc" />
         </t-select>
         <t-button theme="primary" @click="accountsStore.getAccounts">刷新列表</t-button>
-        <t-button theme="primary" @click="accountsStore.showAddDialog">添加账号</t-button>
+        <t-button theme="primary" @click="accountsStore.showAddAccountDialog">添加账号</t-button>
         <t-button theme="danger" @click="accountsStore.deleteSelection">批量删除</t-button>
-        <t-button theme="primary" @click="accountsStore.updateInfoSelection">批量更新</t-button>
-        <t-button theme="primary" @click="accountsStore.enableSelection">批量启用</t-button>
-        <t-button theme="danger" @click="accountsStore.disableSelection">批量禁用</t-button>
+        <t-button theme="primary" @click="accountsStore.updateInfoSelection">
+          批量更新账户信息
+        </t-button>
+        <t-button theme="primary" @click="accountsStore.showUpdateSwitchDialog">
+          批量启用/禁用
+        </t-button>
         <t-button theme="primary" @click="accountsStore.showUpdateProvDialog">
           批量更新省份
         </t-button>
       </t-space>
     </div>
     <AddAccount />
-    <UpdateAccountProv />
+    <UpdateSwitch />
+    <UpdateProv />
     <t-table
       row-key="id"
       resizable
@@ -60,7 +64,8 @@
 import { ref, onMounted } from 'vue'
 import { type TableProps } from 'tdesign-vue-next'
 import AddAccount from './AddAccount.vue'
-import UpdateAccountProv from './UpdateAccountProv.vue'
+import UpdateProv from './UpdateProv.vue'
+import UpdateSwitch from './UpdateSwitch.vue'
 import { useAccountsStore } from '@/stores/accounts.ts'
 import { formatBytes, formatIsoString } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
@@ -120,12 +125,6 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
-    colKey: 'switch',
-    title: '账号状态',
-    cell: (h, { row }) => <>{row.switch ? '启用' : '禁用'}</>,
-    ellipsis: true,
-  },
-  {
     colKey: 'prov',
     title: '省份',
     cell: (h, { row }) => <>{row.prov === null ? '未分配' : row.prov}</>,
@@ -134,13 +133,7 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'switch',
     title: '账号状态',
-    cell: (h, { row }) => <>{row.switch ? '启用' : '禁用'}</>,
-    ellipsis: true,
-  },
-  {
-    colKey: 'reason',
-    title: '禁用原因',
-    cell: (h, { row }) => <>{row.reason === '' ? '未封禁' : row.reason}</>,
+    cell: (h, { row }) => <>{row.switch ? '启用' : `禁用 (${row.reason})`}</>,
     ellipsis: true,
   },
   {
