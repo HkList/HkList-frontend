@@ -63,6 +63,7 @@ export interface UpdateReq {
   switch: boolean
   reason: string
   id: number[]
+  token?: string
 }
 
 /** 更新 */

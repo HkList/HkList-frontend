@@ -1,7 +1,7 @@
 <template>
   <t-dialog
     v-model:visible="isUpdateSwitchDialog"
-    header="更新卡密"
+    header="启用/禁用卡密"
     :footer="false"
   >
     <t-form
@@ -35,13 +35,15 @@
           <t-button
             theme="default"
             @click="tokensStore.hideUpdateSwitchDialog"
-            >取消</t-button
           >
+            取消
+          </t-button>
           <t-button
             theme="primary"
             type="submit"
-            >提交</t-button
           >
+            提交
+          </t-button>
         </t-space>
       </t-form-item>
     </t-form>

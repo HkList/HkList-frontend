@@ -82,13 +82,15 @@
           <t-button
             theme="primary"
             type="submit"
-            >提交</t-button
           >
+            提交
+          </t-button>
           <t-button
             theme="primary"
             @click="handleTestAuth"
-            >测试授权</t-button
           >
+            测试授权
+          </t-button>
         </t-space>
       </t-form-item>
     </t-form>

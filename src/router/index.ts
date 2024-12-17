@@ -31,6 +31,10 @@ const router = createRouter({
       component: () => import('@/views/Login.vue'),
     },
     {
+      path: '/install',
+      component: () => import('@/views/Install.vue'),
+    },
+    {
       path: '/admin',
       component: () => import('@/views/AdminPlatform.vue'),
       redirect: '/admin/account',

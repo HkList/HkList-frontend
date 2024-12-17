@@ -77,13 +77,15 @@
           <t-button
             theme="primary"
             type="submit"
-            >提交</t-button
           >
+            提交
+          </t-button>
           <t-button
             theme="primary"
             @click="handleSendTestMail"
-            >发送测试邮件</t-button
           >
+            发送测试邮件
+          </t-button>
         </t-space>
       </t-form-item>
     </t-form>

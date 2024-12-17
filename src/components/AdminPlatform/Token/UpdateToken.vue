@@ -10,6 +10,14 @@
       :rules="formRules"
     >
       <t-form-item
+        name="token"
+        label="卡密"
+        v-if="updateReq.id.length === 1"
+      >
+        <t-input v-model="updateReq.token" />
+      </t-form-item>
+
+      <t-form-item
         name="count"
         label="次数配额"
       >
@@ -99,13 +107,15 @@
           <t-button
             theme="default"
             @click="tokensStore.hideEditDialog"
-            >取消</t-button
           >
+            取消
+          </t-button>
           <t-button
             theme="primary"
             type="submit"
-            >提交</t-button
           >
+            提交
+          </t-button>
         </t-space>
       </t-form-item>
     </t-form>

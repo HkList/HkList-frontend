@@ -94,13 +94,15 @@
           <t-button
             theme="default"
             @click="accountsStore.hideAddAccountDialog"
-            >取消</t-button
           >
+            取消
+          </t-button>
           <t-button
             theme="primary"
             type="submit"
-            >提交</t-button
           >
+            提交
+          </t-button>
         </t-space>
       </t-form-item>
     </t-form>

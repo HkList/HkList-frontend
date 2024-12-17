@@ -10,7 +10,7 @@ import {
   type UpdateReq,
   type UpdateSwitchReq,
 } from '@/api/admin/token.ts'
-import { GB } from '@/utils/format.ts'
+import { formatDateToString, GB } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
@@ -78,21 +78,39 @@ export const useTokensStore = defineStore('tokens', () => {
     expires_at: null,
     switch: true,
     reason: '',
+    token: undefined,
   })
   const showEditDialog = (event?: PointerEvent, id?: number) => {
     if (event && id) {
       event.stopPropagation()
       updateReq.value.id = [id]
-      const find = tokenList.value.find((item) => item.id === id)
+    } else {
+      updateReq.value = {
+        id: selectedRowKeys.value,
+        count: 100,
+        size: 1000,
+        day: 100,
+        can_use_ip_count: 5,
+        ip: [],
+        expires_at: null,
+        switch: true,
+        reason: '',
+        token: undefined,
+      }
+    }
+
+    if (updateReq.value.id.length === 1) {
+      const find = tokenList.value.find((item) => item.id === updateReq.value.id[0])
       if (find) {
         updateReq.value = {
           ...find,
-          id: [id],
+          expires_at: find.expires_at ? formatDateToString(find.expires_at, 'YYYY-MM-DD HH:mm:ss') : null,
+          size: find.size / GB,
+          id: updateReq.value.id,
         }
       }
-    } else {
-      updateReq.value.id = selectedRowKeys.value
     }
+
     isEditDialog.value = true
   }
   const hideEditDialog = () => (isEditDialog.value = false)

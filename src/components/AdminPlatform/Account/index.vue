@@ -67,18 +67,21 @@
         <t-button
           theme="primary"
           @click="accountsStore.getAccounts"
-          >刷新列表</t-button
         >
+          刷新列表
+        </t-button>
         <t-button
           theme="primary"
           @click="accountsStore.showAddAccountDialog"
-          >添加账号</t-button
         >
+          添加账号
+        </t-button>
         <t-button
           theme="danger"
           @click="accountsStore.deleteSelection"
-          >批量删除</t-button
         >
+          批量删除
+        </t-button>
         <t-button
           theme="primary"
           @click="accountsStore.updateInfoSelection"
@@ -136,7 +139,7 @@ import AddAccount from './AddAccount.vue'
 import UpdateProv from './UpdateProv.vue'
 import UpdateSwitch from './UpdateSwitch.vue'
 import { useAccountsStore } from '@/stores/accounts.ts'
-import { formatBytes, formatIsoString } from '@/utils/format.ts'
+import { formatBytes, formatDateToString } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
 
 const accountsStore = useAccountsStore()
@@ -208,21 +211,21 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'used_at',
     title: '上次使用时间',
-    cell: (h, { row }) => <>{formatIsoString(row.used_at)}</>,
+    cell: (h, { row }) => <>{formatDateToString(row.used_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'created_at',
     title: '创建时间',
-    cell: (h, { row }) => <>{formatIsoString(row.created_at)}</>,
+    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
-    cell: (h, { row }) => <>{formatIsoString(row.updated_at)}</>,
+    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
     width: 175,
     ellipsis: true,
   },

@@ -4,6 +4,7 @@ export interface InstallReq {
   app_name: string
   db_host: string
   db_port: number
+  db_database: string
   db_username: string
   db_password?: string
 }

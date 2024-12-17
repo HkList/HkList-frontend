@@ -48,6 +48,10 @@ body {
     > li:last-child {
       width: calc(100% - 100px);
     }
+
+    ol {
+      padding-left: 15px;
+    }
   }
 }
 

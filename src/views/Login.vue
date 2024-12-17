@@ -24,8 +24,9 @@
             <t-button
               theme="primary"
               type="submit"
-              >提交</t-button
             >
+              提交
+            </t-button>
           </t-space>
         </t-form-item>
       </t-form>
@@ -36,7 +37,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
-import { checkPassword } from '@/api/admin/check_password.ts'
+import { checkPassword, type CheckPasswordReq } from '@/api/admin/check_password.ts'
 import { useRouter } from 'vue-router'
 import { useConfigStore } from '@/stores/config.ts'
 import { storeToRefs } from 'pinia'
@@ -46,7 +47,7 @@ const { config } = storeToRefs(configStore)
 
 const router = useRouter()
 
-const formData = ref({
+const formData = ref<CheckPasswordReq>({
   admin_password: '',
 })
 

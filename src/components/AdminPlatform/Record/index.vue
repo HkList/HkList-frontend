@@ -1,7 +1,165 @@
 <template>
-  <t-card> Record </t-card>
+  <t-card>
+    <div class="buttons">
+      <t-space size="small">
+        <t-select
+          v-model="selectReq.column"
+          @change="recordsStore.getRecords"
+        >
+          <t-option
+            label="按 id 排序"
+            value="id"
+          />
+          <t-option
+            label="按 ip 排序"
+            value="ip"
+          />
+          <t-option
+            label="按 fingerprint 排序"
+            value="fingerprint"
+          />
+          <t-option
+            label="按 fs_id 排序"
+            value="fs_id"
+          />
+          <t-option
+            label="按 urls 排序"
+            value="urls"
+          />
+          <t-option
+            label="按 ua 排序"
+            value="ua"
+          />
+          <t-option
+            label="按 token_id 排序"
+            value="token_id"
+          />
+          <t-option
+            label="按 account_id 排序"
+            value="account_id"
+          />
+          <t-option
+            label="按 created_at 排序"
+            value="created_at"
+          />
+          <t-option
+            label="按 updated_at 排序"
+            value="updated_at"
+          />
+        </t-select>
+        <t-select
+          v-model="selectReq.direction"
+          @change="recordsStore.getRecords"
+        >
+          <t-option
+            label="正序"
+            value="asc"
+          />
+          <t-option
+            label="倒序"
+            value="desc"
+          />
+        </t-select>
+        <t-button
+          theme="primary"
+          @click="recordsStore.getRecords"
+        >
+          刷新列表
+        </t-button>
+      </t-space>
+    </div>
+    <t-table
+      row-key="id"
+      resizable
+      lazy-load
+      :bordered="true"
+      :data="recordList"
+      :pagination="pagination"
+      :columns="columns"
+    >
+      <template #expandedRow="{ row }">
+        <div class="more-detail">
+          <ul>
+            <li>UA:</li>
+            <li>{{ row.ua }}</li>
+          </ul>
+          <ul>
+            <li>urls:</li>
+            <li>
+              <ol>
+                <li
+                  v-for="url in row.urls"
+                  :key="url"
+                >
+                  {{ url }}
+                </li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </t-table>
+  </t-card>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="tsx" setup>
+import { useRecordsStore } from '@/stores/records.ts'
+import { storeToRefs } from 'pinia'
+import type { TableProps } from 'tdesign-vue-next'
+import { onMounted, ref } from 'vue'
+import { formatDateToString } from '@/utils/format.ts'
+
+const recordsStore = useRecordsStore()
+const { recordList, pagination, selectReq } = storeToRefs(recordsStore)
+
+onMounted(recordsStore.getRecords)
+
+const columns = ref<TableProps['columns']>([
+  {
+    colKey: 'id',
+    title: 'ID',
+    ellipsis: true,
+  },
+  {
+    colKey: 'ip',
+    title: 'IP',
+    ellipsis: true,
+  },
+  {
+    colKey: 'fingerprint',
+    title: '指纹',
+    ellipsis: true,
+  },
+  {
+    colKey: 'fs_id',
+    title: '文件ID',
+    ellipsis: true,
+  },
+  {
+    colKey: 'token_id',
+    title: '卡密ID',
+    ellipsis: true,
+  },
+  {
+    colKey: 'account_id',
+    title: '解析账号ID',
+    ellipsis: true,
+  },
+  {
+    colKey: 'created_at',
+    title: '创建时间',
+    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
+    width: 175,
+    ellipsis: true,
+  },
+  {
+    colKey: 'updated_at',
+    title: '更新时间',
+    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
+    width: 175,
+    ellipsis: true,
+  },
+])
+</script>
 
 <style lang="scss" scoped></style>

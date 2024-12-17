@@ -1,10 +1,8 @@
+import dayjs from 'dayjs'
+
 export const formatTimestamp = (timestamp: number) => {
   const date = new Date(timestamp * 1000)
-  return date.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  return formatDateToString(date)
 }
 
 export const GB = 1073741824
@@ -18,4 +16,4 @@ export const formatBytes = (bytes: number | string, decimals = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i]
 }
 
-export const formatIsoString = (isoString: string) => new Date(isoString).toLocaleString()
+export const formatDateToString = (timeString: dayjs.ConfigType, format = 'YYYY/MM/DD HH:mm:ss') => dayjs(timeString).format(format)

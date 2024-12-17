@@ -63,18 +63,21 @@
         <t-button
           theme="primary"
           @click="tokensStore.getTokens"
-          >刷新列表</t-button
         >
+          刷新列表
+        </t-button>
         <t-button
           theme="primary"
           @click="tokensStore.showAddingTokenDialog"
-          >添加卡密</t-button
         >
+          添加卡密
+        </t-button>
         <t-button
           theme="danger"
           @click="tokensStore.deleteSelection"
-          >批量删除</t-button
         >
+          批量删除
+        </t-button>
         <t-button
           theme="primary"
           @click="tokensStore.showUpdateSwitchDialog"
@@ -84,8 +87,9 @@
         <t-button
           theme="primary"
           @click="tokensStore.showEditDialog"
-          >批量更新</t-button
         >
+          批量更新
+        </t-button>
       </t-space>
     </div>
     <AddToken />
@@ -117,7 +121,7 @@
 
 <script lang="tsx" setup>
 import { useTokensStore } from '@/stores/tokens.ts'
-import { formatBytes, formatIsoString } from '@/utils/format.ts'
+import { formatBytes, formatDateToString } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
@@ -205,21 +209,21 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'expires_at',
     title: '过期时间',
-    cell: (h, { row }) => <>{row.expires_at === null ? '未使用' : formatIsoString(row.expires_at)}</>,
+    cell: (h, { row }) => <>{row.expires_at === null ? '未使用' : formatDateToString(row.expires_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'created_at',
     title: '创建时间',
-    cell: (h, { row }) => <>{formatIsoString(row.created_at)}</>,
+    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
-    cell: (h, { row }) => <>{formatIsoString(row.updated_at)}</>,
+    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
     width: 175,
     ellipsis: true,
   },
