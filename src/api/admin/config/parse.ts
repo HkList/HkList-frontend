@@ -5,8 +5,7 @@ export interface GetConfigRes {
   parser_password: string
   parse_mode: number
   user_agent: string
-  proxy_server: string
-  proxy_password: string
+  use_exploit: boolean
 }
 
 /** 获取配置文件 */

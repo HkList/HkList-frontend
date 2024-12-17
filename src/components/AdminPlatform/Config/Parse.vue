@@ -64,17 +64,11 @@
       </t-form-item>
 
       <t-form-item
-        name="proxy_server"
-        label="代理服务器地址"
+        name="use_exploit"
+        label="启用漏洞模式"
+        help="仅限小于100M的文件, 需要准备无会员的CK账号"
       >
-        <t-input v-model="formData.proxy_server" />
-      </t-form-item>
-
-      <t-form-item
-        name="proxy_password"
-        label="代理服务器密码"
-      >
-        <t-input v-model="formData.proxy_password" />
+        <t-switch v-model="formData.use_exploit" />
       </t-form-item>
 
       <t-form-item>
@@ -107,8 +101,7 @@ const formData = ref<UpdateConfigReq>({
   parser_password: '',
   parse_mode: 1,
   user_agent: '',
-  proxy_server: '',
-  proxy_password: '',
+  use_exploit: false,
 })
 
 const formRules: FormProps['rules'] = {
