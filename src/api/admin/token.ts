@@ -2,7 +2,7 @@ import { http } from '@/utils/http.ts'
 import type { BasePagenation, PagenationReq } from '@/api/admin/pagenation.ts'
 
 export type SelectReq = PagenationReq & {
-  column: 'id' | 'token' | 'count' | 'size' | 'day' | 'can_use_ip_count' | 'ip' | 'expires_at' | 'created_at' | 'updated_at'
+  column: 'id' | 'token' | 'count' | 'size' | 'day' | 'can_use_ip_count' | 'ip' | 'expires_at' | 'created_at' | 'updated_at' | 'deleted_at'
   direction: 'asc' | 'desc'
 }
 
@@ -16,13 +16,14 @@ export type SelectRes = {
   ip: string[]
   switch: boolean
   reason: string
-  expires_at: string
-  created_at: string
-  updated_at: string
   total_count: number
   total_size: number | null
   today_count: number
   today_size: number | null
+  expires_at: string
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
 }[]
 
 /** 获取 */

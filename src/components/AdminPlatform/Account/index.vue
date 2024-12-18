@@ -39,16 +39,16 @@
             value="prov"
           />
           <t-option
-            label="按 used_at 排序"
-            value="used_at"
-          />
-          <t-option
             label="按 created_at 排序"
             value="created_at"
           />
           <t-option
             label="按 updated_at 排序"
             value="updated_at"
+          />
+          <t-option
+            label="按 deleted_at 排序"
+            value="deleted_at"
           />
         </t-select>
         <t-select
@@ -206,13 +206,6 @@ const columns = ref<TableProps['columns']>([
     colKey: 'switch',
     title: '账号状态',
     cell: (h, { row }) => <>{row.switch ? '启用' : `禁用 (${row.reason})`}</>,
-    ellipsis: true,
-  },
-  {
-    colKey: 'used_at',
-    title: '上次使用时间',
-    cell: (h, { row }) => <>{formatDateToString(row.used_at)}</>,
-    width: 175,
     ellipsis: true,
   },
   {

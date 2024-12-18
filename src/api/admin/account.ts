@@ -2,7 +2,7 @@ import { http, type baseResponse } from '@/utils/http.ts'
 import type { BasePagenation, PagenationReq } from '@/api/admin/pagenation.ts'
 
 export type SelectReq = PagenationReq & {
-  column: 'id' | 'baidu_name' | 'uk' | 'account_type' | 'account_data' | 'switch' | 'reason' | 'prov' | 'used_at' | 'created_at' | 'updated_at'
+  column: 'id' | 'baidu_name' | 'uk' | 'account_type' | 'account_data' | 'switch' | 'reason' | 'prov' | 'created_at' | 'updated_at' | 'deleted_at'
   direction: 'asc' | 'desc'
 }
 
@@ -52,9 +52,9 @@ export type SingleAccount = {
     | '香港特别行政区'
     | '澳门特别行政区'
     | '台湾省'
-  used_at: string
   created_at: string
   updated_at: string
+  deleted_at: string | null
 } & (
   | {
       account_type: 'cookie'

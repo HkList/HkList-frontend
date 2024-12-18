@@ -104,6 +104,7 @@ export const useTokensStore = defineStore('tokens', () => {
       if (find) {
         updateReq.value = {
           ...find,
+          token: find.token === 'guest' ? undefined : find.token,
           expires_at: find.expires_at ? formatDateToString(find.expires_at, 'YYYY-MM-DD HH:mm:ss') : null,
           size: find.size / GB,
           id: updateReq.value.id,

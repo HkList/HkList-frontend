@@ -30,6 +30,10 @@
           @blur="matchUserAgent"
         >
           <t-option
+            label="V0免费"
+            :value="0"
+          />
+          <t-option
             label="V1盘内"
             :value="1"
           />
@@ -66,7 +70,7 @@
       <t-form-item
         name="use_exploit"
         label="启用漏洞模式"
-        help="仅限小于100M的文件, 需要准备无会员的CK账号"
+        help="小于100M的文件使用漏洞模式, 需要准备无会员的CK账号, 不支持V0"
       >
         <t-switch v-model="formData.use_exploit" />
       </t-form-item>

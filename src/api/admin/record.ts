@@ -1,5 +1,7 @@
 import { http } from '@/utils/http.ts'
 import type { BasePagenation, PagenationReq } from '@/api/admin/pagenation.ts'
+import type { SelectRes as AccountSelectRes } from '@/api/admin/account.ts'
+import type { SelectRes as TokenSelectRes } from '@/api/admin/token.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'ip' | 'fingerprint' | 'fs_id' | 'urls' | 'ua' | 'token_id' | 'account_id' | 'created_at' | 'updated_at'
@@ -17,6 +19,18 @@ export interface SingleRecord {
   account_id: number
   created_at: number
   updated_at: number
+  account: AccountSelectRes[number]
+  token: TokenSelectRes[number]
+  file: {
+    id: number
+    surl: string
+    pwd: string
+    fs_id: string
+    filename: string
+    size: number
+    created_at: string
+    updated_at: string
+  }
 }
 
 export type SelectRes = SingleRecord[]

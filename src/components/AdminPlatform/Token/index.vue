@@ -46,6 +46,10 @@
             label="按 updated_at 排序"
             value="updated_at"
           />
+          <t-option
+            label="按 deleted_at 排序"
+            value="deleted_at"
+          />
         </t-select>
         <t-select
           v-model="selectReq.direction"

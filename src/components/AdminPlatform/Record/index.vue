@@ -80,11 +80,19 @@
       <template #expandedRow="{ row }">
         <div class="more-detail">
           <ul>
+            <li>Surl:</li>
+            <li>{{ row.file.surl }}</li>
+          </ul>
+          <ul>
+            <li>Pwd:</li>
+            <li>{{ row.file.pwd }}</li>
+          </ul>
+          <ul>
             <li>UA:</li>
             <li>{{ row.ua }}</li>
           </ul>
           <ul>
-            <li>urls:</li>
+            <li>Urls:</li>
             <li>
               <ol>
                 <li
@@ -107,7 +115,7 @@ import { useRecordsStore } from '@/stores/records.ts'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
-import { formatDateToString } from '@/utils/format.ts'
+import { formatBytes, formatDateToString } from '@/utils/format.ts'
 
 const recordsStore = useRecordsStore()
 const { recordList, pagination, selectReq } = storeToRefs(recordsStore)
@@ -131,18 +139,19 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
-    colKey: 'fs_id',
-    title: '文件ID',
+    colKey: 'file.size',
+    title: '文件大小',
+    cell: (h, { row }) => <>{formatBytes(row.file.size)}</>,
     ellipsis: true,
   },
   {
-    colKey: 'token_id',
-    title: '卡密ID',
+    colKey: 'token.token',
+    title: '卡密',
     ellipsis: true,
   },
   {
-    colKey: 'account_id',
-    title: '解析账号ID',
+    colKey: 'account.baidu_name',
+    title: '解析账号名称',
     ellipsis: true,
   },
   {
