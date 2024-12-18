@@ -104,7 +104,6 @@ export const useTokensStore = defineStore('tokens', () => {
       if (find) {
         updateReq.value = {
           ...find,
-          token: find.token === 'guest' ? undefined : find.token,
           expires_at: find.expires_at ? formatDateToString(find.expires_at, 'YYYY-MM-DD HH:mm:ss') : null,
           size: find.size / GB,
           id: updateReq.value.id,
@@ -117,7 +116,11 @@ export const useTokensStore = defineStore('tokens', () => {
   const hideEditDialog = () => (isEditDialog.value = false)
   const updateSelection = async () => {
     if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择账号')
-    await update({ ...updateReq.value, size: updateReq.value.size * GB })
+    await update({
+      ...updateReq.value,
+      size: updateReq.value.size * GB,
+      token: updateReq.value.id.length === 1 && updateReq.value.token === 'guest' ? undefined : updateReq.value.token,
+    })
     MessagePlugin.success('更新成功~')
     await getTokens()
   }

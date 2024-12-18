@@ -12,7 +12,7 @@
       <t-form-item
         name="token"
         label="卡密"
-        v-if="updateReq.id.length === 1"
+        v-if="updateReq.id.length === 1 && updateReq.token !== 'guest'"
       >
         <t-input v-model="updateReq.token" />
       </t-form-item>
