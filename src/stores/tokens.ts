@@ -1,16 +1,5 @@
-import {
-  insert,
-  remove,
-  select,
-  update,
-  updateSwitch,
-  type InsertReq,
-  type SelectReq,
-  type SelectRes,
-  type UpdateReq,
-  type UpdateSwitchReq,
-} from '@/api/admin/token.ts'
-import { formatDateToString, GB } from '@/utils/format.ts'
+import { insert, remove, select, update, type InsertReq, type SelectReq, type SelectRes, type UpdateReq } from '@/api/admin/token.ts'
+import { GB } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
@@ -48,20 +37,20 @@ export const useTokensStore = defineStore('tokens', () => {
   const showUpdateSwitchDialog = () => (isUpdateSwitchDialog.value = true)
   const hideUpdateSwitchDialog = () => (isUpdateSwitchDialog.value = false)
 
-  const updateSwitchReq = ref<UpdateSwitchReq>({
+  const updateSwitchReq = ref<UpdateReq>({
     id: [],
     switch: true,
     reason: '手动操作',
   })
   const updateSwitchSelection = async () => {
-    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
-    await updateSwitch({ ...updateSwitchReq.value, id: selectedRowKeys.value })
+    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择卡密')
+    await update({ ...updateSwitchReq.value, id: selectedRowKeys.value })
     MessagePlugin.success(`${updateSwitchReq.value.switch ? '启用' : '禁用'}成功`)
     await getTokens()
   }
 
   const deleteSelection = async () => {
-    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
+    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择卡密')
     await remove({ id: selectedRowKeys.value })
     MessagePlugin.success('删除成功')
     await getTokens()
@@ -104,7 +93,6 @@ export const useTokensStore = defineStore('tokens', () => {
       if (find) {
         updateReq.value = {
           ...find,
-          expires_at: find.expires_at ? formatDateToString(find.expires_at, 'YYYY-MM-DD HH:mm:ss') : null,
           size: find.size / GB,
           id: updateReq.value.id,
         }
@@ -115,10 +103,10 @@ export const useTokensStore = defineStore('tokens', () => {
   }
   const hideEditDialog = () => (isEditDialog.value = false)
   const updateSelection = async () => {
-    if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择账号')
+    if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择卡密')
     await update({
       ...updateReq.value,
-      size: updateReq.value.size * GB,
+      size: updateReq.value.size ?? 0 * GB,
       token: updateReq.value.id.length === 1 && updateReq.value.token === 'guest' ? undefined : updateReq.value.token,
     })
     MessagePlugin.success('更新成功~')

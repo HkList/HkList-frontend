@@ -74,18 +74,8 @@
 
       <t-form-item>
         <t-space size="small">
-          <t-button
-            theme="primary"
-            type="submit"
-          >
-            提交
-          </t-button>
-          <t-button
-            theme="primary"
-            @click="handleSendTestMail"
-          >
-            发送测试邮件
-          </t-button>
+          <t-button type="submit"> 提交 </t-button>
+          <t-button @click="handleSendTestMail"> 发送测试邮件 </t-button>
         </t-space>
       </t-form-item>
     </t-form>

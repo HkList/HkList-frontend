@@ -26,17 +26,17 @@
           </template>
           卡密管理
         </t-menu-item>
-        <t-menu-item value="record">
-          <template #icon>
-            <ListIcon />
-          </template>
-          记录管理
-        </t-menu-item>
         <t-menu-item value="blacklist">
           <template #icon>
             <UserListIcon />
           </template>
           黑名单管理
+        </t-menu-item>
+        <t-menu-item value="record">
+          <template #icon>
+            <ListIcon />
+          </template>
+          记录管理
         </t-menu-item>
         <t-submenu title="配置管理">
           <template #icon>

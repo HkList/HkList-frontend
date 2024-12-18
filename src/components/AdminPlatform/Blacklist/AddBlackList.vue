@@ -58,12 +58,7 @@
           >
             取消
           </t-button>
-          <t-button
-            theme="primary"
-            type="submit"
-          >
-            提交
-          </t-button>
+          <t-button type="submit"> 提交 </t-button>
         </t-space>
       </t-form-item>
     </t-form>
@@ -71,16 +66,31 @@
 </template>
 
 <script lang="ts" setup>
-import { type FormProps } from 'tdesign-vue-next'
+import { MessagePlugin, type CustomValidator, type FormProps } from 'tdesign-vue-next'
 import { useBlackListsStore } from '@/stores/blackLists.ts'
 import { storeToRefs } from 'pinia'
+import { ValidateIsIp } from '@/utils/validates.ts'
 
 const blacksStore = useBlackListsStore()
 const { isAddBlackList, addBlackListReq } = storeToRefs(blacksStore)
 
+const checkIdentifier: CustomValidator = () => {
+  if (addBlackListReq.value.type === 'ip' && addBlackListReq.value.identifier && !ValidateIsIp(addBlackListReq.value.identifier)) {
+    return {
+      result: false,
+      message: '请输入正确的IP地址',
+      type: 'error',
+    }
+  }
+  return {
+    result: true,
+    message: '',
+    type: 'success',
+  }
+}
+
 const formRules: FormProps['rules'] = {
-  type: [{ required: true, message: '请选择类型' }],
-  identifier: [{ required: true, message: '请输入识别码' }],
+  identifier: [{ required: true, message: '请输入识别码' }, { validator: checkIdentifier }],
   reason: [{ required: true, message: '请输入原因' }],
   ban_days: [{ required: true, message: '请输入封禁天数' }],
 }

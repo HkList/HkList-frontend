@@ -60,12 +60,7 @@
             value="desc"
           />
         </t-select>
-        <t-button
-          theme="primary"
-          @click="recordsStore.getRecords"
-        >
-          刷新列表
-        </t-button>
+        <t-button @click="recordsStore.getRecords"> 刷新列表 </t-button>
       </t-space>
     </div>
     <t-table
@@ -78,33 +73,42 @@
       :columns="columns"
     >
       <template #expandedRow="{ row }">
-        <div class="more-detail">
-          <ul>
-            <li>Surl:</li>
-            <li>{{ row.file.surl }}</li>
-          </ul>
-          <ul>
-            <li>Pwd:</li>
-            <li>{{ row.file.pwd }}</li>
-          </ul>
-          <ul>
-            <li>UA:</li>
-            <li>{{ row.ua }}</li>
-          </ul>
-          <ul>
-            <li>Urls:</li>
-            <li>
-              <ol>
-                <li
-                  v-for="url in row.urls"
-                  :key="url"
-                >
-                  {{ url }}
-                </li>
-              </ol>
-            </li>
-          </ul>
-        </div>
+        <t-descriptions
+          bordered
+          colon
+          layout="vertical"
+        >
+          <t-descriptions-item label="Surl">
+            {{ row.file.surl }}
+          </t-descriptions-item>
+          <t-descriptions-item label="Pwd">
+            {{ row.file.pwd }}
+          </t-descriptions-item>
+          <t-descriptions-item label="Ua">
+            {{ row.ua }}
+          </t-descriptions-item>
+          <t-descriptions-item label="Urls">
+            <t-list
+              split
+              size="large"
+            >
+              <t-list-item
+                v-for="(url, index) in row.urls"
+                :key="url"
+              >
+                <t-space direction="vertical">
+                  <t-space>
+                    <t-tag size="large"> 第 {{ index + 1 }} 条 </t-tag>
+                    <t-button @click="copy(url)">复制</t-button>
+                  </t-space>
+                  <p>
+                    {{ url }}
+                  </p>
+                </t-space>
+              </t-list-item>
+            </t-list>
+          </t-descriptions-item>
+        </t-descriptions>
       </template>
     </t-table>
   </t-card>
@@ -115,7 +119,8 @@ import { useRecordsStore } from '@/stores/records.ts'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
-import { formatBytes, formatDateToString } from '@/utils/format.ts'
+import { formatBytes } from '@/utils/format.ts'
+import { copy } from '@/utils/copy.ts'
 
 const recordsStore = useRecordsStore()
 const { recordList, pagination, selectReq } = storeToRefs(recordsStore)
@@ -157,14 +162,12 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'created_at',
     title: '创建时间',
-    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
-    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
     width: 175,
     ellipsis: true,
   },

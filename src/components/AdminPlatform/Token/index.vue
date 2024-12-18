@@ -64,36 +64,12 @@
             value="desc"
           />
         </t-select>
-        <t-button
-          theme="primary"
-          @click="tokensStore.getTokens"
-        >
-          刷新列表
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="tokensStore.showAddingTokenDialog"
-        >
-          添加卡密
-        </t-button>
-        <t-button
-          theme="danger"
-          @click="tokensStore.deleteSelection"
-        >
-          批量删除
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="tokensStore.showUpdateSwitchDialog"
-        >
-          批量启用/禁用
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="tokensStore.showEditDialog"
-        >
-          批量更新
-        </t-button>
+        <t-button @click="tokensStore.getTokens"> 刷新列表 </t-button>
+        <t-button @click="tokensStore.showAddingTokenDialog"> 添加卡密 </t-button>
+        <t-button @click="tokensStore.deleteSelection"> 批量删除 </t-button>
+        <t-button @click="tokensStore.showUpdateSwitchDialog"> 批量启用/禁用 </t-button>
+        <t-button @click="tokensStore.showEditDialog"> 批量更新 </t-button>
+        <t-button @click="tokensStore.showEditDialog"> 批量复制 </t-button>
       </t-space>
     </div>
     <AddToken />
@@ -112,12 +88,41 @@
       @select-change="tokensStore.handleSelectChange"
     >
       <template #expandedRow="{ row }">
-        <div class="more-detail">
-          <ul>
-            <li>已绑定的ip:</li>
-            <li>{{ JSON.stringify(row.ip) }}</li>
-          </ul>
-        </div>
+        <t-descriptions
+          bordered
+          colon
+          layout="vertical"
+        >
+          <t-descriptions-item label="已绑定的ip">
+            <t-tag
+              size="large"
+              v-if="row.ip.length === 0"
+            >
+              没有绑定的IP
+            </t-tag>
+            <t-list
+              stripe
+              split
+              size="large"
+              v-else
+            >
+              <t-list-item
+                v-for="(ip, index) in row.ip"
+                :key="ip"
+              >
+                <t-space direction="vertical">
+                  <t-space>
+                    <t-tag size="large"> 第 {{ index + 1 }} 条 </t-tag>
+                    <t-button @click="copy(ip)">复制</t-button>
+                  </t-space>
+                  <p>
+                    {{ ip }}
+                  </p>
+                </t-space>
+              </t-list-item>
+            </t-list>
+          </t-descriptions-item>
+        </t-descriptions>
       </template>
     </t-table>
   </t-card>
@@ -132,6 +137,7 @@ import { onMounted, ref } from 'vue'
 import AddToken from './AddToken.vue'
 import UpdateToken from './UpdateToken.vue'
 import UpdateSwitch from './UpdateSwitch.vue'
+import { copy } from '@/utils/copy.ts'
 
 const tokensStore = useTokensStore()
 const { selectReq, tokenList, pagination, selectedRowKeys } = storeToRefs(tokensStore)
@@ -220,14 +226,12 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'created_at',
     title: '创建时间',
-    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
-    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
     width: 175,
     ellipsis: true,
   },

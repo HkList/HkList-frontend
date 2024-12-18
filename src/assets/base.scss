@@ -24,6 +24,9 @@ body {
   width: calc(100% - 272px);
   padding: 20px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .logo-text {
@@ -34,30 +37,6 @@ body {
 
 .buttons {
   margin-bottom: 10px;
-}
-
-.more-detail {
-  line-height: 22px;
-
-  ul {
-    padding: 0 10px;
-    list-style: none;
-    width: 99%;
-    display: flex;
-
-    > li:first-child {
-      font-weight: bold;
-      width: 100px;
-    }
-
-    > li:last-child {
-      width: calc(100% - 100px);
-    }
-
-    ol {
-      padding-left: 15px;
-    }
-  }
 }
 
 .t-dialog__position {

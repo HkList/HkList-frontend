@@ -48,30 +48,15 @@
             value="desc"
           />
         </t-select>
-        <t-button
-          theme="primary"
-          @click="blacksStore.getBlackLists"
-        >
-          刷新列表
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="blacksStore.showAddBlackList"
-        >
-          添加黑名单
-        </t-button>
+        <t-button @click="blacksStore.getBlackLists"> 刷新列表 </t-button>
+        <t-button @click="blacksStore.showAddBlackList"> 添加黑名单 </t-button>
         <t-button
           theme="danger"
           @click="blacksStore.deleteSelection"
         >
           删除选中黑名单
         </t-button>
-        <t-button
-          theme="primary"
-          @click="blacksStore.showUpdateDialog"
-        >
-          更新黑名单
-        </t-button>
+        <t-button @click="blacksStore.showUpdateDialog"> 更新黑名单 </t-button>
       </t-space>
     </div>
     <AddBlackList />
@@ -96,7 +81,6 @@ import { useBlackListsStore } from '@/stores/blackLists.ts'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
-import { formatDateToString } from '@/utils/format.ts'
 import UpdateBlackList from './UpdateBlackList.vue'
 import AddBlackList from './AddBlackList.vue'
 
@@ -135,21 +119,18 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'expires_at',
     title: '到期时间',
-    cell: (h, { row }) => <>{formatDateToString(row.expires_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'created_at',
     title: '创建时间',
-    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
-    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
     width: 175,
     ellipsis: true,
   },

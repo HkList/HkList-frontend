@@ -1,5 +1,5 @@
 import { http } from '@/utils/http.ts'
-import type { BasePagenation, PagenationReq } from '@/api/admin/pagenation.ts'
+import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'token' | 'count' | 'size' | 'day' | 'can_use_ip_count' | 'ip' | 'expires_at' | 'created_at' | 'updated_at' | 'deleted_at'
@@ -55,14 +55,14 @@ export const insert = (data: InsertReq) => {
 }
 
 export interface UpdateReq {
-  count: number
-  size: number
-  day: number
-  can_use_ip_count: number
-  ip: string[]
-  expires_at: string | null
-  switch: boolean
-  reason: string
+  count?: number
+  size?: number
+  day?: number
+  can_use_ip_count?: number
+  ip?: string[]
+  expires_at?: string | null
+  switch?: boolean
+  reason?: string
   id: number[]
   token?: string
 }
@@ -70,17 +70,6 @@ export interface UpdateReq {
 /** 更新 */
 export const update = (data: UpdateReq) => {
   return http.request<null>('patch', '/admin/token', { data })
-}
-
-export interface UpdateSwitchReq {
-  switch: boolean
-  reason: string
-  id: number[]
-}
-
-/** 更新 */
-export const updateSwitch = (data: UpdateSwitchReq) => {
-  return http.request<null>('patch', '/admin/token/switch', { data })
 }
 
 export interface RemoveReq {

@@ -1,10 +1,5 @@
 import dayjs from 'dayjs'
 
-export const formatTimestamp = (timestamp: number) => {
-  const date = new Date(timestamp * 1000)
-  return formatDateToString(date)
-}
-
 export const GB = 1073741824
 
 export const formatBytes = (bytes: number | string, decimals = 2) => {
@@ -17,3 +12,8 @@ export const formatBytes = (bytes: number | string, decimals = 2) => {
 }
 
 export const formatDateToString = (timeString: dayjs.ConfigType, format = 'YYYY/MM/DD HH:mm:ss') => dayjs(timeString).format(format)
+
+export const formatTimestamp = (timestamp: number) => {
+  const date = new Date(timestamp * 1000)
+  return formatDateToString(date)
+}

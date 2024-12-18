@@ -16,7 +16,7 @@ export interface GetConfigRes {
 
 /** 获取配置信息 */
 export const getConfig = () => {
-  return http.request<GetConfigRes>('get', '/parse/config')
+  return http.request<GetConfigRes>('get', '/user/parse/config')
 }
 
 export interface GetLimitReq {
@@ -30,8 +30,8 @@ export interface GetLimitRes {
 }
 
 /** 获取当前卡密信息 */
-export const getLimit = (data: GetLimitReq) => {
-  return http.request<GetLimitRes>('get', '/parse/limit', { params: data })
+export const getLimit = (params: GetLimitReq) => {
+  return http.request<GetLimitRes>('get', '/user/parse/limit', { params })
 }
 
 export interface GetFileListReq {
@@ -67,7 +67,7 @@ export interface GetFileListRes {
 
 /** 获取分享链接文件列表 */
 export const getFileList = (data: GetFileListReq) => {
-  return http.request<GetFileListRes>('post', '/parse/get_file_list', {
+  return http.request<GetFileListRes>('post', '/user/parse/get_file_list', {
     data,
   })
 }
@@ -79,7 +79,7 @@ export interface GetVcodeRes {
 
 /** 获取验证码 */
 export const getVcode = () => {
-  return http.request<GetVcodeRes>('post', '/parse/get_vcode')
+  return http.request<GetVcodeRes>('post', '/user/parse/get_vcode')
 }
 
 export interface GetDownloadLinksReq {
@@ -103,5 +103,5 @@ export type GetDownLoadLinksRes = {
 
 /** 获取下载链接 */
 export const getDownloadLinks = (data: GetDownloadLinksReq) => {
-  return http.request<GetDownLoadLinksRes>('post', '/parse/get_download_links', { data })
+  return http.request<GetDownLoadLinksRes>('post', '/user/parse/get_download_links', { data })
 }

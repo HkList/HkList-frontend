@@ -1,4 +1,4 @@
-import { type GetConfigRes, getConfig as _getConfig } from '@/api/parse.ts'
+import { type GetConfigRes, getConfig as _getConfig } from '@/api/user/parse'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 

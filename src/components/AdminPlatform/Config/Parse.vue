@@ -77,18 +77,8 @@
 
       <t-form-item>
         <t-space size="small">
-          <t-button
-            theme="primary"
-            type="submit"
-          >
-            提交
-          </t-button>
-          <t-button
-            theme="primary"
-            @click="handleTestAuth"
-          >
-            测试授权
-          </t-button>
+          <t-button type="submit"> 提交 </t-button>
+          <t-button @click="handleTestAuth"> 测试授权 </t-button>
         </t-space>
       </t-form-item>
     </t-form>

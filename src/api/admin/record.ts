@@ -1,5 +1,5 @@
 import { http } from '@/utils/http.ts'
-import type { BasePagenation, PagenationReq } from '@/api/admin/pagenation.ts'
+import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
 import type { SelectRes as AccountSelectRes } from '@/api/admin/account.ts'
 import type { SelectRes as TokenSelectRes } from '@/api/admin/token.ts'
 

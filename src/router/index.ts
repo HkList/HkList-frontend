@@ -18,7 +18,7 @@ const router = createRouter({
         },
         {
           path: '/user/token',
-          component: () => import('@/components/UserPlatform/TokenManage/index.vue'),
+          component: () => import('@/components/UserPlatform/TokenPage/index.vue'),
         },
         {
           path: '/user/history',

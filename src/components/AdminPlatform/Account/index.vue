@@ -64,42 +64,17 @@
             value="desc"
           />
         </t-select>
-        <t-button
-          theme="primary"
-          @click="accountsStore.getAccounts"
-        >
-          刷新列表
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="accountsStore.showAddAccountDialog"
-        >
-          添加账号
-        </t-button>
+        <t-button @click="accountsStore.getAccounts"> 刷新列表 </t-button>
+        <t-button @click="accountsStore.showAddAccountDialog"> 添加账号 </t-button>
         <t-button
           theme="danger"
           @click="accountsStore.deleteSelection"
         >
           批量删除
         </t-button>
-        <t-button
-          theme="primary"
-          @click="accountsStore.updateInfoSelection"
-        >
-          批量更新账户信息
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="accountsStore.showUpdateSwitchDialog"
-        >
-          批量启用/禁用
-        </t-button>
-        <t-button
-          theme="primary"
-          @click="accountsStore.showUpdateProvDialog"
-        >
-          批量更新省份
-        </t-button>
+        <t-button @click="accountsStore.updateInfoSelection"> 批量更新账户信息 </t-button>
+        <t-button @click="accountsStore.showUpdateSwitchDialog"> 批量启用/禁用 </t-button>
+        <t-button @click="accountsStore.showUpdateProvDialog"> 批量更新省份 </t-button>
       </t-space>
     </div>
     <AddAccount />
@@ -118,15 +93,19 @@
       @select-change="accountsStore.handleSelectChange"
     >
       <template #expandedRow="{ row }">
-        <div class="more-detail">
-          <ul
+        <t-descriptions
+          bordered
+          colon
+          layout="vertical"
+        >
+          <t-descriptions-item
             v-for="(value, key) in row.account_data"
             :key="key"
+            :label="key"
           >
-            <li>{{ key }}:</li>
-            <li>{{ value }}</li>
-          </ul>
-        </div>
+            {{ value }}
+          </t-descriptions-item>
+        </t-descriptions>
       </template>
     </t-table>
   </t-card>
@@ -139,7 +118,7 @@ import AddAccount from './AddAccount.vue'
 import UpdateProv from './UpdateProv.vue'
 import UpdateSwitch from './UpdateSwitch.vue'
 import { useAccountsStore } from '@/stores/accounts.ts'
-import { formatBytes, formatDateToString } from '@/utils/format.ts'
+import { formatBytes } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
 
 const accountsStore = useAccountsStore()
@@ -211,14 +190,12 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'created_at',
     title: '创建时间',
-    cell: (h, { row }) => <>{formatDateToString(row.created_at)}</>,
     width: 175,
     ellipsis: true,
   },
   {
     colKey: 'updated_at',
     title: '更新时间',
-    cell: (h, { row }) => <>{formatDateToString(row.updated_at)}</>,
     width: 175,
     ellipsis: true,
   },

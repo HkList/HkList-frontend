@@ -23,7 +23,7 @@
           <template #icon>
             <KeyIcon />
           </template>
-          卡密管理
+          卡密查询
         </t-menu-item>
         <t-menu-item value="history">
           <template #icon>

@@ -1,5 +1,4 @@
 import { insert, remove, select, update, type InsertReq, type SelectReq, type SelectRes, type UpdateReq } from '@/api/admin/black_list.ts'
-import { formatDateToString } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
@@ -14,7 +13,7 @@ export const useBlackListsStore = defineStore('blackLists', () => {
   }
 
   const deleteSelection = async () => {
-    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
+    if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择黑名单')
     await remove({ id: selectedRowKeys.value })
     MessagePlugin.success('删除成功')
     await getBlackLists()
@@ -47,7 +46,6 @@ export const useBlackListsStore = defineStore('blackLists', () => {
       if (find) {
         updateReq.value = {
           ...find,
-          expires_at: formatDateToString(find.expires_at ?? new Date().toISOString(), 'YYYY-MM-DD HH:mm:ss'),
           id: updateReq.value.id,
         }
       }
@@ -57,7 +55,7 @@ export const useBlackListsStore = defineStore('blackLists', () => {
   }
   const hideUpdateDialog = () => (isUpdate.value = false)
   const updateSelection = async () => {
-    if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择账号')
+    if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择黑名单')
     await update({ ...updateReq.value, id: selectedRowKeys.value })
     MessagePlugin.success('更新成功')
     await getBlackLists()

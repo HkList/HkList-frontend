@@ -110,12 +110,7 @@
           >
             取消
           </t-button>
-          <t-button
-            theme="primary"
-            type="submit"
-          >
-            提交
-          </t-button>
+          <t-button type="submit"> 提交 </t-button>
         </t-space>
       </t-form-item>
     </t-form>
@@ -126,6 +121,7 @@
 import { MessagePlugin, type FormProps, type TagInputProps } from 'tdesign-vue-next'
 import { useTokensStore } from '@/stores/tokens.ts'
 import { storeToRefs } from 'pinia'
+import { ValidateIsIp } from '@/utils/validates.ts'
 
 const tokensStore = useTokensStore()
 const { isEditDialog, updateReq } = storeToRefs(tokensStore)
@@ -145,13 +141,14 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
 
 const onChange: TagInputProps['onChange'] = (val, context) => {
   if (!context.item || typeof context.item === 'number') return
+
   // 判断是否是 ip 地址
-  if (!/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(context.item)) {
+  if (!ValidateIsIp(context.item)) {
     MessagePlugin.error('请输入正确的 ip 地址')
     return
-  } else {
-    updateReq.value.ip = val as string[]
   }
+
+  updateReq.value.ip = val as string[]
 }
 </script>
 
