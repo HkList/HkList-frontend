@@ -31,6 +31,16 @@
           </template>
           记录查询
         </t-menu-item>
+        <t-menu-item
+          v-for="button in custom_button"
+          :key="button[1]"
+          :value="`link-${button[1]}`"
+        >
+          <template #icon>
+            <LinkIcon />
+          </template>
+          {{ button[0] }}
+        </t-menu-item>
       </t-menu>
     </t-aside>
     <t-content>
@@ -40,13 +50,17 @@
 </template>
 
 <script lang="ts" setup>
-import { KeyIcon, HistoryIcon, AppIcon } from 'tdesign-icons-vue-next'
+import { KeyIcon, HistoryIcon, AppIcon, LinkIcon } from 'tdesign-icons-vue-next'
 import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
 import { useConfigStore } from '@/stores/config.ts'
 import { storeToRefs } from 'pinia'
+import { ref, watch } from 'vue'
 
 const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
+
+const custom_button = ref<string[][]>([])
+watch(config, () => (custom_button.value = config.value.custom_button.split('\n').map((v) => v.split('|'))))
 
 const [selectedMenu, changeMenu] = useSelectMenu('user', 'parse')
 </script>

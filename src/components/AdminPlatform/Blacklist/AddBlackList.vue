@@ -82,11 +82,7 @@ const checkIdentifier: CustomValidator = () => {
       type: 'error',
     }
   }
-  return {
-    result: true,
-    message: '',
-    type: 'success',
-  }
+  return true
 }
 
 const formRules: FormProps['rules'] = {

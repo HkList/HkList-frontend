@@ -20,7 +20,7 @@ export const useAccountsStore = defineStore('accounts', () => {
   const [selectReq, pagination, accountList, getAccounts] = useCommonStore<SelectReq, SelectRes>(select)
 
   const selectedRowKeys = ref<number[]>([])
-  const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
+  const handleSelectChange: TableProps['onSelectChange'] = (value) => {
     selectedRowKeys.value = value as number[]
   }
 

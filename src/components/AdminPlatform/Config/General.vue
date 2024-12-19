@@ -35,6 +35,7 @@
       <t-form-item
         name="announce"
         label="公告"
+        help="支持HTML"
       >
         <t-textarea v-model="formData.announce" />
       </t-form-item>
@@ -42,7 +43,7 @@
       <t-form-item
         name="custom_button"
         label="自定义按钮"
-        help="按钮名称 | 点击跳转的链接 每行一个"
+        help="按钮名称|点击跳转的链接 每行一个"
       >
         <t-textarea v-model="formData.custom_button" />
       </t-form-item>

@@ -29,8 +29,8 @@
       <t-descriptions-item label="卡密">{{ result.token }}</t-descriptions-item>
       <t-descriptions-item label="计划下载配额">{{ result.count }}</t-descriptions-item>
       <t-descriptions-item label="剩余下载配额">{{ result.remaining_count }}</t-descriptions-item>
-      <t-descriptions-item label="计划下载大小">{{ result.size }}</t-descriptions-item>
-      <t-descriptions-item label="剩余下载大小">{{ result.remaining_size }}</t-descriptions-item>
+      <t-descriptions-item label="计划下载大小">{{ formatBytes(result.size) }}</t-descriptions-item>
+      <t-descriptions-item label="剩余下载大小">{{ formatBytes(result.remaining_size) }}</t-descriptions-item>
       <t-descriptions-item label="IP">
         <t-tag
           size="large"
@@ -67,13 +67,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { type GetTokenReq, type GetTokenRes, getToken } from '@/api/user/token.ts'
 import { copy } from '@/utils/copy.ts'
+import { formatBytes } from '@/utils/format.ts'
 
 const formData = ref<GetTokenReq>({
-  token: '',
+  token: localStorage.getItem('token') ?? '',
 })
 
 const result = ref<GetTokenRes>({
@@ -92,11 +93,18 @@ const formRules: FormProps['rules'] = {}
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
 
-  const res = await getToken({ token: formData.value.token === '' ? 'guest' : formData.value.token })
+  if (formData.value.token === '') formData.value.token = 'guest'
+
+  const res = await getToken(formData.value)
   result.value = res.data
+  localStorage.setItem('token', formData.value.token)
 
   MessagePlugin.success('查询成功')
 }
+
+onMounted(() => {
+  submitForm({ validateResult: true })
+})
 </script>
 
 <style lang="scss" scoped></style>

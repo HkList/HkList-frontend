@@ -35,12 +35,14 @@ export const getLimit = (params: GetLimitReq) => {
 }
 
 export interface GetFileListReq {
+  url: string
   surl: string
   pwd: string
   dir: string
-  page: number
-  num: number
-  order: 'time' | 'filename'
+  page?: number
+  num?: number
+  order?: 'time' | 'filename'
+  parse_password: string
 }
 
 export interface File {
@@ -72,14 +74,18 @@ export const getFileList = (data: GetFileListReq) => {
   })
 }
 
+export interface GetVcodeReq {
+  parse_password: string
+}
+
 export interface GetVcodeRes {
   vcode_str: string
   vcode_img: string
 }
 
 /** 获取验证码 */
-export const getVcode = () => {
-  return http.request<GetVcodeRes>('post', '/user/parse/get_vcode')
+export const getVcode = (data: GetVcodeReq) => {
+  return http.request<GetVcodeRes>('post', '/user/parse/get_vcode', { data })
 }
 
 export interface GetDownloadLinksReq {
@@ -91,6 +97,7 @@ export interface GetDownloadLinksReq {
   dir: string
   pwd: string
   token: string
+  parse_password: string
 }
 
 export type GetDownLoadLinksRes = {

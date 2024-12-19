@@ -22,7 +22,7 @@
 
   <t-card>
     <t-table
-      row-key="id"
+      row-key="fs_id"
       resizable
       lazy-load
       :bordered="true"
@@ -60,7 +60,7 @@ import { type FormProps, MessagePlugin, type TableProps } from 'tdesign-vue-next
 import { type GetHistoryReq, type GetHistoryRes, getHistory as _getHistory } from '@/api/user/history.ts'
 import { copy } from '@/utils/copy.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
 
 const [selectReq, pagination, historyList, getHistory] = useCommonStore<GetHistoryReq, GetHistoryRes>(_getHistory)
@@ -76,11 +76,7 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'ua',
     title: '下载UA',
-    cell: (h, { row }) => (
-      <>
-        <t-link onClick={() => copy(row.ua)}>{row.ua}</t-link>
-      </>
-    ),
+    cell: (h, { row }) => <t-link onClick={() => copy(row.ua)}>{row.ua}</t-link>,
     ellipsis: true,
   },
   {
@@ -102,8 +98,16 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (!selectReq.value.token) selectReq.value.token = 'guest'
 
   await getHistory()
+
+  localStorage.setItem('token', selectReq.value.token)
+
   MessagePlugin.success('查询成功')
 }
+
+onMounted(() => {
+  selectReq.value.token = localStorage.getItem('token') ?? 'guest'
+  submitForm({ validateResult: true })
+})
 </script>
 
 <style lang="scss" scoped></style>

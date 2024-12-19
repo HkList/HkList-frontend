@@ -6,7 +6,7 @@ import { $t } from '@/utils/use/usei18n.ts'
 import { MessagePlugin } from 'tdesign-vue-next'
 import router from '@/router/index.ts'
 // @ts-expect-error 无法解析非TS模块
-import run from './rand.js'
+import run from './fingerprint.js'
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {

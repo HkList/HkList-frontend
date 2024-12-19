@@ -85,7 +85,7 @@
             {{ row.file.pwd }}
           </t-descriptions-item>
           <t-descriptions-item label="Ua">
-            {{ row.ua }}
+            <t-link @click="copy(row.ua)">{{ row.ua }}</t-link>
           </t-descriptions-item>
           <t-descriptions-item label="Urls">
             <t-list

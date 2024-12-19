@@ -9,7 +9,7 @@ export const useTokensStore = defineStore('tokens', () => {
   const [selectReq, pagination, tokenList, getTokens] = useCommonStore<SelectReq, SelectRes>(select)
 
   const selectedRowKeys = ref<number[]>([])
-  const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
+  const handleSelectChange: TableProps['onSelectChange'] = (value) => {
     selectedRowKeys.value = value as number[]
   }
 
@@ -106,7 +106,7 @@ export const useTokensStore = defineStore('tokens', () => {
     if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择卡密')
     await update({
       ...updateReq.value,
-      size: updateReq.value.size ?? 0 * GB,
+      size: updateReq.value.size ?? 0,
       token: updateReq.value.id.length === 1 && updateReq.value.token === 'guest' ? undefined : updateReq.value.token,
     })
     MessagePlugin.success('更新成功~')
