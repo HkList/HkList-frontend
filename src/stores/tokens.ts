@@ -106,7 +106,7 @@ export const useTokensStore = defineStore('tokens', () => {
     if (updateReq.value.id.length === 0) return MessagePlugin.error('请选择卡密')
     await update({
       ...updateReq.value,
-      size: updateReq.value.size ?? 0,
+      size: (updateReq.value.size ?? 0) * GB,
       token: updateReq.value.id.length === 1 && updateReq.value.token === 'guest' ? undefined : updateReq.value.token,
     })
     MessagePlugin.success('更新成功~')

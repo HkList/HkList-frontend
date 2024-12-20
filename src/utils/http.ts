@@ -70,6 +70,10 @@ class Http {
       (response) => {
         // 关闭进度条动画
         NProgress.done()
+        if (typeof response.data === 'string' && response.data.includes('SourceGuardian')) {
+          MessagePlugin.error('请先安装SourceGuardian组件')
+          throw new Error('SourceGuardian Not Found')
+        }
         return response.data
       },
       (error) => {

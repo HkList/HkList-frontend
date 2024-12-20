@@ -86,16 +86,15 @@ export const useFileListStore = defineStore('fileListStore', () => {
 
   const pending = ref(false)
   const GetDownLoadLinksRes = ref<GetDownLoadLinksRes>([])
-  const getDownloadLinks = async (event?: PointerEvent, row?: File) => {
+  const getDownloadLinks = async (event?: PointerEvent | number, row?: File) => {
     const { config } = configStore
 
-    if (event && row) {
+    if (event && typeof event !== 'number' && row) {
       event.stopPropagation()
       selectedRows.value = [row]
     }
 
     const filteFolders = selectedRows.value.filter((item) => item && !item.is_dir)
-    console.log(filteFolders, selectedRows.value)
     if (filteFolders.length !== selectedRows.value.length) MessagePlugin.warning('文件夹不会进行解析,已忽略')
 
     const filteMinSingleFilesize = filteFolders.filter((file) => file.size > config.min_single_filesize)
@@ -122,14 +121,20 @@ export const useFileListStore = defineStore('fileListStore', () => {
         randsk: GetFileListRes.value!.randsk,
         uk: GetFileListRes.value!.uk,
         shareid: GetFileListRes.value!.shareid,
-        fs_id: rows.map((v) => v.fs_id),
+        fs_id: typeof event === 'number' ? [event] : rows.map((v) => v.fs_id),
         surl: GetFileListReq.value.surl,
         dir: GetFileListReq.value.dir,
         pwd: GetFileListReq.value.pwd,
         token: GetLimitReq.value.token,
         parse_password: GetFileListReq.value.parse_password,
       })
-      GetDownLoadLinksRes.value = res.data
+      if (typeof event === 'number') {
+        MessagePlugin.success('重新解析成功')
+        return res.data
+      } else {
+        MessagePlugin.success('解析成功,下滑查看解析结果')
+        GetDownLoadLinksRes.value = res.data
+      }
     } catch (error) {
       console.log(error)
     } finally {

@@ -70,6 +70,7 @@ import { ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { useRouter } from 'vue-router'
 import { install, type InstallReq } from '@/api/install.ts'
+import { useConfigStore } from '@/stores/config.ts'
 
 const router = useRouter()
 
@@ -90,11 +91,14 @@ const formRules: FormProps['rules'] = {
   db_username: [{ required: true, message: '请输入Mysql用户名' }],
 }
 
+const configStore = useConfigStore()
+
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
 
   await install(formData.value)
   MessagePlugin.success('安装成功')
+  await configStore.getConfig()
   router.push('/admin')
 }
 </script>

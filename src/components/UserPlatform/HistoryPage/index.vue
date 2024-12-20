@@ -21,47 +21,74 @@
   </t-card>
 
   <t-card>
-    <t-table
-      row-key="fs_id"
-      resizable
-      lazy-load
-      :bordered="true"
-      :data="historyList"
-      :pagination="pagination"
-      :columns="columns"
-    >
-      <template #expandedRow="{ row }">
-        <t-list
-          split
-          size="large"
+    <t-space direction="vertical">
+      <t-alert>
+        下载请推荐使用Aria2下载器,如
+        <t-link
+          href="https://motrix.app/"
+          target="_blank"
         >
-          <t-list-item
-            v-for="(url, index) in row.urls"
-            :key="url"
+          <template #prefix-icon>
+            <LinkIcon />
+          </template>
+          Motrix
+        </t-link>
+        <p>IDM下载需要手动指定UA,点击即可复制</p>
+        <p>如果当前链接下载失败,请尝试更换链接,如果全部不可用可重新解析该文件</p>
+        <br />
+        <t-button @click="aria2Store.showAria2Config"> 修改Aria2配置 </t-button>
+      </t-alert>
+
+      <t-table
+        row-key="fs_id"
+        resizable
+        lazy-load
+        :bordered="true"
+        :data="historyList"
+        :pagination="pagination"
+        :columns="columns"
+      >
+        <template #expandedRow="{ row }">
+          <t-list
+            split
+            size="large"
           >
-            <t-space direction="vertical">
-              <t-space>
-                <t-tag size="large"> 第 {{ index + 1 }} 条 </t-tag>
-                <t-button @click="copy(url)">复制</t-button>
+            <t-list-item
+              v-for="(url, index) in row.urls"
+              :key="url"
+            >
+              <t-space direction="vertical">
+                <t-space>
+                  <t-tag size="large"> 第 {{ index + 1 }} 条 </t-tag>
+                  <t-button @click="copy(url)">复制</t-button>
+                  <t-button @click="aria2Store.addAria2Url(url, row.filename, row.ua, 16)">发送到Aria2下载器</t-button>
+                </t-space>
+                <p>
+                  {{ url }}
+                </p>
               </t-space>
-              <p>
-                {{ url }}
-              </p>
-            </t-space>
-          </t-list-item>
-        </t-list>
-      </template>
-    </t-table>
+            </t-list-item>
+          </t-list>
+        </template>
+      </t-table>
+    </t-space>
   </t-card>
+
+  <Aria2Dialog />
 </template>
 
 <script lang="tsx" setup>
 import { type FormProps, MessagePlugin, type TableProps } from 'tdesign-vue-next'
+import { LinkIcon } from 'tdesign-icons-vue-next'
 import { type GetHistoryReq, type GetHistoryRes, getHistory as _getHistory } from '@/api/user/history.ts'
 import { copy } from '@/utils/copy.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { onMounted, ref } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
+import { useAria2Store } from '@/stores/aria2.ts'
+import Aria2Dialog from '@/components/UserPlatform/Aria2Dialog.vue'
+
+const aria2Store = useAria2Store()
 
 const [selectReq, pagination, historyList, getHistory] = useCommonStore<GetHistoryReq, GetHistoryRes>(_getHistory)
 
@@ -76,7 +103,12 @@ const columns = ref<TableProps['columns']>([
   {
     colKey: 'ua',
     title: '下载UA',
-    cell: (h, { row }) => <t-link onClick={() => copy(row.ua)}>{row.ua}</t-link>,
+    cell: (h, { row }) => (
+      <t-link onClick={() => copy(row.ua)}>
+        <LinkIcon />
+        {row.ua}
+      </t-link>
+    ),
     ellipsis: true,
   },
   {

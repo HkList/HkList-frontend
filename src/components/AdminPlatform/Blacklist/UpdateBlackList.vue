@@ -54,7 +54,7 @@
         />
       </t-form-item>
 
-      <t-form-item label="选中的账号">
+      <t-form-item label="选中的黑名单">
         <t-input
           :value="JSON.stringify(updateReq.id)"
           disabled

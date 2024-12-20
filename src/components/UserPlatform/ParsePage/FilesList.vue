@@ -6,6 +6,7 @@
       lazy-load
       :bordered="true"
       :data="GetFileListRes.list"
+      :maxHeight="500"
       :columns="columns"
       :select-on-row-click="true"
       :selectedRowKeys="selectedRowKeys"

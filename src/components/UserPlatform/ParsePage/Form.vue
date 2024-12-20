@@ -15,13 +15,6 @@
         当前网站开启了DEBUG模式,非调试请关闭!!!!
       </t-alert>
 
-      <t-alert
-        theme="error"
-        v-if="!config.is_ssl"
-      >
-        当前网站未开启SSL,可能无法连接Aria2
-      </t-alert>
-
       <t-alert :theme="GetLimitError.length === 0 ? 'success' : 'error'">
         <t-space v-if="GetLimitError.length === 0">
           <span>剩余可解析文件数: {{ GetLimitRes.count }}</span>
