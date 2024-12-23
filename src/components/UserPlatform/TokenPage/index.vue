@@ -27,8 +27,8 @@
       colon
     >
       <t-descriptions-item label="卡密">{{ result.token }}</t-descriptions-item>
-      <t-descriptions-item label="计划下载配额">{{ result.count }}</t-descriptions-item>
-      <t-descriptions-item label="剩余下载配额">{{ result.remaining_count }}</t-descriptions-item>
+      <t-descriptions-item label="计划下载次数">{{ result.count }}</t-descriptions-item>
+      <t-descriptions-item label="剩余下载次数">{{ result.remaining_count }}</t-descriptions-item>
       <t-descriptions-item label="计划下载大小">{{ formatBytes(result.size) }}</t-descriptions-item>
       <t-descriptions-item label="剩余下载大小">{{ formatBytes(result.remaining_size) }}</t-descriptions-item>
       <t-descriptions-item label="IP">
@@ -60,8 +60,7 @@
           </t-list-item>
         </t-list>
       </t-descriptions-item>
-      <t-descriptions-item label="使用日期">{{ result.created_at }}</t-descriptions-item>
-      <t-descriptions-item label="过期日期">{{ result.expires_at }}</t-descriptions-item>
+      <t-descriptions-item label="过期日期">{{ result.expires_at ?? '未使用' }}</t-descriptions-item>
     </t-descriptions>
   </t-card>
 </template>
@@ -84,7 +83,6 @@ const result = ref<GetTokenRes>({
   remaining_count: 0,
   remaining_size: 0,
   ip: [],
-  created_at: '',
   expires_at: '',
 })
 

@@ -40,7 +40,7 @@
       </t-alert>
 
       <t-table
-        row-key="fs_id"
+        row-key="id"
         resizable
         lazy-load
         :bordered="true"

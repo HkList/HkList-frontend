@@ -11,8 +11,8 @@ export interface Aria2Config {
 export const useAria2Store = defineStore('aria2Store', () => {
   const aria2ConfigDialogVisible = ref(false)
   const aria2ConfigForm = ref<Aria2Config>({
-    host: 'ws://localhost:16800/jsonrpc',
-    token: 'JTRWUYMehm2w',
+    host: 'http://localhost:16800/jsonrpc',
+    token: '',
     dir: '',
   })
 
@@ -79,31 +79,21 @@ export const useAria2Store = defineStore('aria2Store', () => {
   }
 
   const getAria2Version = async () => {
-    try {
-      await requestAria2<{ verion: string; enabledFeatures: string[] }>('aria2.getVersion')
-      MessagePlugin.success('测试连接成功')
-    } catch (error) {
-      MessagePlugin.success('测试连接失败')
-      console.log(error)
-    }
+    await requestAria2<{ verion: string; enabledFeatures: string[] }>('aria2.getVersion')
+    MessagePlugin.success('测试连接成功')
   }
 
   const addAria2Url = async (url: string, filename: string, ua: string, threadCount: number) => {
-    try {
-      await requestAria2('aria2.addUri', [
-        [url],
-        {
-          out: filename,
-          dir: aria2ConfigForm.value.dir === '' ? null : aria2ConfigForm.value.dir,
-          header: [`User-Agent: ${ua}`],
-          split: threadCount.toString(),
-        },
-      ])
-      MessagePlugin.success('发送成功')
-    } catch (error) {
-      MessagePlugin.success('发送失败')
-      console.log(error)
-    }
+    await requestAria2('aria2.addUri', [
+      [url],
+      {
+        out: filename,
+        dir: aria2ConfigForm.value.dir === '' ? null : aria2ConfigForm.value.dir,
+        header: [`User-Agent: ${ua}`],
+        split: threadCount.toString(),
+      },
+    ])
+    MessagePlugin.success('添加链接成功')
   }
 
   return {
