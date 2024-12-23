@@ -119,6 +119,9 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
 
 const matchUserAgent = () => {
   switch (formData.value.parse_mode) {
+    case 0:
+      formData.value.user_agent = 'netdisk;7.42.0.5;PC'
+      break
     case 1:
     case 2:
     case 6:
@@ -134,7 +137,7 @@ const matchUserAgent = () => {
       formData.value.user_agent = 'netdisk;hklist'
       break
     default:
-      formData.value.user_agent = 'netdisk;P2SP;3.0.20.63;netdisk;4.36.2;PC;PC-Windows;10.0.19045;UniBaiduYunGuanJia'
+      MessagePlugin.error('未知解析模式')
       break
   }
 }
