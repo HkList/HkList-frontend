@@ -60,6 +60,7 @@
           </t-list-item>
         </t-list>
       </t-descriptions-item>
+      <t-descriptions-item label="使用日期">{{ result.used_at ?? '未使用' }}</t-descriptions-item>
       <t-descriptions-item label="过期日期">{{ result.expires_at ?? '未使用' }}</t-descriptions-item>
     </t-descriptions>
   </t-card>
@@ -83,6 +84,7 @@ const result = ref<GetTokenRes>({
   remaining_count: 0,
   remaining_size: 0,
   ip: [],
+  used_at: '',
   expires_at: '',
 })
 

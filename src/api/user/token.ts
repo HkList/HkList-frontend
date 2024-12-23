@@ -11,6 +11,7 @@ export interface GetTokenRes {
   remaining_count: number
   remaining_size: number
   ip: string[]
+  used_at: string | null
   expires_at: string | null
 }
 
