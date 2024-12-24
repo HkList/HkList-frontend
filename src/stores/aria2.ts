@@ -8,6 +8,12 @@ export interface Aria2Config {
   dir: string
 }
 
+export type DownloadRows = {
+  urls: string[]
+  filename: string
+  ua: string
+}[]
+
 export const useAria2Store = defineStore('aria2Store', () => {
   const aria2ConfigDialogVisible = ref(false)
   const aria2ConfigForm = ref<Aria2Config>({
@@ -96,6 +102,10 @@ export const useAria2Store = defineStore('aria2Store', () => {
     MessagePlugin.success('添加链接成功')
   }
 
+  const downloadLinks = (rows: DownloadRows) => {
+    rows.forEach((row) => addAria2Url(row.urls[0], row.filename, row.ua, 16))
+  }
+
   return {
     aria2ConfigDialogVisible,
     showAria2Config,
@@ -105,5 +115,6 @@ export const useAria2Store = defineStore('aria2Store', () => {
 
     getAria2Version,
     addAria2Url,
+    downloadLinks,
   }
 })
