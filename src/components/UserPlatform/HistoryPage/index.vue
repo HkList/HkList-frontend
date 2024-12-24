@@ -36,7 +36,10 @@
         <p>IDM下载需要手动指定UA,点击即可复制</p>
         <p>如果当前链接下载失败,请尝试更换链接,如果全部不可用可重新解析该文件</p>
         <br />
-        <t-button @click="aria2Store.showAria2Config"> 修改Aria2配置 </t-button>
+        <t-space>
+          <t-button @click="aria2Store.showAria2Config"> 修改Aria2配置 </t-button>
+          <t-button @click="aria2Store.downloadLinks(selectedRows)">批量发送</t-button>
+        </t-space>
       </t-alert>
 
       <t-table
@@ -47,6 +50,9 @@
         :data="historyList"
         :pagination="pagination"
         :columns="columns"
+        :select-on-row-click="true"
+        :selectedRowKeys="selectedRowKeys"
+        @select-change="handleSelectChange"
       >
         <template #expandedRow="{ row }">
           <t-list
@@ -85,7 +91,7 @@ import { copy } from '@/utils/copy.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { onMounted, ref } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
-import { useAria2Store } from '@/stores/aria2.ts'
+import { useAria2Store, type DownloadRows } from '@/stores/aria2.ts'
 import Aria2Dialog from '@/components/UserPlatform/Aria2Dialog.vue'
 
 const aria2Store = useAria2Store()
@@ -95,6 +101,12 @@ const [selectReq, pagination, historyList, getHistory] = useCommonStore<GetHisto
 const formRules: FormProps['rules'] = {}
 
 const columns = ref<TableProps['columns']>([
+  {
+    colKey: 'row-select',
+    type: 'multiple',
+    width: 50,
+    fixed: 'left',
+  },
   {
     colKey: 'file.filename',
     title: '文件名',
@@ -140,6 +152,13 @@ onMounted(() => {
   selectReq.value.token = localStorage.getItem('token') ?? 'guest'
   submitForm({ validateResult: true })
 })
+
+const selectedRowKeys = ref<number[]>([])
+const selectedRows = ref<DownloadRows>([])
+const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
+  selectedRowKeys.value = value as number[]
+  selectedRows.value = (ctx.selectedRowData as GetHistoryRes[]).map((row) => ({ filename: row.file.filename, urls: row.urls, ua: row.ua }))
+}
 </script>
 
 <style lang="scss" scoped></style>
