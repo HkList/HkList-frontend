@@ -104,7 +104,7 @@ const columns = ref<TableProps['columns']>([
 
 const reGetDownloadLinks = async (row: GetDownLoadLinksRes[number], rowIndex: number) => {
   const res = await fileListSotre.getDownloadLinks(row.fs_id)
-  if (res) GetDownLoadLinksRes.value[rowIndex].urls = res[0].urls
+  if (res) GetDownLoadLinksRes.value[rowIndex] = res[0]
 }
 </script>
 
