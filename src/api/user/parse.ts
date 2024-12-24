@@ -4,6 +4,7 @@ export interface GetConfigRes {
   show_announce: boolean
   announce: string
   custom_button: string
+  show_hero: boolean
   name: string
   logo: string
   debug: boolean

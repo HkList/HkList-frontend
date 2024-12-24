@@ -70,9 +70,16 @@
         <t-input v-model="formData.logo" />
       </t-form-item>
 
+      <t-form-item
+        name="show_hero"
+        label="显示站点信息"
+      >
+        <t-switch v-model="formData.show_hero" />
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
-          <t-button type="submit"> 提交 </t-button>
+          <t-button type="submit"> 保存 </t-button>
         </t-space>
       </t-form-item>
     </t-form>
@@ -94,6 +101,7 @@ const formData = ref<UpdateConfigReq>({
   announce: '',
   custom_button: '',
   debug: false,
+  show_hero: false,
   name: '',
   logo: '',
 })

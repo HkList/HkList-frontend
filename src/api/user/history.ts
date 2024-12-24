@@ -7,6 +7,7 @@ export type GetHistoryReq = PagenationReq & {
 }
 
 export interface GetHistoryRes {
+  id: number
   urls: string[]
   ua: string
   file: { id: number; filename: string; size: number }

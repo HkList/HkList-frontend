@@ -77,7 +77,7 @@
 
       <t-form-item>
         <t-space size="small">
-          <t-button type="submit"> 提交 </t-button>
+          <t-button type="submit"> 保存 </t-button>
           <t-button @click="handleTestAuth"> 测试授权 </t-button>
         </t-space>
       </t-form-item>
@@ -119,6 +119,9 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
 
 const matchUserAgent = () => {
   switch (formData.value.parse_mode) {
+    case 0:
+      formData.value.user_agent = 'netdisk;7.42.0.5;PC'
+      break
     case 1:
     case 2:
     case 6:
@@ -134,18 +137,14 @@ const matchUserAgent = () => {
       formData.value.user_agent = 'netdisk;hklist'
       break
     default:
-      formData.value.user_agent = 'netdisk;P2SP;3.0.20.63;netdisk;4.36.2;PC;PC-Windows;10.0.19045;UniBaiduYunGuanJia'
+      MessagePlugin.error('未知解析模式')
       break
   }
 }
 
 const handleTestAuth = async () => {
   const res = await testAuth()
-  if (res.data.valid) {
-    MessagePlugin.success(`测试通过,有效期至: ${res.data.expires_at}`)
-  } else {
-    MessagePlugin.error(`测试失败,请检查授权服务器和授权密钥`)
-  }
+  MessagePlugin.success(`测试通过,有效期至: ${res.data.expires_at}`)
 }
 </script>
 

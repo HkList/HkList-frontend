@@ -1,5 +1,6 @@
 import { insert, remove, select, update, type InsertReq, type SelectReq, type SelectRes, type UpdateReq } from '@/api/admin/token.ts'
-import { GB } from '@/utils/format.ts'
+import { copy } from '@/utils/copy.ts'
+import { formatBytes, GB } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
@@ -9,8 +10,10 @@ export const useTokensStore = defineStore('tokens', () => {
   const [selectReq, pagination, tokenList, getTokens] = useCommonStore<SelectReq, SelectRes>(select)
 
   const selectedRowKeys = ref<number[]>([])
-  const handleSelectChange: TableProps['onSelectChange'] = (value) => {
+  const selectedRows = ref<SelectRes>([])
+  const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
     selectedRowKeys.value = value as number[]
+    selectedRows.value = ctx.selectedRowData as SelectRes
   }
 
   const isAddingToken = ref(false)
@@ -113,6 +116,10 @@ export const useTokensStore = defineStore('tokens', () => {
     await getTokens()
   }
 
+  const copySelection = () => {
+    copy(selectedRows.value.map((token) => `${token.token} | ${formatBytes(token.size)} | ${token.count} 次 | ${token.day} 天`).join('\n'))
+  }
+
   return {
     tokenList,
     pagination,
@@ -141,5 +148,7 @@ export const useTokensStore = defineStore('tokens', () => {
     showEditDialog,
     hideEditDialog,
     updateSelection,
+
+    copySelection,
   }
 })
