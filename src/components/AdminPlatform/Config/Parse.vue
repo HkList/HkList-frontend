@@ -77,7 +77,7 @@
 
       <t-form-item>
         <t-space size="small">
-          <t-button type="submit"> 提交 </t-button>
+          <t-button type="submit"> 保存 </t-button>
           <t-button @click="handleTestAuth"> 测试授权 </t-button>
         </t-space>
       </t-form-item>
@@ -144,11 +144,7 @@ const matchUserAgent = () => {
 
 const handleTestAuth = async () => {
   const res = await testAuth()
-  if (res.data.valid) {
-    MessagePlugin.success(`测试通过,有效期至: ${res.data.expires_at}`)
-  } else {
-    MessagePlugin.error(`测试失败,请检查授权服务器和授权密钥`)
-  }
+  MessagePlugin.success(`测试通过,有效期至: ${res.data.expires_at}`)
 }
 </script>
 

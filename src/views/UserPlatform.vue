@@ -5,7 +5,10 @@
         v-model="selectedMenu"
         @change="changeMenu"
       >
-        <template #logo>
+        <template
+          #logo
+          v-if="config.show_hero"
+        >
           <img
             height="28"
             :src="config.logo"

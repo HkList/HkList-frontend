@@ -67,7 +67,7 @@
 
       <t-form-item>
         <t-space size="small">
-          <t-button type="submit"> 提交 </t-button>
+          <t-button type="submit"> 保存 </t-button>
         </t-space>
       </t-form-item>
     </t-form>
