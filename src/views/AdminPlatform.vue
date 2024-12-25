@@ -50,6 +50,13 @@
           <t-menu-item value="config/parse"> 解析配置 </t-menu-item>
           <t-menu-item value="config/mail"> 邮件配置 </t-menu-item>
         </t-submenu>
+
+        <template #operations>
+          <t-space>
+            <p>前端: {{ config.frontend_version }}</p>
+            <p>后端: {{ config.version }}</p>
+          </t-space>
+        </template>
       </t-menu>
     </t-aside>
     <t-content>

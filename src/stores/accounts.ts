@@ -73,6 +73,7 @@ export const useAccountsStore = defineStore('accounts', () => {
   const addAccountInput = ref({
     cookie: '',
     refresh_token: '',
+    url: '',
     surl: '',
     pwd: '',
     dir: '',
@@ -106,6 +107,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     addAccountInput.value = {
       cookie: '',
       refresh_token: '',
+      url: '',
       surl: '',
       pwd: '',
       dir: '',
@@ -119,10 +121,12 @@ export const useAccountsStore = defineStore('accounts', () => {
     event.stopPropagation()
     const res = await checkBanStatus({ id: [id] })
     res.data.forEach((account) => {
-      account.status.forEach((status) => {
+      account.status.forEach((status, index) => {
         if (status.code !== 200) return MessagePlugin.error(`账号(${account.id})状态请求失败`)
-        if (!status.data.ban_status) return MessagePlugin.success(`账号(${account.id})未被封禁`)
-        MessagePlugin.warning(`账号(${account.id})已被封禁`)
+        let key = '账号'
+        if (account.account_type === 'download_ticket') key = index === 0 ? `普通账号` : `企业账号`
+        if (!status.data.ban_status) return MessagePlugin.success(`${key}(${account.id})未被封禁`)
+        MessagePlugin.warning(`${key}(${account.id})已被封禁`)
         MessagePlugin.warning(`原因: ${status.data.ban_reason}`)
         MessagePlugin.warning(`消息: ${status.data.ban_msg}`)
         MessagePlugin.warning(`开始时间: ${formatTimestamp(status.data.start_time)}`)

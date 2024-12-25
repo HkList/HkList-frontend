@@ -91,6 +91,8 @@ class Http {
             router.push('/login')
           } else {
             MessagePlugin.error(message)
+            const data = error?.response?.data?.data
+            if (data) MessagePlugin.error('错误信息：' + JSON.stringify(data))
           }
         } else {
           MessagePlugin.error($t('axios.serverError'))
