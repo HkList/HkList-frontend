@@ -120,6 +120,10 @@ export const useTokensStore = defineStore('tokens', () => {
     copy(selectedRows.value.map((token) => `${token.token} | ${formatBytes(token.size)} | ${token.count} 次 | ${token.day} 天`).join('\n'))
   }
 
+  const copySelectionNoFormat = () => {
+    copy(selectedRows.value.map((token) => token.token).join('\n'))
+  }
+
   return {
     tokenList,
     pagination,
@@ -150,5 +154,6 @@ export const useTokensStore = defineStore('tokens', () => {
     updateSelection,
 
     copySelection,
+    copySelectionNoFormat,
   }
 })

@@ -13,8 +13,6 @@ export interface GetConfigRes {
   max_single_filesize: number
   need_password: boolean
   have_account: boolean
-  version: string
-  frontend_version: string
 }
 
 /** 获取配置信息 */

@@ -10,6 +10,8 @@ export interface GetConfigRes {
   debug: boolean
   name: string
   logo: string
+  version: string
+  frontend_version: string
 }
 
 /** 获取配置文件 */

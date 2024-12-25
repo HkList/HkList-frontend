@@ -6,6 +6,26 @@
       @submit="submitForm"
     >
       <t-form-item
+        name="frontend_version"
+        label="前端版本"
+      >
+        <t-input
+          v-model="generalConfig.frontend_version"
+          disabled
+        />
+      </t-form-item>
+
+      <t-form-item
+        name="version"
+        label="后端版本"
+      >
+        <t-input
+          v-model="generalConfig.version"
+          disabled
+        />
+      </t-form-item>
+
+      <t-form-item
         name="new_admin_password"
         label="新管理员密码"
       >
@@ -89,13 +109,28 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
-import { getConfig, updateConfig, type UpdateConfigReq } from '@/api/admin/config/general.ts'
+import { getConfig, updateConfig, type GetConfigRes, type UpdateConfigReq } from '@/api/admin/config/general.ts'
 import { useConfigStore } from '@/stores/config.ts'
+import PackageJson from '@/../package.json'
 
 const configStore = useConfigStore()
 
 const formData = ref<UpdateConfigReq>({
   new_admin_password: '',
+  parse_password: '',
+  show_announce: false,
+  announce: '',
+  custom_button: '',
+  debug: false,
+  show_hero: false,
+  name: '',
+  logo: '',
+})
+
+const generalConfig = ref<GetConfigRes>({
+  admin_password: '',
+  version: '',
+  frontend_version: '',
   parse_password: '',
   show_announce: false,
   announce: '',
@@ -114,6 +149,10 @@ const formRules: FormProps['rules'] = {
 const getForm = async () => {
   const config = await getConfig()
   formData.value = { ...config.data, new_admin_password: config.data.admin_password }
+  generalConfig.value = {
+    ...config.data,
+    frontend_version: PackageJson.version,
+  }
 }
 
 onMounted(getForm)
