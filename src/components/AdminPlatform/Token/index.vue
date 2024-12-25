@@ -70,6 +70,7 @@
         <t-button @click="tokensStore.showUpdateSwitchDialog"> 批量启用/禁用 </t-button>
         <t-button @click="tokensStore.showEditDialog"> 批量更新 </t-button>
         <t-button @click="tokensStore.copySelection"> 批量复制 </t-button>
+        <t-button @click="tokensStore.copySelectionNoFormat"> 无格式批量复制 </t-button>
       </t-space>
     </div>
     <AddToken />
