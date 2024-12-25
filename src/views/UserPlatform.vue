@@ -4,6 +4,7 @@
       <t-menu
         v-model="selectedMenu"
         @change="changeMenu"
+        :collapsed="isColScreen"
       >
         <template
           #logo
@@ -14,7 +15,12 @@
             :src="config.logo"
             alt="logo"
           />
-          <p class="logo-text">{{ config.name }}</p>
+          <p
+            class="logo-text"
+            v-if="!isColScreen"
+          >
+            {{ config.name }}
+          </p>
         </template>
         <t-menu-item value="parse">
           <template #icon>
@@ -46,7 +52,7 @@
         </t-menu-item>
 
         <template #operations>
-          <t-space>
+          <t-space :direction="isColScreen ? 'vertical' : 'horizontal'">
             <p>前端: {{ config.frontend_version }}</p>
             <p>后端: {{ config.version }}</p>
           </t-space>
@@ -54,7 +60,9 @@
       </t-menu>
     </t-aside>
     <t-content>
-      <RouterView />
+      <div class="content">
+        <RouterView />
+      </div>
     </t-content>
   </t-layout>
 </template>
@@ -65,6 +73,7 @@ import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
 import { useConfigStore } from '@/stores/config.ts'
 import { storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
+import { useMobile } from '@/utils/use/useMobile.ts'
 
 const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
@@ -73,6 +82,8 @@ const custom_button = ref<string[][]>([])
 watch(config, () => (custom_button.value = config.value.custom_button.split('\n').map((v) => v.split('|'))))
 
 const [selectedMenu, changeMenu] = useSelectMenu('user', 'parse')
+
+const [isColScreen] = useMobile()
 </script>
 
 <style lang="scss" scoped></style>

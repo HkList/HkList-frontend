@@ -102,8 +102,10 @@ export const useAria2Store = defineStore('aria2Store', () => {
     MessagePlugin.success('添加链接成功')
   }
 
-  const downloadLinks = (rows: DownloadRows) => {
-    rows.forEach((row) => addAria2Url(row.urls[0], row.filename, row.ua, 16))
+  const downloadLinks = async (rows: DownloadRows) => {
+    for (const row of rows) {
+      await addAria2Url(row.urls[0], row.filename, row.ua, 16)
+    }
   }
 
   return {

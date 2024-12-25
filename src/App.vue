@@ -1,5 +1,4 @@
 <template>
-  <ColScreen />
   <router-view />
 </template>
 
@@ -9,7 +8,6 @@ import { RouterView } from 'vue-router'
 import { useDark } from '@/utils/use/useDark.ts'
 import { getRandomColor } from '@/utils/random.ts'
 import { useConfigStore } from '@/stores/config.ts'
-import ColScreen from '@/views/ColScreen.vue'
 
 const configStore = useConfigStore()
 
