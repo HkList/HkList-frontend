@@ -44,7 +44,7 @@ body {
 }
 
 .t-dialog__position {
-  padding-top: 0 !important;
+  padding: 0 !important;
   align-items: center !important;
 }
 
@@ -57,6 +57,10 @@ body {
 .filename {
   display: flex;
   align-items: center;
+}
+
+.t-menu__operations {
+  text-align: center !important;
 }
 
 ::-webkit-scrollbar {

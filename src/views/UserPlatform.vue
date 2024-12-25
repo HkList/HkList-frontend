@@ -44,6 +44,13 @@
           </template>
           {{ button[0] }}
         </t-menu-item>
+
+        <template #operations>
+          <t-space>
+            <p>前端: {{ config.frontend_version }}</p>
+            <p>后端: {{ config.version }}</p>
+          </t-space>
+        </template>
       </t-menu>
     </t-aside>
     <t-content>
