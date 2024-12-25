@@ -4,6 +4,7 @@
       <t-menu
         v-model="selectedMenu"
         @change="changeMenu"
+        :collapsed="isColScreen"
       >
         <template
           #logo
@@ -14,7 +15,12 @@
             :src="config.logo"
             alt="logo"
           />
-          <p class="logo-text">{{ config.name }}</p>
+          <p
+            class="logo-text"
+            v-if="!isColScreen"
+          >
+            {{ config.name }}
+          </p>
         </template>
 
         <t-menu-item value="account">
@@ -52,7 +58,7 @@
         </t-submenu>
 
         <template #operations>
-          <t-space>
+          <t-space :direction="isColScreen ? 'vertical' : 'horizontal'">
             <p>前端: {{ config.frontend_version }}</p>
             <p>后端: {{ config.version }}</p>
           </t-space>
@@ -70,11 +76,14 @@ import { KeyIcon, ListIcon, ToolsIcon, UserIcon, UserListIcon } from 'tdesign-ic
 import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
 import { useConfigStore } from '@/stores/config.ts'
 import { storeToRefs } from 'pinia'
+import { useMobile } from '@/utils/use/useMobile.ts'
 
 const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
 
 const [selectedMenu, changeMenu] = useSelectMenu('admin', 'account')
+
+const [isColScreen] = useMobile()
 </script>
 
 <style lang="scss" scoped></style>

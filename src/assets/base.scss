@@ -20,10 +20,17 @@ body {
   width: 100%;
 }
 
+.t-layout__sider {
+  width: auto !important;
+}
+
 .t-layout__content {
-  width: calc(100% - 272px);
   padding: 20px;
   overflow: auto;
+}
+
+.content {
+  min-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -41,6 +48,10 @@ body {
 
 .buttons {
   margin-bottom: 10px;
+
+  .t-space {
+    flex-wrap: wrap;
+  }
 }
 
 .t-dialog__position {
