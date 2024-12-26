@@ -130,7 +130,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { useTokensStore } from '@/stores/tokens.ts'
+import { useTokensStore } from '@/stores/admin/tokens.ts'
 import { formatBytes, formatDateToString } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'

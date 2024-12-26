@@ -117,7 +117,7 @@ import { type TableProps } from 'tdesign-vue-next'
 import AddAccount from './AddAccount.vue'
 import UpdateProv from './UpdateProv.vue'
 import UpdateSwitch from './UpdateSwitch.vue'
-import { useAccountsStore } from '@/stores/accounts.ts'
+import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { formatBytes } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
 

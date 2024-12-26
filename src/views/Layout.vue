@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { ViewListIcon } from 'tdesign-icons-vue-next'
 import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
 import { storeToRefs } from 'pinia'
 import { useMobile } from '@/utils/use/useMobile.ts'
 import { ref, watch } from 'vue'

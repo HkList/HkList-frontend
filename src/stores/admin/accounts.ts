@@ -122,9 +122,9 @@ export const useAccountsStore = defineStore('accounts', () => {
     const res = await checkBanStatus({ id: [id] })
     res.data.forEach((account) => {
       account.status.forEach((status, index) => {
-        if (status.code !== 200) return MessagePlugin.error(`账号(${account.id})状态请求失败`)
         let key = '账号'
         if (account.account_type === 'download_ticket') key = index === 0 ? `企业账号` : `普通账号`
+        if (status.code !== 200) return MessagePlugin.error(`${key}(${account.id})${status.message}`)
         if (!status.data.ban_status) return MessagePlugin.success(`${key}(${account.id})未被封禁`)
         MessagePlugin.warning(`${key}(${account.id})已被封禁`)
         MessagePlugin.warning(`原因: ${status.data.ban_reason}`)

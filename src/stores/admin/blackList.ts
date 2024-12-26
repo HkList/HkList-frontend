@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
-export const useBlackListsStore = defineStore('blackLists', () => {
+export const useBlackListStore = defineStore('blackList', () => {
   const [selectReq, pagination, blackList, getBlackLists] = useCommonStore<SelectReq, SelectRes>(select)
 
   const selectedRowKeys = ref<number[]>([])

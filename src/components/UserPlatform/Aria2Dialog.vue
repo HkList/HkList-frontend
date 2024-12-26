@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useAria2Store } from '@/stores/aria2.ts'
+import { useAria2Store } from '@/stores/user/aria2.ts'
 import { storeToRefs } from 'pinia'
 import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
 

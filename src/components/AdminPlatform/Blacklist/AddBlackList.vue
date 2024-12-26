@@ -67,11 +67,11 @@
 
 <script lang="ts" setup>
 import { MessagePlugin, type CustomValidator, type FormProps } from 'tdesign-vue-next'
-import { useBlackListsStore } from '@/stores/blackLists.ts'
+import { useBlackListStore } from '@/stores/admin/blackList'
 import { storeToRefs } from 'pinia'
 import { ValidateIsIp } from '@/utils/validates.ts'
 
-const blacksStore = useBlackListsStore()
+const blacksStore = useBlackListStore()
 const { isAddBlackList, addBlackListReq } = storeToRefs(blacksStore)
 
 const checkIdentifier: CustomValidator = () => {

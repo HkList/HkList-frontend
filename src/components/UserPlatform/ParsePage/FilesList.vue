@@ -17,7 +17,7 @@
 
 <script lang="tsx" setup>
 import { storeToRefs } from 'pinia'
-import { useFileListStore } from '@/stores/fileList.ts'
+import { useFileListStore } from '@/stores/user/fileList.ts'
 import { ref } from 'vue'
 import type { TableProps } from 'tdesign-vue-next'
 import { formatBytes, formatTimestamp } from '@/utils/format.ts'

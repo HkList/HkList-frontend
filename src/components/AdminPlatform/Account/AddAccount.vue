@@ -117,7 +117,7 @@
 
 <script lang="ts" setup>
 import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
-import { useAccountsStore } from '@/stores/accounts.ts'
+import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { storeToRefs } from 'pinia'
 
 const accountsStore = useAccountsStore()

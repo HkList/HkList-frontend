@@ -102,7 +102,7 @@
 
 <script lang="ts" setup>
 import { type FormProps } from 'tdesign-vue-next'
-import { useTokensStore } from '@/stores/tokens.ts'
+import { useTokensStore } from '@/stores/admin/tokens.ts'
 import { storeToRefs } from 'pinia'
 
 const tokensStore = useTokensStore()

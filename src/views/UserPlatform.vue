@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { KeyIcon, HistoryIcon, AppIcon, LinkIcon } from 'tdesign-icons-vue-next'
 import Layout from '@/views/Layout.vue'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
 import { storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
 

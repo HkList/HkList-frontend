@@ -110,7 +110,7 @@
 import { onMounted, ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { getConfig, updateConfig, type GetConfigRes, type UpdateConfigReq } from '@/api/admin/config/general.ts'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
 import PackageJson from '@/../package.json'
 
 const configStore = useConfigStore()

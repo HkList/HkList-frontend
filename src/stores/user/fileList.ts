@@ -12,11 +12,11 @@ import {
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config'
 
 const configStore = useConfigStore()
 
-export const useFileListStore = defineStore('fileListStore', () => {
+export const useFileListStore = defineStore('fileList', () => {
   const GetFileListReq = ref<GetFileListReq>({
     url: '',
     surl: '',
@@ -136,6 +136,7 @@ export const useFileListStore = defineStore('fileListStore', () => {
         GetDownLoadLinksRes.value = res.data
       }
     } catch (error) {
+      MessagePlugin.error('解析可能失败或超时了,请稍后前往历史记录中尝试查询')
       console.log(error)
     } finally {
       pending.value = false

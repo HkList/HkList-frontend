@@ -66,6 +66,10 @@ const router = createRouter({
           component: () => import('@/components/AdminPlatform/Account/index.vue'),
         },
         {
+          path: '/admin/fingerprint',
+          component: () => import('@/components/AdminPlatform/Fingerprint/index.vue'),
+        },
+        {
           path: '/admin/blacklist',
           component: () => import('@/components/AdminPlatform/Blacklist/index.vue'),
         },

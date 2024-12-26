@@ -62,12 +62,12 @@
 
 <script lang="tsx" setup>
 import { storeToRefs } from 'pinia'
-import { useFileListStore } from '@/stores/fileList.ts'
+import { useFileListStore } from '@/stores/user/fileList.ts'
 import { type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 import { copy } from '@/utils/copy.ts'
 import { LinkIcon } from 'tdesign-icons-vue-next'
-import { useAria2Store, type DownloadRows } from '@/stores/aria2.ts'
+import { useAria2Store, type DownloadRows } from '@/stores/user/aria2.ts'
 import type { GetDownLoadLinksRes } from '@/api/user/parse.ts'
 
 const fileListSotre = useFileListStore()
