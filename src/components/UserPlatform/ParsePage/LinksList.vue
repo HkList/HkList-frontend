@@ -64,7 +64,7 @@
 import { storeToRefs } from 'pinia'
 import { useFileListStore } from '@/stores/user/fileList.ts'
 import { type TableProps } from 'tdesign-vue-next'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { copy } from '@/utils/copy.ts'
 import { LinkIcon } from 'tdesign-icons-vue-next'
 import { useAria2Store, type DownloadRows } from '@/stores/user/aria2.ts'
@@ -128,6 +128,12 @@ const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
     .filter((row) => row.urls)
     .map((row) => ({ filename: row.filename, urls: row.urls, ua: row.ua })) as DownloadRows
 }
+
+watch(GetDownLoadLinksRes, () => {
+  selectedRowKeys.value = []
+  selectedRows.value = []
+})
+
 const handlePageChange = () => {
   selectedRowKeys.value = []
   selectedRows.value = []
