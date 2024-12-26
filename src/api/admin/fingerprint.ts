@@ -15,6 +15,6 @@ export type SelectRes = {
 }[]
 
 /** 查看密码是否正确 */
-export const select = (data: SelectReq) => {
-  return http.request<BasePagenation<SelectRes>>('get', '/admin/fingerprint', { data })
+export const select = (params: SelectReq) => {
+  return http.request<BasePagenation<SelectRes>>('get', '/admin/fingerprint', { params })
 }
