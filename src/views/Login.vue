@@ -34,7 +34,7 @@ import { ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { checkPassword, type CheckPasswordReq } from '@/api/admin/check_password.ts'
 import { useRouter } from 'vue-router'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
 import { storeToRefs } from 'pinia'
 
 const configStore = useConfigStore()

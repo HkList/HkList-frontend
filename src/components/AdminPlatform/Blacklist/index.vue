@@ -77,14 +77,14 @@
 </template>
 
 <script lang="tsx" setup>
-import { useBlackListsStore } from '@/stores/blackLists.ts'
+import { useBlackListStore } from '@/stores/admin/blackList'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
 import UpdateBlackList from './UpdateBlackList.vue'
 import AddBlackList from './AddBlackList.vue'
 
-const blacksStore = useBlackListsStore()
+const blacksStore = useBlackListStore()
 const { blackList, pagination, selectReq, selectedRowKeys } = storeToRefs(blacksStore)
 
 onMounted(blacksStore.getBlackLists)

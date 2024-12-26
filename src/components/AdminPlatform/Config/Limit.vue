@@ -52,6 +52,18 @@
       </t-form-item>
 
       <t-form-item
+        name="fingerprint_for_ip"
+        label="请输入每个指纹允许的IP数"
+        help="不推荐过小,防止误判"
+      >
+        <t-input-number
+          :min="0"
+          v-model="formData.fingerprint_for_ip"
+          auto-width
+        />
+      </t-form-item>
+
+      <t-form-item
         name="limit_cn"
         label="仅限中国用户使用"
       >
@@ -87,6 +99,7 @@ const formData = ref<UpdateConfigReq>({
   max_download_daily_pre_account: 0,
   limit_cn: false,
   limit_prov: false,
+  fingerprint_for_ip: 20,
 })
 
 const formRules: FormProps['rules'] = {
@@ -94,6 +107,7 @@ const formRules: FormProps['rules'] = {
   min_single_filesize: [{ required: true, message: '请输入单次最小能解析的文件大小' }],
   max_single_filesize: [{ required: true, message: '请输入单次最大能解析的文件大小' }],
   max_download_daily_pre_account: [{ required: true, message: '请输入单个账号每日最大解析量' }],
+  fingerprint_for_ip: [{ required: true, message: '请输入每个指纹允许的IP数' }],
 }
 
 const getForm = async () => {

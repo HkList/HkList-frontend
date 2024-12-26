@@ -90,8 +90,8 @@
 <script lang="tsx" setup>
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { storeToRefs } from 'pinia'
-import { useConfigStore } from '@/stores/config.ts'
-import { useFileListStore } from '@/stores/fileList.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
+import { useFileListStore } from '@/stores/user/fileList.ts'
 import { onMounted } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
 

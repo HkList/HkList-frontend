@@ -4,39 +4,19 @@
       <t-space size="small">
         <t-select
           v-model="selectReq.column"
-          @change="recordsStore.getRecords"
+          @change="fingerprintStore.getFingerprint"
         >
           <t-option
             label="按 id 排序"
             value="id"
           />
           <t-option
-            label="按 ip 排序"
-            value="ip"
-          />
-          <t-option
             label="按 fingerprint 排序"
             value="fingerprint"
           />
           <t-option
-            label="按 fs_id 排序"
-            value="fs_id"
-          />
-          <t-option
-            label="按 urls 排序"
-            value="urls"
-          />
-          <t-option
-            label="按 ua 排序"
-            value="ua"
-          />
-          <t-option
-            label="按 token_id 排序"
-            value="token_id"
-          />
-          <t-option
-            label="按 account_id 排序"
-            value="account_id"
+            label="按 ip 排序"
+            value="ip"
           />
           <t-option
             label="按 created_at 排序"
@@ -49,7 +29,7 @@
         </t-select>
         <t-select
           v-model="selectReq.direction"
-          @change="recordsStore.getRecords"
+          @change="fingerprintStore.getFingerprint"
         >
           <t-option
             label="正序"
@@ -60,7 +40,7 @@
             value="desc"
           />
         </t-select>
-        <t-button @click="recordsStore.getRecords"> 刷新列表 </t-button>
+        <t-button @click="fingerprintStore.getFingerprint"> 刷新列表 </t-button>
       </t-space>
     </div>
     <t-table
@@ -68,7 +48,7 @@
       resizable
       lazy-load
       :bordered="true"
-      :data="recordList"
+      :data="fingerprintList"
       :pagination="pagination"
       :columns="columns"
     >
@@ -78,31 +58,30 @@
           colon
           layout="vertical"
         >
-          <t-descriptions-item label="Surl">
-            {{ row.file.surl }}
-          </t-descriptions-item>
-          <t-descriptions-item label="Pwd">
-            {{ row.file.pwd }}
-          </t-descriptions-item>
-          <t-descriptions-item label="Ua">
-            <t-link @click="copy(row.ua)">{{ row.ua }}</t-link>
-          </t-descriptions-item>
-          <t-descriptions-item label="Urls">
+          <t-descriptions-item label="已绑定的ip">
+            <t-tag
+              size="large"
+              v-if="row.ip.length === 0"
+            >
+              没有绑定的IP
+            </t-tag>
             <t-list
+              stripe
               split
               size="large"
+              v-else
             >
               <t-list-item
-                v-for="(url, index) in row.urls"
-                :key="url"
+                v-for="(ip, index) in row.ip"
+                :key="ip"
               >
                 <t-space direction="vertical">
                   <t-space>
                     <t-tag size="large"> 第 {{ index + 1 }} 条 </t-tag>
-                    <t-button @click="copy(url)">复制</t-button>
+                    <t-button @click="copy(ip)">复制</t-button>
                   </t-space>
                   <p>
-                    {{ url }}
+                    {{ ip }}
                   </p>
                 </t-space>
               </t-list-item>
@@ -115,17 +94,16 @@
 </template>
 
 <script lang="tsx" setup>
-import { useRecordsStore } from '@/stores/admin/records.ts'
+import { useFingerprintStore } from '@/stores/admin/fingerprint.ts'
 import { storeToRefs } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
-import { formatBytes } from '@/utils/format.ts'
 import { copy } from '@/utils/copy.ts'
 
-const recordsStore = useRecordsStore()
-const { recordList, pagination, selectReq } = storeToRefs(recordsStore)
+const fingerprintStore = useFingerprintStore()
+const { fingerprintList, pagination, selectReq } = storeToRefs(fingerprintStore)
 
-onMounted(recordsStore.getRecords)
+onMounted(fingerprintStore.getFingerprint)
 
 const columns = ref<TableProps['columns']>([
   {
@@ -134,34 +112,15 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
-    colKey: 'ip',
-    title: 'IP',
-    ellipsis: true,
-  },
-  {
     colKey: 'fingerprint',
     title: '指纹',
+    width: 400,
     ellipsis: true,
   },
   {
-    colKey: 'file.filename',
-    title: '文件名称',
-    ellipsis: true,
-  },
-  {
-    colKey: 'file.size',
-    title: '文件大小',
-    cell: (h, { row }) => <>{formatBytes(row.file.size)}</>,
-    ellipsis: true,
-  },
-  {
-    colKey: 'token.token',
-    title: '卡密',
-    ellipsis: true,
-  },
-  {
-    colKey: 'account.baidu_name',
-    title: '解析账号名称',
+    colKey: 'count(ip)',
+    title: 'IP数量',
+    cell: (h, { row }) => <>{row.ip.length}</>,
     ellipsis: true,
   },
   {
@@ -175,6 +134,11 @@ const columns = ref<TableProps['columns']>([
     title: '更新时间',
     width: 175,
     ellipsis: true,
+  },
+  {
+    colKey: 'action',
+    title: '操作',
+    cell: (h, { row }) => <t-button onClick={() => copy(row.fingerprint)}>复制指纹</t-button>,
   },
 ])
 </script>

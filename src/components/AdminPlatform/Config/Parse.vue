@@ -137,6 +137,7 @@ const matchUserAgent = () => {
       break
     case 6:
       formData.value.user_agent = 'netdisk;P2SP;3.0.20.73'
+      break
     default:
       MessagePlugin.error('未知解析模式')
       break

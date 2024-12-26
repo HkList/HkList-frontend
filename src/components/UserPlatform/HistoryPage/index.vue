@@ -52,7 +52,7 @@
         :columns="columns"
         :select-on-row-click="true"
         :selectedRowKeys="selectedRowKeys"
-        @select-change="handleSelectChange"
+        @select-change="historyStore.handleSelectChange"
       >
         <template #expandedRow="{ row }">
           <t-list
@@ -86,19 +86,22 @@
 <script lang="tsx" setup>
 import { type FormProps, MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { LinkIcon } from 'tdesign-icons-vue-next'
-import { type GetHistoryReq, type GetHistoryRes, getHistory as _getHistory } from '@/api/user/history.ts'
 import { copy } from '@/utils/copy.ts'
-import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { onMounted, ref } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
-import { useAria2Store, type DownloadRows } from '@/stores/aria2.ts'
+import { useAria2Store } from '@/stores/user/aria2.ts'
 import Aria2Dialog from '@/components/UserPlatform/Aria2Dialog.vue'
+import { useHistoryStore } from '@/stores/user/history.ts'
+import { storeToRefs } from 'pinia'
 
 const aria2Store = useAria2Store()
 
-const [selectReq, pagination, historyList, getHistory] = useCommonStore<GetHistoryReq, GetHistoryRes>(_getHistory)
+const historyStore = useHistoryStore()
+const { selectReq, pagination, historyList, selectedRowKeys, selectedRows } = storeToRefs(historyStore)
 
-const formRules: FormProps['rules'] = {}
+const formRules: FormProps['rules'] = {
+  token: [{ required: true, message: '请输入卡密' }],
+}
 
 const columns = ref<TableProps['columns']>([
   {
@@ -138,13 +141,8 @@ const columns = ref<TableProps['columns']>([
 
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
-
-  if (!selectReq.value.token) selectReq.value.token = 'guest'
-
-  await getHistory()
-
+  await historyStore.getHistory()
   localStorage.setItem('token', selectReq.value.token)
-
   MessagePlugin.success('查询成功')
 }
 
@@ -152,13 +150,6 @@ onMounted(() => {
   selectReq.value.token = localStorage.getItem('token') ?? 'guest'
   submitForm({ validateResult: true })
 })
-
-const selectedRowKeys = ref<number[]>([])
-const selectedRows = ref<DownloadRows>([])
-const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
-  selectedRowKeys.value = value as number[]
-  selectedRows.value = (ctx.selectedRowData as GetHistoryRes[]).map((row) => ({ filename: row.file.filename, urls: row.urls, ua: row.ua }))
-}
 </script>
 
 <style lang="scss" scoped></style>

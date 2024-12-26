@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
 import { storeToRefs } from 'pinia'
 
 const configStore = useConfigStore()

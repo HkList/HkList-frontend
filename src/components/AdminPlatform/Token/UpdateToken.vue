@@ -119,7 +119,7 @@
 
 <script lang="ts" setup>
 import { MessagePlugin, type FormProps, type TagInputProps } from 'tdesign-vue-next'
-import { useTokensStore } from '@/stores/tokens.ts'
+import { useTokensStore } from '@/stores/admin/tokens.ts'
 import { storeToRefs } from 'pinia'
 import { ValidateIsIp } from '@/utils/validates.ts'
 

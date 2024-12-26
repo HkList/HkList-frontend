@@ -7,7 +7,7 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useDark } from '@/utils/use/useDark.ts'
 import { getRandomColor } from '@/utils/random.ts'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config'
 
 const configStore = useConfigStore()
 

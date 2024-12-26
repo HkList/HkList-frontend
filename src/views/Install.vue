@@ -70,7 +70,7 @@ import { ref } from 'vue'
 import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { useRouter } from 'vue-router'
 import { install, type InstallReq } from '@/api/install.ts'
-import { useConfigStore } from '@/stores/config.ts'
+import { useConfigStore } from '@/stores/user/config.ts'
 
 const router = useRouter()
 
