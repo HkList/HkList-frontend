@@ -56,7 +56,7 @@ class Http {
           }
         }
 
-        return run(config)
+        return await run(config)
       },
       (error) => {
         return Promise.reject(error)

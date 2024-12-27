@@ -15,12 +15,6 @@
       </template>
       卡密管理
     </t-menu-item>
-    <t-menu-item value="fingerprint">
-      <template #icon>
-        <FingerprintIcon />
-      </template>
-      指纹管理
-    </t-menu-item>
     <t-menu-item value="blacklist">
       <template #icon>
         <UserListIcon />
@@ -46,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KeyIcon, ListIcon, ToolsIcon, UserIcon, UserListIcon, FingerprintIcon } from 'tdesign-icons-vue-next'
+import { KeyIcon, ListIcon, ToolsIcon, UserIcon, UserListIcon } from 'tdesign-icons-vue-next'
 import Layout from '@/views/Layout.vue'
 </script>
 
