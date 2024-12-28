@@ -7,7 +7,10 @@ import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 export const useTokensStore = defineStore('tokens', () => {
-  const [selectReq, pagination, tokenList, getTokens] = useCommonStore<SelectReq, SelectRes>(select)
+  const [selectReq, pagination, tokenList, getTokens] = useCommonStore<SelectReq, SelectRes>(select, () => {
+    selectedRowKeys.value = []
+    selectedRows.value = []
+  })
 
   const selectedRowKeys = ref<number[]>([])
   const selectedRows = ref<SelectRes>([])
@@ -55,6 +58,7 @@ export const useTokensStore = defineStore('tokens', () => {
   const deleteSelection = async () => {
     if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择卡密')
     await remove({ id: selectedRowKeys.value })
+    selectedRowKeys.value = []
     MessagePlugin.success('删除成功')
     await getTokens()
   }
