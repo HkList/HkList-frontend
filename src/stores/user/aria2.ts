@@ -29,7 +29,10 @@ export const useAria2Store = defineStore('aria2', () => {
 
   const showAria2Config = () => (aria2ConfigDialogVisible.value = true)
   const hideAria2Config = () => (aria2ConfigDialogVisible.value = false)
-  const saveAria2Config = () => localStorage.setItem('aria2Config', JSON.stringify(aria2ConfigForm.value))
+  const saveAria2Config = () => {
+    localStorage.setItem('aria2Config', JSON.stringify(aria2ConfigForm.value))
+    wsConnection = null
+  }
 
   let wsConnection: WebSocket | null = null
   const connectAria2 = (): Promise<WebSocket> => {

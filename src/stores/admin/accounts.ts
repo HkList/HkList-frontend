@@ -17,7 +17,9 @@ import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 export const useAccountsStore = defineStore('accounts', () => {
-  const [selectReq, pagination, accountList, getAccounts] = useCommonStore<SelectReq, SelectRes>(select)
+  const [selectReq, pagination, accountList, getAccounts] = useCommonStore<SelectReq, SelectRes>(select, () => {
+    selectedRowKeys.value = []
+  })
 
   const selectedRowKeys = ref<number[]>([])
   const handleSelectChange: TableProps['onSelectChange'] = (value) => {
@@ -34,6 +36,7 @@ export const useAccountsStore = defineStore('accounts', () => {
   const deleteSelection = async () => {
     if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择账号')
     await remove({ id: selectedRowKeys.value })
+    selectedRowKeys.value = []
     MessagePlugin.success('删除成功')
     await getAccounts()
   }

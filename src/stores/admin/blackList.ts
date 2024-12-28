@@ -5,7 +5,9 @@ import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 export const useBlackListStore = defineStore('blackList', () => {
-  const [selectReq, pagination, blackList, getBlackLists] = useCommonStore<SelectReq, SelectRes>(select)
+  const [selectReq, pagination, blackList, getBlackLists] = useCommonStore<SelectReq, SelectRes>(select, () => {
+    selectedRowKeys.value = []
+  })
 
   const selectedRowKeys = ref<number[]>([])
   const handleSelectChange: TableProps['onSelectChange'] = (value) => {
@@ -15,6 +17,7 @@ export const useBlackListStore = defineStore('blackList', () => {
   const deleteSelection = async () => {
     if (selectedRowKeys.value.length === 0) return MessagePlugin.error('请选择黑名单')
     await remove({ id: selectedRowKeys.value })
+    selectedRowKeys.value = []
     MessagePlugin.success('删除成功')
     await getBlackLists()
   }

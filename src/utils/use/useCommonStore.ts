@@ -1,9 +1,12 @@
-import type { TableProps } from 'tdesign-vue-next'
+import type { TableProps, TdPaginationProps } from 'tdesign-vue-next'
 import { ref, type Ref } from 'vue'
 import type { baseResponse } from '@/utils/http.ts'
 import type { BasePagenation } from '@/api/pagenation.ts'
 
-export const useCommonStore = <SelectReq, SelectRes>(select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>) => {
+export const useCommonStore = <SelectReq, SelectRes>(
+  select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>,
+  onChange?: TdPaginationProps['onChange'],
+) => {
   const list = ref<SelectRes>([] as SelectRes)
 
   const pagination = ref<TableProps['pagination']>({
@@ -16,6 +19,7 @@ export const useCommonStore = <SelectReq, SelectRes>(select: (param: SelectReq) 
       selectReq.value.page = pageInfo.current
       selectReq.value.size = pageInfo.pageSize
       get()
+      if (onChange) onChange(pageInfo)
     },
   })
 
