@@ -17,7 +17,7 @@ export type DownloadRows = {
 export const useAria2Store = defineStore('aria2', () => {
   const aria2ConfigDialogVisible = ref(false)
   const aria2ConfigForm = ref<Aria2Config>({
-    host: 'http://localhost:16800/jsonrpc',
+    host: 'ws://localhost:16800/jsonrpc',
     token: '',
     dir: '',
   })
