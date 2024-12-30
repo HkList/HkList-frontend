@@ -38,6 +38,7 @@
           <t-input
             v-model.trim="GetFileListReq.url"
             @blur="parseUrl"
+            @change="clearDir"
           />
         </t-form-item>
 
@@ -55,7 +56,10 @@
           name="pwd"
           label="提取码"
         >
-          <t-input v-model.trim="GetFileListReq.pwd" />
+          <t-input
+            v-model.trim="GetFileListReq.pwd"
+            @change="clearDir"
+          />
         </t-form-item>
 
         <t-form-item
@@ -73,6 +77,16 @@
           <t-input
             v-model.trim="GetLimitReq.token"
             @blur="fileListSotre.getLimit"
+          />
+        </t-form-item>
+
+        <t-form-item
+          name="dir"
+          label="路径"
+        >
+          <t-input
+            v-model.trim="GetFileListReq.dir"
+            disabled
           />
         </t-form-item>
 
@@ -94,38 +108,32 @@ import { useConfigStore } from '@/stores/user/config.ts'
 import { useFileListStore } from '@/stores/user/fileList.ts'
 import { onMounted } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
+import { getUrlId } from '@/utils/getUrlId.ts'
 
 const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
 
 const fileListSotre = useFileListStore()
-const { GetFileListReq, GetLimitReq, GetLimitRes, GetLimitError } = storeToRefs(fileListSotre)
+const { GetFileListReq, GetLimitReq, GetLimitRes, GetLimitError, GetFileListRes, GetDownLoadLinksRes } = storeToRefs(fileListSotre)
 
 const parseUrl = () => {
-  const url = GetFileListReq.value.url
-  const fullMatch = url.match(/s\/([a-zA-Z0-9_-]+)/)
-  const fullMatch2 = url.match(/surl=([a-zA-Z0-9_-]+)/)
-  const pwdMatch = url.match(/\?pwd=([a-zA-Z0-9_-]+)/)
-  const pwdMatch2 = url.match(/&pwd=([a-zA-Z0-9_-]+)/)
-  const pwdMatch3 = url.match(/提取码[:：]\s?([a-zA-Z0-9_-]+)/)
+  const res = getUrlId(GetFileListReq.value.url)
+  if (!res) return
 
-  if (fullMatch) {
-    GetFileListReq.value.surl = fullMatch[1]
-  } else if (fullMatch2) {
-    GetFileListReq.value.surl = `1${fullMatch2[1]}`
-  } else {
-    GetFileListReq.value.surl = ''
-    GetFileListReq.value.pwd = ''
-    GetFileListReq.value.dir = ''
-    return MessagePlugin.error('无法识别的链接')
+  const { surl, pwd, url } = res
+  GetFileListReq.value.surl = surl
+  GetFileListReq.value.url = url
+  GetFileListReq.value.dir = '/'
+  if (pwd) {
+    GetFileListReq.value.pwd = pwd
+    MessagePlugin.success('已自动填写密码~')
   }
+}
 
-  GetFileListReq.value.url = `https://pan.baidu.com/s/${GetFileListReq.value.surl}`
-  GetFileListReq.value.pwd = pwdMatch ? pwdMatch[1] : pwdMatch2 ? pwdMatch2[1] : pwdMatch3 ? pwdMatch3[1] : ''
-
-  MessagePlugin.success('链接识别成功~')
-
-  return true
+const clearDir = () => {
+  GetFileListReq.value.dir = ''
+  GetFileListRes.value = undefined
+  GetDownLoadLinksRes.value = []
 }
 
 const formRules: FormProps['rules'] = {

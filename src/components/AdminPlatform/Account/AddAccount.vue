@@ -119,6 +119,7 @@
 import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
 import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { storeToRefs } from 'pinia'
+import { getUrlId } from '@/utils/getUrlId.ts'
 
 const accountsStore = useAccountsStore()
 const { isAddAccount, addAccountType, addAccountInput } = storeToRefs(accountsStore)
@@ -140,29 +141,17 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
 }
 
 const parseUrl = () => {
-  const url = addAccountInput.value.url
-  const fullMatch = url.match(/s\/([a-zA-Z0-9_-]+)/)
-  const fullMatch2 = url.match(/surl=([a-zA-Z0-9_-]+)/)
-  const pwdMatch = url.match(/\?pwd=([a-zA-Z0-9_-]+)/)
-  const pwdMatch2 = url.match(/&pwd=([a-zA-Z0-9_-]+)/)
-  const pwdMatch3 = url.match(/提取码[:：]\s?([a-zA-Z0-9_-]+)/)
+  const res = getUrlId(addAccountInput.value.url)
+  if (!res) return
 
-  if (fullMatch) {
-    addAccountInput.value.surl = fullMatch[1]
-  } else if (fullMatch2) {
-    addAccountInput.value.surl = `1${fullMatch2[1]}`
-  } else {
-    addAccountInput.value.surl = ''
-    addAccountInput.value.pwd = ''
-    addAccountInput.value.dir = ''
-    return MessagePlugin.error('无法识别的链接')
+  const { surl, pwd, url } = res
+  addAccountInput.value.surl = surl
+  addAccountInput.value.url = url
+  addAccountInput.value.dir = '/'
+  if (pwd) {
+    addAccountInput.value.pwd = pwd
+    MessagePlugin.success('已自动填写密码~')
   }
-
-  addAccountInput.value.url = `https://pan.baidu.com/s/${addAccountInput.value.surl}`
-  addAccountInput.value.pwd = pwdMatch ? pwdMatch[1] : pwdMatch2 ? pwdMatch2[1] : pwdMatch3 ? pwdMatch3[1] : ''
-  MessagePlugin.success('链接识别成功~')
-
-  return true
 }
 </script>
 
