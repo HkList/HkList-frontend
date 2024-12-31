@@ -95,7 +95,10 @@ export const useFileListStore = defineStore('fileList', () => {
   const pending = ref(false)
   const GetDownLoadLinksRes = ref<GetDownLoadLinksRes>([])
   const getDownloadLinks = async (event?: PointerEvent | number, row?: File) => {
-    if (pending.value) return MessagePlugin.error('正在解析中,请稍后再试')
+    if (pending.value) {
+      MessagePlugin.error('正在解析中,请稍后再试')
+      return false
+    }
 
     const { config } = configStore
 
