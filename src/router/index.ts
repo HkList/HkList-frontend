@@ -59,6 +59,10 @@ const router = createRouter({
               path: '/admin/config/mail',
               component: () => import('@/components/AdminPlatform/Config/Mail.vue'),
             },
+            {
+              path: '/admin/config/proxy',
+              component: () => import('@/components/AdminPlatform/Config/Proxy.vue'),
+            },
           ],
         },
         {

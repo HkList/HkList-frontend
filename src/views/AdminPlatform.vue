@@ -35,6 +35,7 @@
       <t-menu-item value="config/limit"> 限制配置 </t-menu-item>
       <t-menu-item value="config/parse"> 解析配置 </t-menu-item>
       <t-menu-item value="config/mail"> 邮件配置 </t-menu-item>
+      <t-menu-item value="config/proxy"> 代理配置 </t-menu-item>
     </t-submenu>
   </Layout>
 </template>
