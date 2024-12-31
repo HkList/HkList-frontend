@@ -99,6 +99,8 @@ export interface GetDownloadLinksReq {
   pwd: string
   token: string
   parse_password: string
+  vcode_str?: string
+  vcode_input?: string
 }
 
 export type GetDownLoadLinksRes = {

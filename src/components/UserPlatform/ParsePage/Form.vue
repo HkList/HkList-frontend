@@ -29,6 +29,7 @@
       <t-form
         :data="GetFileListReq"
         :rules="formRules"
+        :labelWidth="120"
         @submit="submitForm"
       >
         <t-form-item
@@ -90,6 +91,24 @@
           />
         </t-form-item>
 
+        <template v-if="vcode.hit_captcha">
+          <t-form-item
+            label="验证码图片"
+            name="vcode_img"
+          >
+            <img
+              :src="`${vcode.vcode_img}&t=${timestamp}`"
+              @click="changeTimestamp"
+            />
+          </t-form-item>
+          <t-form-item
+            label="验证码字符"
+            name="vcode_input"
+          >
+            <t-input v-model="vcode.vcode_input" />
+          </t-form-item>
+        </template>
+
         <t-form-item>
           <t-space size="small">
             <t-button type="submit"> 获取文件列表 </t-button>
@@ -106,7 +125,7 @@ import { type FormProps, MessagePlugin } from 'tdesign-vue-next'
 import { storeToRefs } from 'pinia'
 import { useConfigStore } from '@/stores/user/config.ts'
 import { useFileListStore } from '@/stores/user/fileList.ts'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { formatBytes } from '@/utils/format.ts'
 import { getUrlId } from '@/utils/getUrlId.ts'
 
@@ -114,7 +133,7 @@ const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
 
 const fileListSotre = useFileListStore()
-const { GetFileListReq, GetLimitReq, GetLimitRes, GetLimitError, GetFileListRes, GetDownLoadLinksRes } = storeToRefs(fileListSotre)
+const { GetFileListReq, GetLimitReq, GetLimitRes, GetLimitError, GetFileListRes, GetDownLoadLinksRes, vcode } = storeToRefs(fileListSotre)
 
 const parseUrl = () => {
   const res = getUrlId(GetFileListReq.value.url)
@@ -139,6 +158,7 @@ const clearDir = () => {
 const formRules: FormProps['rules'] = {
   url: [{ required: true, message: '链接不能为空' }],
   parse_password: [{ required: true, message: '解析密码不能为空' }],
+  vcode_input: [{ required: true, message: '验证码不能为空' }],
 }
 
 onMounted(() => {
@@ -152,10 +172,20 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   await fileListSotre.getFileList()
   MessagePlugin.success('获取成功')
 }
+
+const timestamp = ref(Date.now())
+
+const changeTimestamp = () => {
+  timestamp.value = Date.now()
+}
 </script>
 
 <style lang="scss" scoped>
 .space {
   width: 100%;
+}
+
+img:hover {
+  cursor: pointer;
 }
 </style>

@@ -8,6 +8,7 @@ import {
   type File,
   type GetDownLoadLinksRes,
   getDownloadLinks as _getDownloadLinks,
+  getVcode,
 } from '@/api/user/parse.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
@@ -84,9 +85,21 @@ export const useFileListStore = defineStore('fileList', () => {
     selectedRows.value = ctx.selectedRowData as File[]
   }
 
+  const vcode = ref({
+    hit_captcha: false,
+    vcode_str: '',
+    vcode_img: '',
+    vcode_input: '',
+  })
+
   const pending = ref(false)
   const GetDownLoadLinksRes = ref<GetDownLoadLinksRes>([])
   const getDownloadLinks = async (event?: PointerEvent | number, row?: File) => {
+    if (pending.value) {
+      MessagePlugin.error('正在解析中,请稍后再试')
+      return false
+    }
+
     const { config } = configStore
 
     if (event && typeof event !== 'number' && row) {
@@ -127,6 +140,7 @@ export const useFileListStore = defineStore('fileList', () => {
         pwd: GetFileListReq.value.pwd,
         token: GetLimitReq.value.token,
         parse_password: GetFileListReq.value.parse_password,
+        ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
       })
       if (typeof event === 'number') {
         MessagePlugin.success('重新解析成功')
@@ -135,9 +149,23 @@ export const useFileListStore = defineStore('fileList', () => {
         MessagePlugin.success('解析成功,下滑查看解析结果')
         GetDownLoadLinksRes.value = res.data
       }
-    } catch (error) {
-      MessagePlugin.error('解析可能失败或超时了,请稍后前往历史记录中尝试查询')
-      console.log(error)
+      vcode.value.hit_captcha = false
+    } catch (_error) {
+      const error = _error as { response: { data: { message: string } } }
+      if (error?.response?.data?.message?.includes('-20')) {
+        // -20 为验证码
+        const res = await getVcode({
+          parse_password: GetFileListReq.value.parse_password,
+        })
+
+        vcode.value = {
+          hit_captcha: true,
+          ...res.data,
+          vcode_input: '',
+        }
+      } else {
+        MessagePlugin.error('解析可能失败或超时了,请稍后前往历史记录中尝试查询是否成功')
+      }
     } finally {
       pending.value = false
       await getLimit()
@@ -160,5 +188,7 @@ export const useFileListStore = defineStore('fileList', () => {
 
     getDownloadLinks,
     GetDownLoadLinksRes,
+
+    vcode,
   }
 })

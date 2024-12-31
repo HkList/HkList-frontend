@@ -96,9 +96,9 @@ class Http {
           }
         } else {
           MessagePlugin.error($t('axios.serverError'))
-          console.log(error)
         }
 
+        console.log(error)
         return Promise.reject(error)
       },
     )
