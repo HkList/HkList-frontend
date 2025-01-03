@@ -5,10 +5,13 @@ import {
   update,
   updateInfo,
   checkBanStatus,
+  updateData,
   type InsertReq,
   type SelectReq,
   type SelectRes,
   type UpdateReq,
+  type SingleAccount,
+  type UpdateData,
 } from '@/api/admin/account.ts'
 import { formatTimestamp } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
@@ -88,24 +91,19 @@ export const useAccountsStore = defineStore('accounts', () => {
       account_type: addAccountType.value,
       account_data: [],
     }
-    if (addAccountType.value === 'cookie') {
-      req.account_data = [{ cookie: addAccountInput.value.cookie }]
-    } else if (addAccountType.value === 'enterprise_cokie') {
-      req.account_data = [{ cookie: addAccountInput.value.cookie }]
+
+    const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie } = addAccountInput.value
+
+    if (addAccountType.value === 'cookie' || addAccountType.value === 'enterprise_cokie') {
+      req.account_data = [{ cookie }]
     } else if (addAccountType.value === 'open_platform') {
-      req.account_data = [{ refresh_token: addAccountInput.value.refresh_token }]
+      req.account_data = [{ refresh_token }]
     } else if (addAccountType.value === 'download_ticket') {
-      req.account_data = [
-        {
-          surl: addAccountInput.value.surl,
-          pwd: addAccountInput.value.pwd,
-          dir: addAccountInput.value.dir,
-          save_cookie: addAccountInput.value.save_cookie,
-          download_cookie: addAccountInput.value.download_cookie,
-        },
-      ]
+      req.account_data = [{ surl, pwd, dir, save_cookie, download_cookie }]
     }
+
     await insert(req)
+
     MessagePlugin.success('插入成功~')
     addAccountInput.value = {
       cookie: '',
@@ -136,6 +134,38 @@ export const useAccountsStore = defineStore('accounts', () => {
         MessagePlugin.warning(`结束时间: ${formatTimestamp(status.data.end_time)}`)
       })
     })
+  }
+
+  const updateAccountDataInfo = ref<UpdateData>({
+    id: [],
+    account_type: 'cookie',
+    account_data: {
+      cookie: '',
+      vip_type: '普通用户',
+      expires_at: '',
+    },
+  })
+  const isUpdatingAccountData = ref(false)
+  const showUpdateAccountDataDialog = (event: PointerEvent, account: SingleAccount) => {
+    event.stopPropagation()
+
+    updateAccountDataInfo.value = {
+      id: [account.id],
+      account_type: account.account_type,
+      account_data: account.account_data,
+    }
+
+    isUpdatingAccountData.value = true
+  }
+  const hideUpdateAccountDataDialog = () => {
+    isUpdatingAccountData.value = false
+  }
+  const updateAccountData = async () => {
+    await updateData(updateAccountDataInfo.value)
+    MessagePlugin.success('编辑账户信息成功')
+    await updateInfo({ id: updateAccountDataInfo.value.id })
+    MessagePlugin.success('更新账户信息成功')
+    await getAccounts()
   }
 
   return {
@@ -170,5 +200,11 @@ export const useAccountsStore = defineStore('accounts', () => {
     addAccount,
 
     checkAccountBanStatus,
+
+    updateAccountDataInfo,
+    isUpdatingAccountData,
+    showUpdateAccountDataDialog,
+    hideUpdateAccountDataDialog,
+    updateAccountData,
   }
 })
