@@ -1,18 +1,18 @@
 <template>
   <t-dialog
-    v-model:visible="isAddAccount"
-    header="添加账号"
+    v-model:visible="isUpdatingAccountData"
+    header="编辑账号"
     :footer="false"
     :width="800"
   >
     <t-form
-      :data="addAccountInput"
+      :data="updateAccountDataInfo.account_data"
       :rules="formRules"
       @submit="submitForm"
       :labelWidth="130"
     >
       <t-form-item label="账号类型">
-        <t-select v-model="addAccountType">
+        <t-select v-model="updateAccountDataInfo.account_type">
           <t-option
             label="Cookie"
             value="cookie"
@@ -32,40 +32,34 @@
         </t-select>
       </t-form-item>
 
-      <template v-if="addAccountType === 'cookie' || addAccountType === 'enterprise_cokie'">
+      <template
+        v-if="
+          (updateAccountDataInfo.account_type === 'cookie' || updateAccountDataInfo.account_type === 'enterprise_cokie') &&
+          'cookie' in updateAccountDataInfo.account_data
+        "
+      >
         <t-form-item
           label="Cookie"
           name="cookie"
         >
-          <t-input v-model="addAccountInput.cookie" />
+          <t-input v-model="updateAccountDataInfo.account_data.cookie" />
         </t-form-item>
       </template>
-      <template v-else-if="addAccountType === 'open_platform'">
+      <template v-else-if="updateAccountDataInfo.account_type === 'open_platform' && 'refresh_token' in updateAccountDataInfo.account_data">
         <t-form-item
           label="RefreshToken"
           name="refresh_token"
         >
-          <t-input v-model="addAccountInput.refresh_token" />
+          <t-input v-model="updateAccountDataInfo.account_data.refresh_token" />
         </t-form-item>
       </template>
-      <template v-else-if="addAccountType === 'download_ticket'">
-        <t-form-item
-          label="分享链接"
-          name="url"
-          help="链接需要对应下方填入的文件夹名称"
-        >
-          <t-input
-            v-model="addAccountInput.url"
-            @blur="parseUrl"
-          />
-        </t-form-item>
-
+      <template v-else-if="updateAccountDataInfo.account_type === 'download_ticket' && 'surl' in updateAccountDataInfo.account_data">
         <t-form-item
           label="Surl"
           name="surl"
         >
           <t-input
-            v-model="addAccountInput.surl"
+            v-model="updateAccountDataInfo.account_data.surl"
             disabled
           />
         </t-form-item>
@@ -74,7 +68,7 @@
           label="提取码"
           name="pwd"
         >
-          <t-input v-model="addAccountInput.pwd" />
+          <t-input v-model="updateAccountDataInfo.account_data.pwd" />
         </t-form-item>
 
         <t-form-item
@@ -82,21 +76,21 @@
           name="dir"
           help="以/打头,需要提前创建该文件夹"
         >
-          <t-input v-model="addAccountInput.dir" />
+          <t-input v-model="updateAccountDataInfo.account_data.dir" />
         </t-form-item>
 
         <t-form-item
           label="企业号CK"
           name="save_cookie"
         >
-          <t-textarea v-model="addAccountInput.save_cookie" />
+          <t-textarea v-model="updateAccountDataInfo.account_data.save_cookie" />
         </t-form-item>
 
         <t-form-item
           label="普通号CK"
           name="download_cookie"
         >
-          <t-textarea v-model="addAccountInput.download_cookie" />
+          <t-textarea v-model="updateAccountDataInfo.account_data.download_cookie" />
         </t-form-item>
       </template>
 
@@ -122,7 +116,7 @@ import { storeToRefs } from 'pinia'
 import { getUrlId } from '@/utils/getUrlId.ts'
 
 const accountsStore = useAccountsStore()
-const { isAddAccount, addAccountType, addAccountInput } = storeToRefs(accountsStore)
+const { isUpdatingAccountData, updateAccountDataInfo } = storeToRefs(accountsStore)
 
 const formRules: FormProps['rules'] = {
   cookie: [{ required: true, message: 'Cookie不能为空' }],
@@ -137,21 +131,8 @@ const formRules: FormProps['rules'] = {
 
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
-  await accountsStore.addAccount()
-}
-
-const parseUrl = () => {
-  const res = getUrlId(addAccountInput.value.url)
-  if (!res) return
-
-  const { surl, pwd, url } = res
-  addAccountInput.value.surl = surl
-  addAccountInput.value.url = url
-
-  if (pwd) {
-    addAccountInput.value.pwd = pwd
-    MessagePlugin.success('已自动填写密码~')
-  }
+  await accountsStore.updateAccountData()
+  accountsStore.hideUpdateAccountDataDialog()
 }
 </script>
 

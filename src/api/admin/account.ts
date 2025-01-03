@@ -90,7 +90,10 @@ export type SingleAccount = {
         pwd: string
         dir: string
         save_cookie: string
+        save_bdstoken: string
         download_cookie: string
+        download_bdstoken: string
+        cid: number
       }
     }
 )
@@ -187,6 +190,19 @@ export type CheckBanStatusRes = {
 /** 检查账号封禁状态 */
 export const checkBanStatus = (data: CheckBanStatusReq) => {
   return http.request<CheckBanStatusRes>('post', '/admin/account/check_ban_status', {
+    data,
+  })
+}
+
+export interface UpdateData {
+  id: number[]
+  account_type: SingleAccount['account_type']
+  account_data: SingleAccount['account_data']
+}
+
+/** 更新账号信息 */
+export const updateData = (data: UpdateData) => {
+  return http.request<null>('post', '/admin/account/update_data', {
     data,
   })
 }

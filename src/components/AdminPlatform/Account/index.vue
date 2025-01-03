@@ -80,6 +80,7 @@
     <AddAccount />
     <UpdateSwitch />
     <UpdateProv />
+    <UpdateAccountData />
     <t-table
       row-key="id"
       resizable
@@ -117,9 +118,11 @@ import { type TableProps } from 'tdesign-vue-next'
 import AddAccount from './AddAccount.vue'
 import UpdateProv from './UpdateProv.vue'
 import UpdateSwitch from './UpdateSwitch.vue'
+import UpdateAccountData from './UpdateAccountData.vue'
 import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { formatBytes } from '@/utils/format.ts'
 import { storeToRefs } from 'pinia'
+import type { SingleAccount } from '@/api/admin/account.ts'
 
 const accountsStore = useAccountsStore()
 const { selectReq, accountList, pagination, selectedRowKeys } = storeToRefs(accountsStore)
@@ -203,14 +206,24 @@ const columns = ref<TableProps['columns']>([
     colKey: 'operation',
     title: '操作',
     cell: (h, { row }) => (
-      <t-button
-        theme='primary'
-        onClick={(event: PointerEvent) => accountsStore.checkAccountBanStatus(event, row.id)}
-      >
-        检查封禁状态
-      </t-button>
+      <>
+        <t-space>
+          <t-button
+            theme='primary'
+            onClick={(event: PointerEvent) => accountsStore.checkAccountBanStatus(event, row.id)}
+          >
+            检查封禁状态
+          </t-button>
+          <t-button
+            theme='primary'
+            onClick={(event: PointerEvent) => accountsStore.showUpdateAccountDataDialog(event, row as SingleAccount)}
+          >
+            编辑信息
+          </t-button>
+        </t-space>
+      </>
     ),
-    width: 150,
+    width: 250,
     fixed: 'right',
   },
 ])
