@@ -7,7 +7,6 @@ export interface GetConfigRes {
   max_download_daily_pre_account: number
   limit_cn: boolean
   limit_prov: boolean
-  fingerprint_for_ip: number
 }
 
 /** 获取配置文件 */
