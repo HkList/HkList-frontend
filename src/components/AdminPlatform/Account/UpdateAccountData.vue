@@ -58,10 +58,7 @@
           label="Surl"
           name="surl"
         >
-          <t-input
-            v-model="updateAccountDataInfo.account_data.surl"
-            disabled
-          />
+          <t-input v-model="updateAccountDataInfo.account_data.surl" />
         </t-form-item>
 
         <t-form-item
