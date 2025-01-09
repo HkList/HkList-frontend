@@ -14,6 +14,7 @@ import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 import { useConfigStore } from '@/stores/user/config'
+import { formatBytes } from '@/utils/format.ts'
 
 const configStore = useConfigStore()
 
@@ -117,6 +118,12 @@ export const useFileListStore = defineStore('fileList', () => {
     if (filteMaxSingleFilesize.length !== filteMinSingleFilesize.length) MessagePlugin.warning('文件过大不会被解析')
 
     const rows = filteMaxSingleFilesize
+    const sum = rows.reduce((prev, cur) => prev + cur.size, 0)
+
+    if (sum > config.max_all_filesize) {
+      MessagePlugin.error(`单次最多解析${formatBytes(config.max_all_filesize)}的文件`)
+      return
+    }
 
     if (rows.length > config.max_once) {
       MessagePlugin.error(`单次最多解析${config.max_once}个文件`)
