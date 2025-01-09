@@ -80,25 +80,29 @@ class Http {
         // 关闭进度条动画
         NProgress.done()
 
-        const message = error?.response?.data?.message
+        console.log(error)
 
-        if (message) {
-          if (message === 'Too Many Attempts.') {
-            MessagePlugin.error($t('axios.tooManyAttempts'))
-          } else if (message === '请检查 管理员 密码是否正确') {
-            MessagePlugin.error($t('axios.wrongAdminPassword'))
-            localStorage.clear()
-            router.push('/login')
-          } else {
-            MessagePlugin.error(message)
-            const data = error?.response?.data?.data
-            if (data) MessagePlugin.error('错误信息：' + JSON.stringify(data))
-          }
-        } else {
+        const message = error?.response?.data?.message as string
+
+        if (!message) {
           MessagePlugin.error($t('axios.serverError'))
+          return Promise.reject(error)
         }
 
-        console.log(error)
+        if (message === 'Too Many Attempts.') {
+          MessagePlugin.error($t('axios.tooManyAttempts'))
+        } else if (message === '请检查 管理员 密码是否正确') {
+          MessagePlugin.error($t('axios.wrongAdminPassword'))
+          localStorage.clear()
+          router.push('/login')
+        } else if (message.includes('-20')) {
+          MessagePlugin.info($t('axios.hitCaptcha'))
+        } else {
+          MessagePlugin.error(message)
+          const data = error?.response?.data?.data
+          if (data) MessagePlugin.error('错误信息：' + JSON.stringify(data))
+        }
+
         return Promise.reject(error)
       },
     )

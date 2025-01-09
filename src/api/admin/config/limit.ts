@@ -4,6 +4,7 @@ export interface GetConfigRes {
   max_once: number
   min_single_filesize: number
   max_single_filesize: number
+  max_all_filesize: number
   max_download_daily_pre_account: number
   limit_cn: boolean
   limit_prov: boolean

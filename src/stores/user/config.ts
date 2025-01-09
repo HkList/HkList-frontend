@@ -15,6 +15,7 @@ export const useConfigStore = defineStore('config', () => {
     max_once: 0,
     min_single_filesize: 0,
     max_single_filesize: 0,
+    max_all_filesize: 0,
     need_password: false,
     have_account: true,
   })

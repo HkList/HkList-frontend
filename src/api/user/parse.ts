@@ -11,6 +11,7 @@ export interface GetConfigRes {
   max_once: number
   min_single_filesize: number
   max_single_filesize: number
+  max_all_filesize: number
   need_password: boolean
   have_account: boolean
 }

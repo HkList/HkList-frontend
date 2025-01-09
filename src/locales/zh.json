@@ -2,6 +2,7 @@
   "axios": {
     "tooManyAttempts": "请求次数过多, 请稍后再试",
     "serverError": "服务器错误",
-    "wrongAdminPassword": "错误的管理员密码"
+    "wrongAdminPassword": "错误的管理员密码",
+    "hitCaptcha": "解析时遇到验证码,请输入验证码后重试"
   }
 }

@@ -40,6 +40,17 @@
       </t-form-item>
 
       <t-form-item
+        name="max_all_filesize"
+        label="单次最大一共能解析的文件大小 (GB)"
+      >
+        <t-input-number
+          :min="0"
+          v-model="formData.max_all_filesize"
+          auto-width
+        />
+      </t-form-item>
+
+      <t-form-item
         name="max_download_daily_pre_account"
         label="单个账号每日最大解析量 (GB)"
         help="不是用户,是后台设置的解析账号"
@@ -84,6 +95,7 @@ const formData = ref<UpdateConfigReq>({
   max_once: 0,
   min_single_filesize: 0,
   max_single_filesize: 0,
+  max_all_filesize: 0,
   max_download_daily_pre_account: 0,
   limit_cn: false,
   limit_prov: false,
@@ -93,6 +105,7 @@ const formRules: FormProps['rules'] = {
   max_once: [{ required: true, message: '请输入单次最大能解析多少文件' }],
   min_single_filesize: [{ required: true, message: '请输入单次最小能解析的文件大小' }],
   max_single_filesize: [{ required: true, message: '请输入单次最大能解析的文件大小' }],
+  max_all_filesize: [{ required: true, message: '请输入单次一共最大能解析的文件大小' }],
   max_download_daily_pre_account: [{ required: true, message: '请输入单个账号每日最大解析量' }],
 }
 
@@ -100,6 +113,7 @@ const getForm = async () => {
   const config = await getConfig()
   config.data.min_single_filesize = config.data.min_single_filesize / GB
   config.data.max_single_filesize = config.data.max_single_filesize / GB
+  config.data.max_all_filesize = config.data.max_all_filesize / GB
   config.data.max_download_daily_pre_account = config.data.max_download_daily_pre_account / GB
   formData.value = config.data
 }
@@ -113,6 +127,7 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
     ...formData.value,
     min_single_filesize: formData.value.min_single_filesize * GB,
     max_single_filesize: formData.value.max_single_filesize * GB,
+    max_all_filesize: formData.value.max_all_filesize / GB,
     max_download_daily_pre_account: formData.value.max_download_daily_pre_account * GB,
   })
   MessagePlugin.success('保存成功')
