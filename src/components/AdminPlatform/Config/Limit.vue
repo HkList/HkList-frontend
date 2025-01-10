@@ -4,7 +4,7 @@
       :data="formData"
       :rules="formRules"
       @submit="submitForm"
-      :labelWidth="230"
+      :labelWidth="270"
     >
       <t-form-item
         name="max_once"
