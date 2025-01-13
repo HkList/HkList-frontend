@@ -127,7 +127,7 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
     ...formData.value,
     min_single_filesize: formData.value.min_single_filesize * GB,
     max_single_filesize: formData.value.max_single_filesize * GB,
-    max_all_filesize: formData.value.max_all_filesize / GB,
+    max_all_filesize: formData.value.max_all_filesize * GB,
     max_download_daily_pre_account: formData.value.max_download_daily_pre_account * GB,
   })
   MessagePlugin.success('保存成功')
