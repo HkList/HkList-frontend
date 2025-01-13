@@ -94,7 +94,7 @@ const columns = ref<TableProps['columns']>([
     colKey: 'ua',
     title: 'UA',
     cell: (h, { row }) => (
-      <t-link onClick={() => copy(row.ua)}>
+      <t-link onClick={(event: PointerEvent) => copyLink(event, row.ua)}>
         <LinkIcon />
         {row.ua}
       </t-link>
@@ -109,13 +109,14 @@ const columns = ref<TableProps['columns']>([
     title: '操作',
     cell: (h, { row, rowIndex }) => (
       <>
-        <t-button onClick={() => reGetDownloadLinks(row as GetDownLoadLinksRes[number], rowIndex)}>重新解析</t-button>
+        <t-button onClick={(event: PointerEvent) => reGetDownloadLinks(event, row as GetDownLoadLinksRes[number], rowIndex)}>重新解析</t-button>
       </>
     ),
   },
 ])
 
-const reGetDownloadLinks = async (row: GetDownLoadLinksRes[number], rowIndex: number) => {
+const reGetDownloadLinks = async (event: PointerEvent, row: GetDownLoadLinksRes[number], rowIndex: number) => {
+  event.stopPropagation()
   const res = await fileListSotre.getDownloadLinks(row.fs_id)
   if (res) GetDownLoadLinksRes.value[rowIndex] = res[0]
 }
@@ -137,6 +138,11 @@ watch(GetDownLoadLinksRes, () => {
 const handlePageChange = () => {
   selectedRowKeys.value = []
   selectedRows.value = []
+}
+
+const copyLink = (event: PointerEvent, link: string) => {
+  event.stopPropagation()
+  copy(link)
 }
 </script>
 
