@@ -122,10 +122,6 @@ const matchUserAgent = () => {
     case 0:
       formData.value.user_agent = 'netdisk;7.42.0.5;PC'
       break
-    case 1:
-    case 2:
-      formData.value.user_agent = 'netdisk;P2SP;3.0.20.73;netdisk;4.36.2;PC;PC-Windows;10.0.19045;UniBaiduYunGuanJia'
-      break
     case 3:
       formData.value.user_agent = 'pan.baidu.com'
       break
@@ -135,6 +131,8 @@ const matchUserAgent = () => {
     case 5:
       formData.value.user_agent = 'netdisk;hklist'
       break
+    case 1:
+    case 2:
     case 6:
       formData.value.user_agent = 'netdisk;P2SP;3.0.20.73'
       break
