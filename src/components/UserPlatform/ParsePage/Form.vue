@@ -150,7 +150,7 @@ const parseUrl = () => {
 }
 
 const clearDir = () => {
-  GetFileListReq.value.dir = ''
+  GetFileListReq.value.dir = '/'
   GetFileListRes.value = undefined
   GetDownLoadLinksRes.value = []
 }
