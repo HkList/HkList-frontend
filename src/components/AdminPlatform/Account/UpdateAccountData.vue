@@ -19,7 +19,7 @@
           />
           <t-option
             label="企业"
-            value="enterprise_cokie"
+            value="enterprise_cookie"
           />
           <t-option
             label="开放平台"
@@ -34,7 +34,7 @@
 
       <template
         v-if="
-          (updateAccountDataInfo.account_type === 'cookie' || updateAccountDataInfo.account_type === 'enterprise_cokie') &&
+          (updateAccountDataInfo.account_type === 'cookie' || updateAccountDataInfo.account_type === 'enterprise_cookie') &&
           'cookie' in updateAccountDataInfo.account_data
         "
       >

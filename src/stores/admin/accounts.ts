@@ -94,7 +94,7 @@ export const useAccountsStore = defineStore('accounts', () => {
 
     const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie } = addAccountInput.value
 
-    if (addAccountType.value === 'cookie' || addAccountType.value === 'enterprise_cokie') {
+    if (addAccountType.value === 'cookie' || addAccountType.value === 'enterprise_cookie') {
       req.account_data = [{ cookie }]
     } else if (addAccountType.value === 'open_platform') {
       req.account_data = [{ refresh_token }]
