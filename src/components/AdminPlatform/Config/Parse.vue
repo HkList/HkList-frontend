@@ -128,11 +128,9 @@ const matchUserAgent = () => {
     case 4:
       formData.value.user_agent = 'Mozilla/5.0 (hklist-laravel;netdisk;svip)'
       break
-    case 5:
-      formData.value.user_agent = 'netdisk;hklist'
-      break
     case 1:
     case 2:
+    case 5:
     case 6:
       formData.value.user_agent = 'netdisk;P2SP;3.0.20.88'
       break
