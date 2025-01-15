@@ -126,7 +126,7 @@ const matchUserAgent = () => {
       formData.value.user_agent = 'pan.baidu.com'
       break
     case 4:
-      formData.value.user_agent = 'Mozilla/5.0 (94list-laravel;netdisk;svip)'
+      formData.value.user_agent = 'Mozilla/5.0 (hklist-laravel;netdisk;svip)'
       break
     case 5:
       formData.value.user_agent = 'netdisk;hklist'

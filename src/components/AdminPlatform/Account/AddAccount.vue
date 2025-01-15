@@ -19,7 +19,7 @@
           />
           <t-option
             label="企业"
-            value="enterprise_cokie"
+            value="enterprise_cookie"
           />
           <t-option
             label="开放平台"
@@ -32,7 +32,7 @@
         </t-select>
       </t-form-item>
 
-      <template v-if="addAccountType === 'cookie' || addAccountType === 'enterprise_cokie'">
+      <template v-if="addAccountType === 'cookie' || addAccountType === 'enterprise_cookie'">
         <t-form-item
           label="Cookie"
           name="cookie"
@@ -46,6 +46,14 @@
           name="refresh_token"
         >
           <t-input v-model="addAccountInput.refresh_token" />
+        </t-form-item>
+        <t-form-item label="获取链接">
+          <t-link
+            href="https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=iYCeC9g08h5vuP9UqvPHKKSVrKFXGa1v&redirect_uri=https://alist.nn.ci/tool/baidu/callback&scope=basic,netdisk&qrcode=1"
+            target="_blank"
+          >
+            点击跳转
+          </t-link>
         </t-form-item>
       </template>
       <template v-else-if="addAccountType === 'download_ticket'">
