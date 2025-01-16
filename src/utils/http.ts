@@ -71,7 +71,8 @@ class Http {
         // 关闭进度条动画
         NProgress.done()
         if (typeof response.data === 'string' && response.data.includes('SourceGuardian')) {
-          MessagePlugin.error('请先安装SourceGuardian组件')
+          MessagePlugin.error('请先安装SourceGuardian组件,具体报错详见跳转页')
+          setTimeout(() => window.open('/api/v1/user/parse/config'), 3000)
           throw new Error('SourceGuardian Not Found')
         }
         return response.data
