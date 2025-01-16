@@ -59,7 +59,7 @@ export const useFileListStore = defineStore('fileList', () => {
   }
 
   const GetLimitReq = ref<GetLimitReq>({
-    token: 'guest',
+    token: localStorage.getItem('token') ?? 'guest',
   })
   const GetLimitRes = ref<GetLimitRes>({
     count: 0,
@@ -73,6 +73,7 @@ export const useFileListStore = defineStore('fileList', () => {
       const res = await _getLimit(GetLimitReq.value)
       GetLimitRes.value = res.data
       GetLimitError.value = ''
+      localStorage.setItem('token', GetLimitReq.value.token)
     } catch (error) {
       const message = (error as { response: { data: { message: string } } })?.response?.data?.message
       if (message) GetLimitError.value = message
