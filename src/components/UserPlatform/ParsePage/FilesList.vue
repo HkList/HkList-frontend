@@ -22,6 +22,7 @@ import { ref } from 'vue'
 import type { TableProps } from 'tdesign-vue-next'
 import { formatBytes, formatTimestamp } from '@/utils/format.ts'
 import type { File } from '@/api/user/parse.ts'
+import { getFileIcon, iconList } from '@/utils/genFileIcon.ts'
 
 const fileListSotre = useFileListStore()
 const { GetFileListReq, GetFileListRes, selectedRowKeys } = storeToRefs(fileListSotre)
@@ -39,9 +40,11 @@ const columns = ref<TableProps['columns']>([
     cell: (h, { row }) => (
       <>
         <div class='filename'>
-          <img
+          <div
             class='ico'
-            src={row.is_dir ? '/images/folder.png' : '/images/file.png'}
+            style={{
+              backgroundImage: `url(${row.is_dir ? iconList['folder'] : getFileIcon(row.server_filename)})`,
+            }}
           />
           <span>{row.server_filename}</span>
         </div>
