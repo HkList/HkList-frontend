@@ -7,10 +7,14 @@ import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 export const useTokensStore = defineStore('tokens', () => {
-  const [selectReq, pagination, tokenList, getTokens] = useCommonStore<SelectReq, SelectRes>(select, () => {
-    selectedRowKeys.value = []
-    selectedRows.value = []
-  })
+  const [selectReq, pagination, tokenList, getTokens] = useCommonStore<SelectReq, SelectRes>(
+    select,
+    () => {
+      selectedRowKeys.value = []
+      selectedRows.value = []
+    },
+    { keyword: '' },
+  )
 
   const selectedRowKeys = ref<number[]>([])
   const selectedRows = ref<SelectRes>([])

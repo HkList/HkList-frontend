@@ -6,6 +6,7 @@ import type { BasePagenation } from '@/api/pagenation.ts'
 export const useCommonStore = <SelectReq, SelectRes>(
   select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>,
   onChange?: TdPaginationProps['onChange'],
+  extraReq: Partial<SelectReq> = {},
 ) => {
   const list = ref<SelectRes>([] as SelectRes)
 
@@ -26,6 +27,7 @@ export const useCommonStore = <SelectReq, SelectRes>(
   const selectReq = ref<SelectReq>({
     page: pagination.value?.current ?? 1,
     size: pagination.value?.pageSize ?? 5,
+    ...extraReq,
     column: 'id',
     direction: 'asc',
   } as SelectReq)

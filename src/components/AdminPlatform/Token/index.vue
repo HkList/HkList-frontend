@@ -64,6 +64,11 @@
             value="desc"
           />
         </t-select>
+        <t-input
+          v-model="selectReq.keyword"
+          @blur="tokensStore.getTokens"
+          placeholder="请输入需要查询的卡密"
+        />
         <t-button @click="tokensStore.getTokens"> 刷新列表 </t-button>
         <t-button @click="tokensStore.showAddingTokenDialog"> 添加卡密 </t-button>
         <t-button @click="tokensStore.deleteSelection"> 批量删除 </t-button>
