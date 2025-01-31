@@ -1,6 +1,25 @@
 <template>
   <t-layout>
-    <t-aside>
+    <t-header v-if="isMobile && isColScreen">
+      <t-head-menu
+        v-model="selectedMenu"
+        @change="changeMenu"
+      >
+        <template #logo>
+          <img
+            height="28"
+            :src="config.logo"
+            alt="logo"
+          />
+          <p class="logo-text">
+            {{ config.name }}
+          </p>
+        </template>
+
+        <slot></slot>
+      </t-head-menu>
+    </t-header>
+    <t-aside v-else>
       <t-menu
         v-model="selectedMenu"
         @change="changeMenu"
@@ -74,7 +93,7 @@ const changeCollapsed = () => {
   collapsed.value = !collapsed.value
 }
 
-const [isColScreen] = useMobile()
+const [isColScreen, isMobile] = useMobile()
 watch(
   isColScreen,
   (val) => {
