@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  overflow-wrap: break-word;
 }
 
 body {
@@ -30,7 +31,7 @@ body {
 }
 
 .content {
-  min-width: 500px;
+  // min-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -63,6 +64,7 @@ body {
   width: 30px;
   height: 30px;
   margin-right: 15px;
+  background-size: contain;
 }
 
 .filename {
@@ -85,4 +87,39 @@ body {
 ::-webkit-scrollbar-thumb:vertical:hover,
 ::-webkit-scrollbar-thumb:horizontal:hover {
   background-color: var(--td-scrollbar-hover-color);
+}
+
+.t-layout__header {
+  height: fit-content;
+}
+
+.t-head-menu__inner {
+  height: fit-content;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+}
+
+.t-head-menu .t-menu__logo {
+  justify-content: center;
+  width: 100%;
+}
+
+.t-head-menu .t-menu__logo img {
+  margin-left: 0;
+}
+
+.t-head-menu .t-menu {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+  .t-space-horizontal {
+    flex-direction: column;
+  }
+}
+
+.t-card__body {
+  overflow: auto;
 }
