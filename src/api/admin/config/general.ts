@@ -6,6 +6,7 @@ export interface GetConfigRes {
   show_hero: boolean
   show_announce: boolean
   announce: string
+  custom_script: string
   custom_button: string
   debug: boolean
   name: string
@@ -25,6 +26,7 @@ export interface UpdateConfigReq {
   show_hero: boolean
   show_announce: boolean
   announce: string
+  custom_script: string
   custom_button: string
   debug: boolean
   name: string

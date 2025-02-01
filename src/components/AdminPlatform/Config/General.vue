@@ -61,6 +61,14 @@
       </t-form-item>
 
       <t-form-item
+        name="custom_script"
+        label="自定义JS脚本"
+        help="无需script标签"
+      >
+        <t-textarea v-model="formData.custom_script" />
+      </t-form-item>
+
+      <t-form-item
         name="custom_button"
         label="自定义按钮"
         help="按钮名称|点击跳转的链接 每行一个"
@@ -120,6 +128,7 @@ const formData = ref<UpdateConfigReq>({
   parse_password: '',
   show_announce: false,
   announce: '',
+  custom_script: '',
   custom_button: '',
   debug: false,
   show_hero: false,
@@ -134,6 +143,7 @@ const generalConfig = ref<GetConfigRes>({
   parse_password: '',
   show_announce: false,
   announce: '',
+  custom_script: '',
   custom_button: '',
   debug: false,
   show_hero: false,
