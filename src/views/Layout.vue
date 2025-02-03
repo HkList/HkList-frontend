@@ -69,7 +69,7 @@ import { useSelectMenu } from '@/utils/use/useSelectMenu.ts'
 import { useConfigStore } from '@/stores/user/config.ts'
 import { storeToRefs } from 'pinia'
 import { useMobile } from '@/utils/use/useMobile.ts'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
@@ -94,13 +94,6 @@ const changeCollapsed = () => {
 }
 
 const [isColScreen, isMobile] = useMobile()
-watch(
-  isColScreen,
-  (val) => {
-    collapsed.value = val
-  },
-  { immediate: true },
-)
 </script>
 
 <style lang="scss" scoped></style>
