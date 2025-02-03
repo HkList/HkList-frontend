@@ -90,11 +90,11 @@ body {
 }
 
 .t-layout__header {
-  height: fit-content;
+  height: fit-content !important;
 }
 
 .t-head-menu__inner {
-  height: fit-content;
+  height: fit-content !important;
   flex-direction: column;
   gap: 20px;
   padding: 10px;
@@ -112,6 +112,7 @@ body {
 .t-head-menu .t-menu {
   flex-wrap: wrap;
   justify-content: center;
+  gap: 5px;
 }
 
 @media screen and (max-width: 500px) {
