@@ -14,6 +14,7 @@ export interface GetConfigRes {
   max_all_filesize: number
   need_password: boolean
   have_account: boolean
+  allow_folder: boolean
 }
 
 /** 获取配置信息 */

@@ -4,7 +4,7 @@
       :data="formData"
       :rules="formRules"
       @submit="submitForm"
-      :labelWidth="130"
+      :labelWidth="150"
     >
       <t-form-item
         name="parser_server"
@@ -75,6 +75,13 @@
         <t-switch v-model="formData.use_exploit" />
       </t-form-item>
 
+      <t-form-item
+        name="allow_folder"
+        label="允许客户端解析文件夹"
+      >
+        <t-switch v-model="formData.allow_folder" />
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
           <t-button type="submit"> 保存 </t-button>
@@ -96,6 +103,7 @@ const formData = ref<UpdateConfigReq>({
   parse_mode: 1,
   user_agent: '',
   use_exploit: false,
+  allow_folder: false,
 })
 
 const formRules: FormProps['rules'] = {
