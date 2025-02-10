@@ -19,7 +19,7 @@
         <t-space v-if="GetLimitError.length === 0">
           <span>剩余可解析文件数: {{ GetLimitRes.count }}</span>
           <span>剩余可解析大小: {{ formatBytes(GetLimitRes.size) }}</span>
-          <span>到期时间: {{ GetLimitRes.expires_at }}</span>
+          <span>到期时间: {{ GetLimitRes.expires_at ?? '未使用过' }}</span>
         </t-space>
         <span v-else>
           {{ GetLimitError }}
