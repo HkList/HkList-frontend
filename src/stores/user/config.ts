@@ -18,6 +18,7 @@ export const useConfigStore = defineStore('config', () => {
     max_all_filesize: 0,
     need_password: false,
     have_account: true,
+    allow_folder: false,
   })
   const getConfig = async () => {
     const res = await _getConfig()

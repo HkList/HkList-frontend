@@ -163,7 +163,6 @@ const formRules: FormProps['rules'] = {
 
 onMounted(() => {
   fileListSotre.getLimit()
-  configStore.getConfig()
 })
 
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {

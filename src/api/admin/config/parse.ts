@@ -6,6 +6,7 @@ export interface GetConfigRes {
   parse_mode: number
   user_agent: string
   use_exploit: boolean
+  allow_folder: boolean
 }
 
 /** 获取配置文件 */
