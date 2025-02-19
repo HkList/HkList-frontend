@@ -1,20 +1,20 @@
 import {
-  type GetFileListReq,
-  type GetFileListRes,
-  getFileList as _getFileList,
-  type GetLimitReq,
-  type GetLimitRes,
-  getLimit as _getLimit,
   type File,
   type GetDownLoadLinksRes,
+  type GetFileListReq,
+  type GetFileListRes,
+  type GetLimitReq,
+  type GetLimitRes,
   getDownloadLinks as _getDownloadLinks,
+  getFileList as _getFileList,
+  getLimit as _getLimit,
   getVcode,
 } from '@/api/user/parse.ts'
+import { useConfigStore } from '@/stores/user/config'
+import { formatBytes } from '@/utils/format.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
-import { useConfigStore } from '@/stores/user/config'
-import { formatBytes } from '@/utils/format.ts'
 
 const configStore = useConfigStore()
 

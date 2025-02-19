@@ -1,7 +1,7 @@
+import type { BasePagenation } from '@/api/pagenation.ts'
+import type { baseResponse } from '@/utils/http.ts'
 import type { TableProps, TdPaginationProps } from 'tdesign-vue-next'
 import { ref, type Ref } from 'vue'
-import type { baseResponse } from '@/utils/http.ts'
-import type { BasePagenation } from '@/api/pagenation.ts'
 
 export const useCommonStore = <SelectReq, SelectRes>(
   select: (param: SelectReq) => Promise<baseResponse<BasePagenation<SelectRes>>>,

@@ -1,13 +1,11 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import { useI18n } from '@/utils/use/usei18n.ts'
+import '@/assets/base.scss'
+import 'tdesign-vue-next/es/style/index.css'
 
 import App from '@/App.vue'
 import router from '@/router/index.ts'
-
-// 引入组件库的少量全局样式变量
-import 'tdesign-vue-next/es/style/index.css'
-import '@/assets/base.scss'
+import { useI18n } from '@/utils/use/usei18n.ts'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 
 const app = createApp(App)
 

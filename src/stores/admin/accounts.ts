@@ -1,17 +1,17 @@
 import {
+  checkBanStatus,
   insert,
   remove,
   select,
   update,
-  updateInfo,
-  checkBanStatus,
   updateData,
+  updateInfo,
   type InsertReq,
   type SelectReq,
   type SelectRes,
-  type UpdateReq,
   type SingleAccount,
   type UpdateData,
+  type UpdateReq,
 } from '@/api/admin/account.ts'
 import { formatTimestamp } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'

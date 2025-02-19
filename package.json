@@ -4,9 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-s type-check lint build:modify build-only build:recovery",
-    "build:modify": "tsx build/modify.ts",
-    "build:recovery": "tsx build/recovery.ts",
+    "build": "run-s type-check lint build-only",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",

@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
 import { type GetHistoryReq, type GetHistoryRes, getHistory as _getHistory } from '@/api/user/history.ts'
-import { useCommonStore } from '@/utils/use/useCommonStore.ts'
-import { ref } from 'vue'
 import { type DownloadRows } from '@/stores/user/aria2'
+import { useCommonStore } from '@/utils/use/useCommonStore.ts'
+import { defineStore } from 'pinia'
 import type { TableProps } from 'tdesign-vue-next'
+import { ref } from 'vue'
 
 export const useHistoryStore = defineStore('history', () => {
   const [selectReq, pagination, historyList, getHistory] = useCommonStore<GetHistoryReq, GetHistoryRes>(_getHistory, () => {

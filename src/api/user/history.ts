@@ -1,5 +1,5 @@
-import { http } from '@/utils/http.ts'
 import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
+import { http } from '@/utils/http.ts'
 
 export type GetHistoryReq = PagenationReq & {
   token: string

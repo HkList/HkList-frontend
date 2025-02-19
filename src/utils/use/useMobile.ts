@@ -1,6 +1,6 @@
+import { isMobile as _isMobile } from '@/utils/isMobile.ts'
 import { MessagePlugin } from 'tdesign-vue-next'
 import { ref } from 'vue'
-import { isMobile as _isMobile } from '@/utils/isMobile.ts'
 import { useRouter } from 'vue-router'
 
 export const useMobile = () => {
