@@ -65,7 +65,7 @@ export type SingleAccount = {
       }
     }
   | {
-      account_type: 'enterprise_cookie'
+      account_type: 'enterprise_cookie' | 'enterprise_cookie_photography'
       account_data: {
         cookie: string
         cid: number
@@ -109,7 +109,7 @@ export const select = (data: SelectReq) => {
 
 export type InsertReq =
   | {
-      account_type: 'cookie' | 'enterprise_cookie'
+      account_type: 'cookie' | 'enterprise_cookie' | 'enterprise_cookie_photography'
       account_data: {
         cookie: string
       }[]

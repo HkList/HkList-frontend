@@ -22,6 +22,10 @@
             value="enterprise_cookie"
           />
           <t-option
+            label="企业-摄影版"
+            value="enterprise_cookie_photography"
+          />
+          <t-option
             label="开放平台"
             value="open_platform"
           />
@@ -32,7 +36,7 @@
         </t-select>
       </t-form-item>
 
-      <template v-if="addAccountType === 'cookie' || addAccountType === 'enterprise_cookie'">
+      <template v-if="addAccountType === 'cookie' || addAccountType === 'enterprise_cookie' || addAccountType === 'enterprise_cookie_photography'">
         <t-form-item
           label="Cookie"
           name="cookie"
