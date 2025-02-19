@@ -1,5 +1,5 @@
-import { createI18n } from 'vue-i18n'
 import zh from '@/locales/zh.json'
+import { createI18n } from 'vue-i18n'
 
 export const useI18n = () => {
   return createI18n({

@@ -1,17 +1,17 @@
 import {
+  checkBanStatus,
   insert,
   remove,
   select,
   update,
-  updateInfo,
-  checkBanStatus,
   updateData,
+  updateInfo,
   type InsertReq,
   type SelectReq,
   type SelectRes,
-  type UpdateReq,
   type SingleAccount,
   type UpdateData,
+  type UpdateReq,
 } from '@/api/admin/account.ts'
 import { formatTimestamp } from '@/utils/format.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
@@ -94,7 +94,11 @@ export const useAccountsStore = defineStore('accounts', () => {
 
     const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie } = addAccountInput.value
 
-    if (addAccountType.value === 'cookie' || addAccountType.value === 'enterprise_cookie') {
+    if (
+      addAccountType.value === 'cookie' ||
+      addAccountType.value === 'enterprise_cookie' ||
+      addAccountType.value === 'enterprise_cookie_photography'
+    ) {
       req.account_data = [{ cookie }]
     } else if (addAccountType.value === 'open_platform') {
       req.account_data = [{ refresh_token }]

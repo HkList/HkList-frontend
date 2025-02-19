@@ -22,6 +22,10 @@
             value="enterprise_cookie"
           />
           <t-option
+            label="企业-摄影版"
+            value="enterprise_cookie_photography"
+          />
+          <t-option
             label="开放平台"
             value="open_platform"
           />
@@ -34,7 +38,9 @@
 
       <template
         v-if="
-          (updateAccountDataInfo.account_type === 'cookie' || updateAccountDataInfo.account_type === 'enterprise_cookie') &&
+          (updateAccountDataInfo.account_type === 'cookie' ||
+            updateAccountDataInfo.account_type === 'enterprise_cookie' ||
+            updateAccountDataInfo.account_type === 'enterprise_cookie_photography') &&
           'cookie' in updateAccountDataInfo.account_data
         "
       >

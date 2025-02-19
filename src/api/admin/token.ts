@@ -1,5 +1,5 @@
-import { http } from '@/utils/http.ts'
 import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
+import { http } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'token' | 'count' | 'size' | 'day' | 'can_use_ip_count' | 'ip' | 'expires_at' | 'created_at' | 'updated_at' | 'deleted_at'

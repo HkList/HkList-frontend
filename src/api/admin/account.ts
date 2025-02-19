@@ -1,5 +1,5 @@
-import { http, type baseResponse } from '@/utils/http.ts'
 import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
+import { http, type baseResponse } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'baidu_name' | 'uk' | 'account_type' | 'account_data' | 'switch' | 'reason' | 'prov' | 'created_at' | 'updated_at' | 'deleted_at'
@@ -65,7 +65,7 @@ export type SingleAccount = {
       }
     }
   | {
-      account_type: 'enterprise_cookie'
+      account_type: 'enterprise_cookie' | 'enterprise_cookie_photography'
       account_data: {
         cookie: string
         cid: number
@@ -109,7 +109,7 @@ export const select = (data: SelectReq) => {
 
 export type InsertReq =
   | {
-      account_type: 'cookie' | 'enterprise_cookie'
+      account_type: 'cookie' | 'enterprise_cookie' | 'enterprise_cookie_photography'
       account_data: {
         cookie: string
       }[]

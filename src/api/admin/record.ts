@@ -1,7 +1,7 @@
-import { http } from '@/utils/http.ts'
-import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
 import type { SelectRes as AccountSelectRes } from '@/api/admin/account.ts'
 import type { SelectRes as TokenSelectRes } from '@/api/admin/token.ts'
+import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
+import { http } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'ip' | 'fingerprint' | 'fs_id' | 'urls' | 'ua' | 'token_id' | 'account_id' | 'created_at' | 'updated_at'

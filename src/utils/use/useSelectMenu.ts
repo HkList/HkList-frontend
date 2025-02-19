@@ -1,6 +1,6 @@
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 import { type MenuProps } from 'tdesign-vue-next'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export const useSelectMenu = (jumpPath: string, defaultValue: string) => {
   const router = useRouter()
