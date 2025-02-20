@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { MessagePlugin } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
+import { useFileListStore } from './fileList.ts'
 
 export interface Aria2Config {
   host: string
@@ -9,10 +10,13 @@ export interface Aria2Config {
 }
 
 export type DownloadRows = {
-  urls: string[]
   filename: string
+  fs_id?: number
   ua: string
+  urls: string[]
 }[]
+
+const fileListStore = useFileListStore()
 
 export const useAria2Store = defineStore('aria2', () => {
   const aria2ConfigDialogVisible = ref(false)
@@ -105,9 +109,15 @@ export const useAria2Store = defineStore('aria2', () => {
     MessagePlugin.success('添加链接成功')
   }
 
-  const downloadLinks = async (rows: DownloadRows) => {
+  const downloadLinks = async (rows: DownloadRows, index = 0) => {
     for (const row of rows) {
-      await addAria2Url(row.urls[0], row.filename, row.ua, 16)
+      let filename = row.filename
+      if (row.fs_id && fileListStore.GetFileListRes) {
+        // 查询 path 参数
+        const file = fileListStore.GetFileListRes.list.find((file) => file.fs_id === row.fs_id)
+        if (file) filename = file.path
+      }
+      await addAria2Url(row.urls[index], filename, row.ua, 16)
     }
   }
 
