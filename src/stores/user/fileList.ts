@@ -1,19 +1,19 @@
 import {
+  getDownloadLinks as _getDownloadLinks,
+  getFileList as _getFileList,
+  getLimit as _getLimit,
+  getVcode,
   type File,
   type GetDownLoadLinksRes,
   type GetFileListReq,
   type GetFileListRes,
   type GetLimitReq,
   type GetLimitRes,
-  getDownloadLinks as _getDownloadLinks,
-  getFileList as _getFileList,
-  getLimit as _getLimit,
-  getVcode,
 } from '@/api/user/parse.ts'
 import { useConfigStore } from '@/stores/user/config'
 import { formatBytes } from '@/utils/format.ts'
 import { defineStore } from 'pinia'
-import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
+import { MessagePlugin, type MessageInstance, type TableProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 const configStore = useConfigStore()
@@ -110,7 +110,7 @@ export const useFileListStore = defineStore('fileList', () => {
     }
 
     const filteFolders = selectedRows.value.filter((item) => item && !item.is_dir)
-    if (filteFolders.length !== selectedRows.value.length) MessagePlugin.warning('文件夹不会进行解析,已忽略')
+    if (filteFolders.length !== selectedRows.value.length) MessagePlugin.warning('暂时不支持解析文件夹')
 
     const filteMinSingleFilesize = filteFolders.filter((file) => file.size > config.min_single_filesize)
     if (filteMinSingleFilesize.length !== filteFolders.length) MessagePlugin.warning('文件过小不会被解析')
@@ -138,26 +138,56 @@ export const useFileListStore = defineStore('fileList', () => {
 
     try {
       pending.value = true
-      const res = await _getDownloadLinks({
-        randsk: GetFileListRes.value!.randsk,
-        uk: GetFileListRes.value!.uk,
-        shareid: GetFileListRes.value!.shareid,
-        fs_id: typeof event === 'number' ? [event] : rows.map((v) => v.fs_id),
-        surl: GetFileListReq.value.surl,
-        dir: GetFileListReq.value.dir,
-        pwd: GetFileListReq.value.pwd,
-        token: GetLimitReq.value.token,
-        parse_password: GetFileListReq.value.parse_password,
-        ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
-      })
+      vcode.value.hit_captcha = false
+
       if (typeof event === 'number') {
+        const res = await _getDownloadLinks({
+          randsk: GetFileListRes.value!.randsk,
+          uk: GetFileListRes.value!.uk,
+          shareid: GetFileListRes.value!.shareid,
+          fs_id: [event],
+          surl: GetFileListReq.value.surl,
+          dir: GetFileListReq.value.dir,
+          pwd: GetFileListReq.value.pwd,
+          token: GetLimitReq.value.token,
+          parse_password: GetFileListReq.value.parse_password,
+          ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
+        })
         MessagePlugin.success('重新解析成功')
         return res.data
       } else {
+        const res: GetDownLoadLinksRes = []
+        let message: MessageInstance | null = null
+
+        try {
+          for (const index in rows) {
+            const row = rows[index]
+            if (message) message.close()
+            message = await MessagePlugin.loading(`正在解析第${parseFloat(index) + 1}个文件:${row.server_filename}`, 9999999)
+
+            const link = await _getDownloadLinks({
+              randsk: GetFileListRes.value!.randsk,
+              uk: GetFileListRes.value!.uk,
+              shareid: GetFileListRes.value!.shareid,
+              fs_id: [row.fs_id],
+              surl: GetFileListReq.value.surl,
+              dir: GetFileListReq.value.dir,
+              pwd: GetFileListReq.value.pwd,
+              token: GetLimitReq.value.token,
+              parse_password: GetFileListReq.value.parse_password,
+              ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
+            })
+            res.push(...link.data)
+          }
+        } catch (error) {
+          if (message) message.close()
+          throw error
+        }
+
+        if (message) message.close()
         MessagePlugin.success('解析成功,下滑查看解析结果')
-        GetDownLoadLinksRes.value = res.data
+        GetDownLoadLinksRes.value = res
       }
-      vcode.value.hit_captcha = false
     } catch (_error) {
       const error = _error as { response: { data: { message: string } } }
       if (error?.response?.data?.message?.includes('-20')) {

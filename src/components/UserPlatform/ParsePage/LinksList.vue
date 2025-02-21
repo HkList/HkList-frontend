@@ -46,7 +46,7 @@
                 <t-space>
                   <t-tag size="large"> 第 {{ index + 1 }} 条 </t-tag>
                   <t-button @click="copy(url)">复制</t-button>
-                  <t-button @click="aria2Store.addAria2Url(url, row.filename, row.ua, 16)">发送到Aria2下载器</t-button>
+                  <t-button @click="aria2Store.downloadLinks(row, index)">发送到Aria2下载器</t-button>
                 </t-space>
                 <p>
                   {{ url }}
@@ -125,9 +125,7 @@ const selectedRowKeys = ref<number[]>([])
 const selectedRows = ref<DownloadRows>([])
 const handleSelectChange: TableProps['onSelectChange'] = (value, ctx) => {
   selectedRowKeys.value = value as number[]
-  selectedRows.value = (ctx.selectedRowData as GetDownLoadLinksRes)
-    .filter((row) => row.urls)
-    .map((row) => ({ filename: row.filename, urls: row.urls, ua: row.ua })) as DownloadRows
+  selectedRows.value = (ctx.selectedRowData as GetDownLoadLinksRes).filter((row) => row.urls) as DownloadRows
 }
 
 watch(GetDownLoadLinksRes, () => {
