@@ -4,6 +4,7 @@
       :data="formData"
       :rules="formRules"
       @submit="submitForm"
+      :labelWidth="130"
     >
       <t-form-item
         name="frontend_version"

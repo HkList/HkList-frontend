@@ -11,7 +11,10 @@ export const useSelectMenu = (jumpPath: string, defaultValue: string) => {
   const changeMenu: MenuProps['onChange'] = (value) => {
     value = value.toString()
 
-    if (value.includes('link')) return window.open(value.split('-')[1])
+    if (value.includes('link')) {
+      selectedMenu.value = router.currentRoute.value.path.split(jumpPath).pop()?.slice(1) || defaultValue
+      return window.open(value.split('-')[1])
+    }
     selectedMenu.value = value
     router.push({ path: `/${jumpPath}/${value}` })
   }
