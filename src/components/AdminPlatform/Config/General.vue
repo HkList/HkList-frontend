@@ -105,6 +105,13 @@
         <t-switch v-model="formData.show_hero" />
       </t-form-item>
 
+      <t-form-item
+        name="disable_check_rand"
+        label="禁用接口参数校验"
+      >
+        <t-switch v-model="formData.disable_check_rand" />
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
           <t-button type="submit"> 保存 </t-button>
@@ -134,6 +141,7 @@ const formData = ref<UpdateConfigReq>({
   show_hero: false,
   name: '',
   logo: '',
+  disable_check_rand: true,
 })
 
 const generalConfig = ref<GetConfigRes>({
@@ -149,6 +157,7 @@ const generalConfig = ref<GetConfigRes>({
   show_hero: false,
   name: '',
   logo: '',
+  disable_check_rand: true,
 })
 
 const formRules: FormProps['rules'] = {

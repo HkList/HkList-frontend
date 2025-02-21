@@ -13,6 +13,7 @@ export interface GetConfigRes {
   logo: string
   version: string
   frontend_version: string
+  disable_check_rand: boolean
 }
 
 /** 获取配置文件 */
@@ -31,6 +32,7 @@ export interface UpdateConfigReq {
   debug: boolean
   name: string
   logo: string
+  disable_check_rand: boolean
 }
 
 /** 更新配置文件 */
