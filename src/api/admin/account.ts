@@ -78,7 +78,6 @@ export type SingleAccount = {
         access_token: string
         refresh_token: string
         token_expires_at: string
-        cookie: string
         vip_type: '普通用户' | '普通会员' | '超级会员'
         expires_at: string
       }
