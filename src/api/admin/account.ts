@@ -1,5 +1,5 @@
 import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
-import { http, type baseResponse } from '@/utils/http.ts'
+import { http, type BaseResponse } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'baidu_name' | 'uk' | 'account_type' | 'account_data' | 'switch' | 'reason' | 'prov' | 'created_at' | 'updated_at' | 'deleted_at'
@@ -176,7 +176,7 @@ export interface CheckBanStatusReq {
 export type CheckBanStatusRes = {
   account_type: InsertReq['account_type']
   id: number
-  status: baseResponse<{
+  status: BaseResponse<{
     ban_msg: string
     ban_reason: string
     ban_status: boolean

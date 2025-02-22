@@ -23,7 +23,7 @@ const defaultConfig: AxiosRequestConfig = {
   },
 }
 
-export interface baseResponse<T> {
+export interface BaseResponse<T> {
   code: number
   message: string
   data: T
@@ -110,7 +110,7 @@ class Http {
   }
 
   /** 通用请求工具函数 */
-  public request<T>(method: Method, url: string, param?: AxiosRequestConfig): Promise<baseResponse<T>> {
+  public request<T>(method: Method, url: string, param?: AxiosRequestConfig): Promise<BaseResponse<T>> {
     return Http.axiosInstance.request({
       method,
       url,
@@ -120,12 +120,12 @@ class Http {
 
   /** 单独抽离的`post`工具函数 */
   public post<T, P>(url: string, params?: AxiosRequestConfig<P>) {
-    return this.request<baseResponse<T>>('post', url, params)
+    return this.request<BaseResponse<T>>('post', url, params)
   }
 
   /** 单独抽离的`get`工具函数 */
   public get<T, P>(url: string, params?: AxiosRequestConfig<P>) {
-    return this.request<baseResponse<T>>('get', url, params)
+    return this.request<BaseResponse<T>>('get', url, params)
   }
 }
 
