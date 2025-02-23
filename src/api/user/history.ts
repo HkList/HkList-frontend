@@ -3,7 +3,6 @@ import { http } from '@/utils/http.ts'
 
 export type GetHistoryReq = PagenationReq & {
   token: string
-  fingerprint: string
 }
 
 export interface GetHistoryRes {

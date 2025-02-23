@@ -29,7 +29,7 @@ export interface GetLimitReq {
 export interface GetLimitRes {
   count: number
   size: number
-  expires_at: string
+  expires_at: string | null
 }
 
 /** 获取当前卡密信息 */

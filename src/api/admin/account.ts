@@ -139,15 +139,6 @@ export const insert = (data: InsertReq) => {
   return http.request<InsertRes>('post', '/admin/account', { data })
 }
 
-export interface UpdateInfoReq {
-  id: number[]
-}
-
-/** 更新账号信息 */
-export const updateInfo = (data: UpdateInfoReq) => {
-  return http.request<null>('post', '/admin/account/update_info', { data })
-}
-
 export interface UpdateReq {
   switch?: boolean
   prov?: SingleAccount['prov']
@@ -157,6 +148,28 @@ export interface UpdateReq {
 /** 更新 */
 export const update = (data: UpdateReq) => {
   return http.request<null>('patch', '/admin/account', { data })
+}
+
+export interface UpdateInfoReq {
+  id: number[]
+}
+
+/** 更新账号信息 */
+export const updateInfo = (data: UpdateInfoReq) => {
+  return http.request<null>('post', '/admin/account/update_info', { data })
+}
+
+export interface UpdateData {
+  id: number[]
+  account_type: SingleAccount['account_type']
+  account_data: SingleAccount['account_data']
+}
+
+/** 更新账号信息 */
+export const updateData = (data: UpdateData) => {
+  return http.request<null>('post', '/admin/account/update_data', {
+    data,
+  })
 }
 
 export interface RemoveReq {
@@ -189,19 +202,6 @@ export type CheckBanStatusRes = {
 /** 检查账号封禁状态 */
 export const checkBanStatus = (data: CheckBanStatusReq) => {
   return http.request<CheckBanStatusRes>('post', '/admin/account/check_ban_status', {
-    data,
-  })
-}
-
-export interface UpdateData {
-  id: number[]
-  account_type: SingleAccount['account_type']
-  account_data: SingleAccount['account_data']
-}
-
-/** 更新账号信息 */
-export const updateData = (data: UpdateData) => {
-  return http.request<null>('post', '/admin/account/update_data', {
     data,
   })
 }
