@@ -29,7 +29,7 @@ export interface GetLimitReq {
 export interface GetLimitRes {
   count: number
   size: number
-  expires_at: string
+  expires_at: string | null
 }
 
 /** 获取当前卡密信息 */
@@ -106,7 +106,7 @@ export interface GetDownloadLinksReq {
 }
 
 export type GetDownLoadLinksRes = {
-  message: '请求成功'
+  message: string
   filename: string
   fs_id: number
   ua: string

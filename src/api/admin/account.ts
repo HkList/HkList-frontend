@@ -1,5 +1,5 @@
 import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
-import { http, type baseResponse } from '@/utils/http.ts'
+import { http, type BaseResponse } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
   column: 'id' | 'baidu_name' | 'uk' | 'account_type' | 'account_data' | 'switch' | 'reason' | 'prov' | 'created_at' | 'updated_at' | 'deleted_at'
@@ -78,7 +78,6 @@ export type SingleAccount = {
         access_token: string
         refresh_token: string
         token_expires_at: string
-        cookie: string
         vip_type: '普通用户' | '普通会员' | '超级会员'
         expires_at: string
       }
@@ -140,15 +139,6 @@ export const insert = (data: InsertReq) => {
   return http.request<InsertRes>('post', '/admin/account', { data })
 }
 
-export interface UpdateInfoReq {
-  id: number[]
-}
-
-/** 更新账号信息 */
-export const updateInfo = (data: UpdateInfoReq) => {
-  return http.request<null>('post', '/admin/account/update_info', { data })
-}
-
 export interface UpdateReq {
   switch?: boolean
   prov?: SingleAccount['prov']
@@ -158,6 +148,28 @@ export interface UpdateReq {
 /** 更新 */
 export const update = (data: UpdateReq) => {
   return http.request<null>('patch', '/admin/account', { data })
+}
+
+export interface UpdateInfoReq {
+  id: number[]
+}
+
+/** 更新账号信息 */
+export const updateInfo = (data: UpdateInfoReq) => {
+  return http.request<null>('post', '/admin/account/update_info', { data })
+}
+
+export interface UpdateData {
+  id: number[]
+  account_type: SingleAccount['account_type']
+  account_data: SingleAccount['account_data']
+}
+
+/** 更新账号信息 */
+export const updateData = (data: UpdateData) => {
+  return http.request<null>('post', '/admin/account/update_data', {
+    data,
+  })
 }
 
 export interface RemoveReq {
@@ -176,7 +188,7 @@ export interface CheckBanStatusReq {
 export type CheckBanStatusRes = {
   account_type: InsertReq['account_type']
   id: number
-  status: baseResponse<{
+  status: BaseResponse<{
     ban_msg: string
     ban_reason: string
     ban_status: boolean
@@ -190,19 +202,6 @@ export type CheckBanStatusRes = {
 /** 检查账号封禁状态 */
 export const checkBanStatus = (data: CheckBanStatusReq) => {
   return http.request<CheckBanStatusRes>('post', '/admin/account/check_ban_status', {
-    data,
-  })
-}
-
-export interface UpdateData {
-  id: number[]
-  account_type: SingleAccount['account_type']
-  account_data: SingleAccount['account_data']
-}
-
-/** 更新账号信息 */
-export const updateData = (data: UpdateData) => {
-  return http.request<null>('post', '/admin/account/update_data', {
     data,
   })
 }
