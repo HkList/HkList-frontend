@@ -158,10 +158,11 @@ export const useFileListStore = defineStore('fileList', () => {
       } else {
         const res: GetDownLoadLinksRes = []
         let message: MessageInstance | null = null
+        let row: File
 
         try {
           for (const index in rows) {
-            const row = rows[index]
+            row = rows[index]
             if (message) message.close()
             message = await MessagePlugin.loading(`正在解析第${parseFloat(index) + 1}个文件:${row.server_filename}`, 9999999)
 
@@ -178,9 +179,16 @@ export const useFileListStore = defineStore('fileList', () => {
               ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
             })
             res.push(...link.data)
+
+            // 取消选中
+            if (row === null) continue
+            selectedRowKeys.value = selectedRowKeys.value.filter((item) => item !== row.fs_id)
+            selectedRows.value = selectedRows.value.filter((item) => item.fs_id !== row.fs_id)
           }
         } catch (error) {
           if (message) message.close()
+          GetDownLoadLinksRes.value = res
+          MessagePlugin.success('部分解析成功,下滑查看解析结果')
           throw error
         }
 
