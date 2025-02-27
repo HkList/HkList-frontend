@@ -101,6 +101,7 @@
               @click="changeTimestamp"
             />
           </t-form-item>
+
           <t-form-item
             label="验证码字符"
             name="vcode_input"
