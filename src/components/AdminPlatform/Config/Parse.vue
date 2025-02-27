@@ -30,32 +30,36 @@
           @blur="matchUserAgent"
         >
           <t-option
-            label="V0免费"
+            label="V0免费-SVIP-盘内"
             :value="0"
           />
           <t-option
-            label="V1盘内"
+            label="V1-SVIP-盘内"
             :value="1"
           />
           <t-option
-            label="V2盘外"
+            label="V2-SVIP-盘外"
             :value="2"
           />
           <t-option
-            label="V3开放平台"
+            label="V3开放平台-SVIP-盘内"
             :value="3"
           />
           <t-option
-            label="V4开放平台"
+            label="V4开放平台-SVIP-盘内"
             :value="4"
           />
           <t-option
-            label="V5企业模式"
+            label="V5企业-企业套餐-盘内"
             :value="5"
           />
           <t-option
-            label="V6下载卷"
+            label="V6企业-下载卷-盘内"
             :value="6"
+          />
+          <t-option
+            label="V7企业-摄影套餐-盘外"
+            :value="7"
           />
         </t-select>
       </t-form-item>
@@ -67,17 +71,17 @@
         <t-input v-model="formData.user_agent" />
       </t-form-item>
 
-      <t-form-item
+      <!-- <t-form-item
         name="use_exploit"
         label="启用漏洞模式"
         help="小于100M的文件使用漏洞模式, 需要准备无会员的CK账号, 不支持V0"
       >
         <t-switch v-model="formData.use_exploit" />
-      </t-form-item>
+      </t-form-item> -->
 
       <t-form-item
         name="allow_folder"
-        label="允许客户端解析文件夹"
+        label="允许解析文件夹"
       >
         <t-switch v-model="formData.allow_folder" />
       </t-form-item>
@@ -140,6 +144,7 @@ const matchUserAgent = () => {
     case 2:
     case 5:
     case 6:
+    case 7:
       formData.value.user_agent = 'netdisk;P2SP;3.0.20.88'
       break
     default:

@@ -43,7 +43,20 @@
         >
           <t-input v-model="addAccountInput.cookie" />
         </t-form-item>
+
+        <t-form-item
+          label="获取链接"
+          v-if="addAccountType === 'enterprise_cookie_photography'"
+        >
+          <t-link
+            href="https://pan.baidu.com/photography/"
+            target="_blank"
+          >
+            点击跳转
+          </t-link>
+        </t-form-item>
       </template>
+
       <template v-else-if="addAccountType === 'open_platform'">
         <t-form-item
           label="RefreshToken"
@@ -51,6 +64,7 @@
         >
           <t-input v-model="addAccountInput.refresh_token" />
         </t-form-item>
+
         <t-form-item label="获取链接">
           <t-link
             href="https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=iYCeC9g08h5vuP9UqvPHKKSVrKFXGa1v&redirect_uri=https://alist.nn.ci/tool/baidu/callback&scope=basic,netdisk&qrcode=1"
@@ -60,6 +74,7 @@
           </t-link>
         </t-form-item>
       </template>
+
       <template v-else-if="addAccountType === 'download_ticket'">
         <t-form-item
           label="分享链接"

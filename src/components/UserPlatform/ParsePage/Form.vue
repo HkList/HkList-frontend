@@ -133,7 +133,7 @@ const configStore = useConfigStore()
 const { config } = storeToRefs(configStore)
 
 const fileListSotre = useFileListStore()
-const { GetFileListReq, GetLimitReq, GetLimitRes, GetLimitError, GetFileListRes, GetDownLoadLinksRes, vcode } = storeToRefs(fileListSotre)
+const { GetFileListReq, GetLimitReq, GetLimitRes, GetLimitError, GetFileListRes, GetDownLoadLinksRes, vcode, paths } = storeToRefs(fileListSotre)
 
 const parseUrl = () => {
   const res = getUrlId(GetFileListReq.value.url)
@@ -153,6 +153,7 @@ const clearDir = () => {
   GetFileListReq.value.dir = '/'
   GetFileListRes.value = undefined
   GetDownLoadLinksRes.value = []
+  paths.value = []
 }
 
 const formRules: FormProps['rules'] = {

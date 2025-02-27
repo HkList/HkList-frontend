@@ -25,7 +25,7 @@ import type { File } from '@/api/user/parse.ts'
 import { getFileIcon, iconList } from '@/utils/genFileIcon.ts'
 
 const fileListSotre = useFileListStore()
-const { GetFileListReq, GetFileListRes, selectedRowKeys } = storeToRefs(fileListSotre)
+const { GetFileListReq, GetFileListRes, selectedRowKeys, paths } = storeToRefs(fileListSotre)
 
 const columns = ref<TableProps['columns']>([
   {
@@ -72,7 +72,7 @@ const columns = ref<TableProps['columns']>([
         <>
           <t-button
             theme='primary'
-            onClick={(event: PointerEvent) => getDir(event, row.path)}
+            onClick={(event: PointerEvent) => getDir(event, row.path, row.category)}
           >
             打开文件夹
           </t-button>
@@ -93,10 +93,15 @@ const columns = ref<TableProps['columns']>([
   },
 ])
 
-const getDir = async (event: PointerEvent, path: string) => {
+const getDir = async (event: PointerEvent, path: string, category: number) => {
   event.stopPropagation()
 
   GetFileListReq.value.dir = path
+  if (category === -1) {
+    paths.value.pop()
+  } else {
+    paths.value.push(path)
+  }
   await fileListSotre.getFileList()
 }
 </script>

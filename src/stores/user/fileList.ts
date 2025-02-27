@@ -28,12 +28,12 @@ export const useFileListStore = defineStore('fileList', () => {
   })
   const GetFileListRes = ref<GetFileListRes>()
 
+  const paths = ref<string[]>([])
+
   // 根据路径生成上一个路径的地址
   const getPreviousPath = () => {
-    const newArr = GetFileListReq.value.dir.split('/')
-    newArr.pop()
-    const newPath = newArr.join('/')
-    return newPath === '' ? '/' : newPath
+    if (paths.value.length === 0) return '/'
+    return paths.value[paths.value.length - 2] ?? '/'
   }
 
   const getFileList = async () => {
@@ -55,6 +55,8 @@ export const useFileListStore = defineStore('fileList', () => {
         server_filename: '返回上一层',
         dlink: '',
       })
+    } else {
+      paths.value = []
     }
   }
 
@@ -236,5 +238,6 @@ export const useFileListStore = defineStore('fileList', () => {
     GetDownLoadLinksRes,
 
     vcode,
+    paths,
   }
 })
