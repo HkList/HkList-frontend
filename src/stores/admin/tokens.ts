@@ -33,6 +33,7 @@ export const useTokensStore = defineStore('tokens', () => {
     can_use_ip_count: 5,
     type: 'generate',
     generate_count: 10,
+    token_type: 'normal',
   })
   const addToken = async () => {
     await insert({
@@ -79,6 +80,7 @@ export const useTokensStore = defineStore('tokens', () => {
     switch: true,
     reason: '',
     token: undefined,
+    token_type: 'normal',
   })
   const showEditDialog = (event?: PointerEvent, id?: number) => {
     if (event && id) {

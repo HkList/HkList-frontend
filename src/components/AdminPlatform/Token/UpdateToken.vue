@@ -18,6 +18,22 @@
       </t-form-item>
 
       <t-form-item
+        name="token_type"
+        label="卡密类型"
+      >
+        <t-select v-model="updateReq.token_type">
+          <t-option
+            label="普通模式"
+            value="normal"
+          />
+          <t-option
+            label="每日刷新模式"
+            value="daily"
+          />
+        </t-select>
+      </t-form-item>
+
+      <t-form-item
         name="count"
         label="次数配额"
       >

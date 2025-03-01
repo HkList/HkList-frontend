@@ -2,7 +2,19 @@ import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
 import { http } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
-  column: 'id' | 'token' | 'count' | 'size' | 'day' | 'can_use_ip_count' | 'ip' | 'expires_at' | 'created_at' | 'updated_at' | 'deleted_at'
+  column:
+    | 'id'
+    | 'token'
+    | 'token_type'
+    | 'count'
+    | 'size'
+    | 'day'
+    | 'can_use_ip_count'
+    | 'ip'
+    | 'expires_at'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
   direction: 'asc' | 'desc'
   keyword: string
 }
@@ -10,6 +22,7 @@ export type SelectReq = PagenationReq & {
 export type SelectRes = {
   id: number
   token: string
+  token_type: 'normal' | 'daily'
   count: number
   size: number
   day: number
@@ -39,6 +52,7 @@ export type InsertReq = {
   size: number
   day: number
   can_use_ip_count: number
+  token_type: 'normal' | 'daily'
 } & (
   | {
       type: 'set'
@@ -66,6 +80,7 @@ export interface UpdateReq {
   reason?: string
   id: number[]
   token?: string
+  token_type?: 'normal' | 'daily'
 }
 
 /** 更新 */

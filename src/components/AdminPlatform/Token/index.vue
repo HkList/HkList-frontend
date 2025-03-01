@@ -168,6 +168,12 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
+    colKey: 'token_type',
+    title: '卡密类型',
+    cell: (h, { row }) => <>{row.token_type === 'normal' ? '普通模式' : `每日刷新模式`}</>,
+    ellipsis: true,
+  },
+  {
     colKey: 'switch',
     title: '状态',
     cell: (h, { row }) => <>{row.switch ? '启用' : `禁用 (${row.reason})`}</>,
