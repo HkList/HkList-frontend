@@ -111,8 +111,15 @@ export const useFileListStore = defineStore('fileList', () => {
       selectedRows.value = [row]
     }
 
-    const filteFolders = selectedRows.value.filter((item) => item && !item.is_dir)
+    const isDirFsId: number[] = []
+    const filteFolders = selectedRows.value.filter((item) => {
+      if (item.is_dir) isDirFsId.push(item.fs_id)
+      return item && !item.is_dir
+    })
     if (filteFolders.length !== selectedRows.value.length) MessagePlugin.warning('暂时不支持解析文件夹')
+
+    selectedRows.value = filteFolders
+    selectedRowKeys.value = selectedRowKeys.value.filter((fs_id) => !isDirFsId.includes(fs_id))
 
     const filteMinSingleFilesize = filteFolders.filter((file) => file.size > config.min_single_filesize)
     if (filteMinSingleFilesize.length !== filteFolders.length) MessagePlugin.warning('文件过小不会被解析')

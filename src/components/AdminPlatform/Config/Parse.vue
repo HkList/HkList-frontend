@@ -58,7 +58,7 @@
             :value="6"
           />
           <t-option
-            label="V7企业-摄影套餐-盘外"
+            label="V7企业-企业套餐-盘外"
             :value="7"
           />
         </t-select>

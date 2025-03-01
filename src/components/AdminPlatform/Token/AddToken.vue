@@ -10,6 +10,22 @@
       :rules="formRules"
     >
       <t-form-item
+        name="token_type"
+        label="卡密类型"
+      >
+        <t-select v-model="addingTokenReq.token_type">
+          <t-option
+            label="普通模式"
+            value="normal"
+          />
+          <t-option
+            label="每日刷新模式"
+            value="daily"
+          />
+        </t-select>
+      </t-form-item>
+
+      <t-form-item
         name="type"
         label="添加方式"
       >

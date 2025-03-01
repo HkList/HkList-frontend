@@ -1,11 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import Components from 'unplugin-vue-components/vite'
 import { TDesignResolver } from 'unplugin-vue-components/resolvers'
-import viteCompression from 'vite-plugin-compression'
+import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
+// import viteCompression from 'vite-plugin-compression'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -20,12 +20,12 @@ export default defineConfig({
         }),
       ],
     }),
-    viteCompression({
-      verbose: true,
-      disable: false,
-      algorithm: 'brotliCompress',
-      ext: '.gz',
-    }),
+    // viteCompression({
+    //   verbose: true,
+    //   disable: false,
+    //   algorithm: 'brotliCompress',
+    //   ext: '.gz',
+    // }),
   ],
   server: {
     proxy: {
