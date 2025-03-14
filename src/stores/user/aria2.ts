@@ -110,6 +110,8 @@ export const useAria2Store = defineStore('aria2', () => {
   }
 
   const downloadLinks = async (rows: DownloadRows, index = 0) => {
+    if (!Array.isArray(rows)) rows = [rows]
+
     for (const row of rows) {
       let filename = row.filename
       if (row.fs_id && fileListStore.GetFileListRes) {
