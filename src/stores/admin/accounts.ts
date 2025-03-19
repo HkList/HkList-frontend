@@ -85,6 +85,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     dir: '',
     save_cookie: '',
     download_cookie: '',
+    dlink_cookie: '',
   })
   const addAccount = async () => {
     const req: InsertReq = {
@@ -92,14 +93,23 @@ export const useAccountsStore = defineStore('accounts', () => {
       account_data: [],
     }
 
-    const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie } = addAccountInput.value
+    const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie, dlink_cookie } = addAccountInput.value
 
     if (
       addAccountType.value === 'cookie' ||
       addAccountType.value === 'enterprise_cookie' ||
       addAccountType.value === 'enterprise_cookie_photography'
     ) {
-      req.account_data = [{ cookie }]
+      req.account_data = [
+        {
+          cookie,
+          ...(addAccountType.value !== 'cookie'
+            ? {
+                dlink_cookie,
+              }
+            : {}),
+        },
+      ]
     } else if (addAccountType.value === 'open_platform') {
       req.account_data = [{ refresh_token }]
     } else if (addAccountType.value === 'download_ticket') {
@@ -118,6 +128,7 @@ export const useAccountsStore = defineStore('accounts', () => {
       dir: '',
       save_cookie: '',
       download_cookie: '',
+      dlink_cookie: '',
     }
     await getAccounts()
   }

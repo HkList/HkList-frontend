@@ -50,6 +50,21 @@
         >
           <t-input v-model="updateAccountDataInfo.account_data.cookie" />
         </t-form-item>
+
+        <template
+          v-if="
+            (updateAccountDataInfo.account_type === 'enterprise_cookie' || updateAccountDataInfo.account_type === 'enterprise_cookie_photography') &&
+            'dlink_cookie' in updateAccountDataInfo.account_data
+          "
+        >
+          <t-form-item
+            label="额外普通号"
+            name="dlink_cookie"
+            help="可留空"
+          >
+            <t-textarea v-model="updateAccountDataInfo.account_data.dlink_cookie" />
+          </t-form-item>
+        </template>
       </template>
       <template v-else-if="updateAccountDataInfo.account_type === 'open_platform' && 'refresh_token' in updateAccountDataInfo.account_data">
         <t-form-item
@@ -101,7 +116,7 @@
         <t-space size="small">
           <t-button
             theme="default"
-            @click="accountsStore.hideAddAccountDialog"
+            @click="accountsStore.hideUpdateAccountDataDialog"
           >
             取消
           </t-button>

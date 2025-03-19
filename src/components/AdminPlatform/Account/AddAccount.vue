@@ -55,6 +55,16 @@
             点击跳转
           </t-link>
         </t-form-item>
+
+        <template v-if="addAccountType === 'enterprise_cookie' || addAccountType === 'enterprise_cookie_photography'">
+          <t-form-item
+            label="额外普通号"
+            name="dlink_cookie"
+            help="可留空"
+          >
+            <t-textarea v-model="addAccountInput.dlink_cookie" />
+          </t-form-item>
+        </template>
       </template>
 
       <template v-else-if="addAccountType === 'open_platform'">
