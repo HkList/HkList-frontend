@@ -11,61 +11,67 @@
       @submit="submitForm"
       :labelWidth="130"
     >
-      <t-form-item label="账号类型">
-        <t-select v-model="updateAccountDataInfo.account_type">
-          <t-option
-            label="Cookie"
-            value="cookie"
-          />
-          <t-option
-            label="企业"
-            value="enterprise_cookie"
-          />
-          <t-option
-            label="企业-摄影版"
-            value="enterprise_cookie_photography"
-          />
-          <t-option
-            label="开放平台"
-            value="open_platform"
-          />
-          <t-option
-            label="下载卷"
-            value="download_ticket"
-          />
-        </t-select>
-      </t-form-item>
+      <template v-if="updateAccountDataInfo.account_type === 'cookie' && 'cookie' in updateAccountDataInfo.account_data">
+        <t-form-item
+          label="Cookie"
+          name="cookie"
+        >
+          <t-textarea v-model="updateAccountDataInfo.account_data.cookie" />
+        </t-form-item>
+      </template>
 
       <template
-        v-if="
-          (updateAccountDataInfo.account_type === 'cookie' ||
-            updateAccountDataInfo.account_type === 'enterprise_cookie' ||
-            updateAccountDataInfo.account_type === 'enterprise_cookie_photography') &&
-          'cookie' in updateAccountDataInfo.account_data
+        v-else-if="
+          updateAccountDataInfo.account_type === 'enterprise_cookie' &&
+          'cookie' in updateAccountDataInfo.account_data &&
+          'dlink_cookie' in updateAccountDataInfo.account_data &&
+          'cid' in updateAccountDataInfo.account_data
         "
       >
         <t-form-item
           label="Cookie"
           name="cookie"
         >
-          <t-input v-model="updateAccountDataInfo.account_data.cookie" />
+          <t-textarea v-model="updateAccountDataInfo.account_data.cookie" />
         </t-form-item>
 
-        <template
-          v-if="
-            (updateAccountDataInfo.account_type === 'enterprise_cookie' || updateAccountDataInfo.account_type === 'enterprise_cookie_photography') &&
-            'dlink_cookie' in updateAccountDataInfo.account_data
-          "
+        <t-form-item
+          label="选择企业"
+          name="选择CID"
         >
-          <t-form-item
-            label="额外普通号"
-            name="dlink_cookie"
-            help="可留空"
+          <t-select
+            v-model="updateAccountDataInfo.account_data.cid"
+            v-if="accountCidInfo.length > 0"
           >
-            <t-textarea v-model="updateAccountDataInfo.account_data.dlink_cookie" />
-          </t-form-item>
-        </template>
+            <t-option
+              v-for="item in accountCidInfo"
+              :key="item.cid"
+              :label="item.org_name"
+              :value="item.cid"
+            />
+          </t-select>
+          <span v-else> 请先填写Cookie </span>
+        </t-form-item>
+
+        <t-form-item
+          label="企业ID"
+          name="cid"
+        >
+          <t-input
+            v-model="updateAccountDataInfo.account_data.cid"
+            disabled
+          />
+        </t-form-item>
+
+        <t-form-item
+          label="额外普通号"
+          name="dlink_cookie"
+          help="可留空"
+        >
+          <t-textarea v-model="updateAccountDataInfo.account_data.dlink_cookie" />
+        </t-form-item>
       </template>
+
       <template v-else-if="updateAccountDataInfo.account_type === 'open_platform' && 'refresh_token' in updateAccountDataInfo.account_data">
         <t-form-item
           label="RefreshToken"
@@ -74,12 +80,26 @@
           <t-input v-model="updateAccountDataInfo.account_data.refresh_token" />
         </t-form-item>
       </template>
+
       <template v-else-if="updateAccountDataInfo.account_type === 'download_ticket' && 'surl' in updateAccountDataInfo.account_data">
+        <t-form-item
+          label="分享链接"
+          name="url"
+        >
+          <t-input
+            v-model="urlRef"
+            @blur="parseUrl"
+          />
+        </t-form-item>
+
         <t-form-item
           label="Surl"
           name="surl"
         >
-          <t-input v-model="updateAccountDataInfo.account_data.surl" />
+          <t-input
+            v-model="updateAccountDataInfo.account_data.surl"
+            disabled
+          />
         </t-form-item>
 
         <t-form-item
@@ -102,6 +122,34 @@
           name="save_cookie"
         >
           <t-textarea v-model="updateAccountDataInfo.account_data.save_cookie" />
+        </t-form-item>
+
+        <t-form-item
+          label="选择企业"
+          name="选择CID"
+        >
+          <t-select
+            v-model="updateAccountDataInfo.account_data.cid"
+            v-if="accountCidInfo.length > 0"
+          >
+            <t-option
+              v-for="item in accountCidInfo"
+              :key="item.cid"
+              :label="item.org_name"
+              :value="item.cid"
+            />
+          </t-select>
+          <span v-else> 请先填写Cookie </span>
+        </t-form-item>
+
+        <t-form-item
+          label="企业ID"
+          name="cid"
+        >
+          <t-input
+            v-model="updateAccountDataInfo.account_data.cid"
+            disabled
+          />
         </t-form-item>
 
         <t-form-item
@@ -128,9 +176,13 @@
 </template>
 
 <script lang="ts" setup>
-import { type FormProps } from 'tdesign-vue-next'
+import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
 import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
+import { getUrlId } from '@/utils/getUrlId.ts'
+import { watch } from 'vue'
+import { getAccountCidInfo, type GetAccountCidRes } from '@/api/admin/account.ts'
 
 const accountsStore = useAccountsStore()
 const { isUpdatingAccountData, updateAccountDataInfo } = storeToRefs(accountsStore)
@@ -150,6 +202,39 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
   await accountsStore.updateAccountData()
   accountsStore.hideUpdateAccountDataDialog()
+}
+
+const urlRef = ref('')
+const accountCidInfo = ref<GetAccountCidRes>([])
+
+watch(updateAccountDataInfo, async (accountInfo) => {
+  urlRef.value = ''
+  accountCidInfo.value = []
+
+  if (accountInfo.account_type === 'download_ticket' && 'surl' in accountInfo.account_data && 'save_cookie' in accountInfo.account_data) {
+    urlRef.value = `https://pan.baidu.com/s/${accountInfo.account_data.surl}`
+    const res = await getAccountCidInfo({ cookie: accountInfo.account_data.save_cookie })
+    accountCidInfo.value = res.data
+  }
+
+  if (accountInfo.account_type === 'enterprise_cookie' && 'cookie' in accountInfo.account_data) {
+    const res = await getAccountCidInfo({ cookie: accountInfo.account_data.cookie })
+    accountCidInfo.value = res.data
+  }
+})
+
+const parseUrl = () => {
+  const res = getUrlId(urlRef.value)
+  if (!res) return
+
+  const { surl, pwd } = res
+  if ('surl' in updateAccountDataInfo.value.account_data) {
+    updateAccountDataInfo.value.account_data.surl = surl
+    if (pwd) {
+      updateAccountDataInfo.value.account_data.pwd = pwd
+      MessagePlugin.success('已自动填写密码~')
+    }
+  }
 }
 </script>
 

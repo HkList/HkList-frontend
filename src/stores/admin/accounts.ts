@@ -78,6 +78,7 @@ export const useAccountsStore = defineStore('accounts', () => {
   const addAccountType = ref<InsertReq['account_type']>('cookie')
   const addAccountInput = ref({
     cookie: '',
+    cid: 0,
     refresh_token: '',
     url: '',
     surl: '',
@@ -93,27 +94,16 @@ export const useAccountsStore = defineStore('accounts', () => {
       account_data: [],
     }
 
-    const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie, dlink_cookie } = addAccountInput.value
+    const { cookie, refresh_token, surl, pwd, dir, save_cookie, download_cookie, dlink_cookie, cid } = addAccountInput.value
 
-    if (
-      addAccountType.value === 'cookie' ||
-      addAccountType.value === 'enterprise_cookie' ||
-      addAccountType.value === 'enterprise_cookie_photography'
-    ) {
-      req.account_data = [
-        {
-          cookie,
-          ...(addAccountType.value !== 'cookie'
-            ? {
-                dlink_cookie,
-              }
-            : {}),
-        },
-      ]
+    if (addAccountType.value === 'cookie') {
+      req.account_data = [{ cookie }]
+    } else if (addAccountType.value === 'enterprise_cookie') {
+      req.account_data = [{ cookie, dlink_cookie, cid }]
     } else if (addAccountType.value === 'open_platform') {
       req.account_data = [{ refresh_token }]
     } else if (addAccountType.value === 'download_ticket') {
-      req.account_data = [{ surl, pwd, dir, save_cookie, download_cookie }]
+      req.account_data = [{ surl, pwd, dir, save_cookie, download_cookie, cid }]
     }
 
     await insert(req)
@@ -122,6 +112,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     addAccountInput.value = {
       cookie: '',
       refresh_token: '',
+      cid: 0,
       url: '',
       surl: '',
       pwd: '',

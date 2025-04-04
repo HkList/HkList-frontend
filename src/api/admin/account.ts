@@ -65,7 +65,7 @@ export type SingleAccount = {
       }
     }
   | {
-      account_type: 'enterprise_cookie' | 'enterprise_cookie_photography'
+      account_type: 'enterprise_cookie'
       account_data: {
         cookie: string
         cid: number
@@ -108,9 +108,17 @@ export const select = (data: SelectReq) => {
 
 export type InsertReq =
   | {
-      account_type: 'cookie' | 'enterprise_cookie' | 'enterprise_cookie_photography'
+      account_type: 'cookie'
       account_data: {
         cookie: string
+      }[]
+    }
+  | {
+      account_type: 'enterprise_cookie'
+      account_data: {
+        dlink_cookie: string
+        cookie: string
+        cid: number
       }[]
     }
   | {
@@ -126,6 +134,7 @@ export type InsertReq =
         pwd: string
         dir: string
         save_cookie: string
+        cid: number
         download_cookie: string
       }[]
     }
@@ -202,6 +211,27 @@ export type CheckBanStatusRes = {
 /** 检查账号封禁状态 */
 export const checkBanStatus = (data: CheckBanStatusReq) => {
   return http.request<CheckBanStatusRes>('post', '/admin/account/check_ban_status', {
+    data,
+  })
+}
+
+export interface GetAccountCidReq {
+  cookie: string
+}
+
+export interface EnterpriseAccountInfo {
+  cid: number
+  org_name: string
+  product_endtime: number
+  product_starttime: number
+  product_name: string
+}
+
+export type GetAccountCidRes = EnterpriseAccountInfo[]
+
+/** 获取企业账号信息 */
+export const getAccountCidInfo = (data: GetAccountCidReq) => {
+  return http.request<GetAccountCidRes>('post', '/admin/account/get_cid_info', {
     data,
   })
 }

@@ -22,10 +22,6 @@
             value="enterprise_cookie"
           />
           <t-option
-            label="企业-摄影版"
-            value="enterprise_cookie_photography"
-          />
-          <t-option
             label="开放平台"
             value="open_platform"
           />
@@ -36,35 +32,61 @@
         </t-select>
       </t-form-item>
 
-      <template v-if="addAccountType === 'cookie' || addAccountType === 'enterprise_cookie' || addAccountType === 'enterprise_cookie_photography'">
+      <template v-if="addAccountType === 'cookie'">
         <t-form-item
           label="Cookie"
           name="cookie"
         >
-          <t-input v-model="addAccountInput.cookie" />
+          <t-textarea v-model="addAccountInput.cookie" />
+        </t-form-item>
+      </template>
+
+      <template v-else-if="addAccountType === 'enterprise_cookie'">
+        <t-form-item
+          label="Cookie"
+          name="cookie"
+        >
+          <t-textarea
+            v-model="addAccountInput.cookie"
+            @blur="getAccountCid"
+          />
         </t-form-item>
 
         <t-form-item
-          label="获取链接"
-          v-if="addAccountType === 'enterprise_cookie_photography'"
+          label="选择企业"
+          name="选择CID"
         >
-          <t-link
-            href="https://pan.baidu.com/photography/"
-            target="_blank"
+          <t-select
+            v-model="addAccountInput.cid"
+            v-if="accountCidInfo.length > 0"
           >
-            点击跳转
-          </t-link>
+            <t-option
+              v-for="item in accountCidInfo"
+              :key="item.cid"
+              :label="item.org_name"
+              :value="item.cid"
+            />
+          </t-select>
+          <span v-else> 请先填写Cookie </span>
         </t-form-item>
 
-        <template v-if="addAccountType === 'enterprise_cookie' || addAccountType === 'enterprise_cookie_photography'">
-          <t-form-item
-            label="额外普通号"
-            name="dlink_cookie"
-            help="可留空"
-          >
-            <t-textarea v-model="addAccountInput.dlink_cookie" />
-          </t-form-item>
-        </template>
+        <t-form-item
+          label="企业ID"
+          name="cid"
+        >
+          <t-input
+            v-model="addAccountInput.cid"
+            disabled
+          />
+        </t-form-item>
+
+        <t-form-item
+          label="额外普通号"
+          name="dlink_cookie"
+          help="可留空"
+        >
+          <t-textarea v-model="addAccountInput.dlink_cookie" />
+        </t-form-item>
       </template>
 
       <template v-else-if="addAccountType === 'open_platform'">
@@ -72,7 +94,7 @@
           label="RefreshToken"
           name="refresh_token"
         >
-          <t-input v-model="addAccountInput.refresh_token" />
+          <t-textarea v-model="addAccountInput.refresh_token" />
         </t-form-item>
 
         <t-form-item label="获取链接">
@@ -126,7 +148,38 @@
           label="企业号CK"
           name="save_cookie"
         >
-          <t-textarea v-model="addAccountInput.save_cookie" />
+          <t-textarea
+            v-model="addAccountInput.save_cookie"
+            @blur="getAccountCid"
+          />
+        </t-form-item>
+
+        <t-form-item
+          label="选择企业"
+          name="选择CID"
+        >
+          <t-select
+            v-model="addAccountInput.cid"
+            v-if="accountCidInfo.length > 0"
+          >
+            <t-option
+              v-for="item in accountCidInfo"
+              :key="item.cid"
+              :label="item.org_name"
+              :value="item.cid"
+            />
+          </t-select>
+          <span v-else> 请先填写Cookie </span>
+        </t-form-item>
+
+        <t-form-item
+          label="企业ID"
+          name="cid"
+        >
+          <t-input
+            v-model="addAccountInput.cid"
+            disabled
+          />
         </t-form-item>
 
         <t-form-item
@@ -145,7 +198,12 @@
           >
             取消
           </t-button>
-          <t-button type="submit"> 提交 </t-button>
+          <t-button
+            type="submit"
+            :disabled="(addAccountType === 'enterprise_cookie' || addAccountType === 'download_ticket') && addAccountInput.cid === 0"
+          >
+            提交
+          </t-button>
         </t-space>
       </t-form-item>
     </t-form>
@@ -157,6 +215,8 @@ import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
 import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { storeToRefs } from 'pinia'
 import { getUrlId } from '@/utils/getUrlId.ts'
+import { getAccountCidInfo, type GetAccountCidRes } from '@/api/admin/account.ts'
+import { ref } from 'vue'
 
 const accountsStore = useAccountsStore()
 const { isAddAccount, addAccountType, addAccountInput } = storeToRefs(accountsStore)
@@ -170,11 +230,13 @@ const formRules: FormProps['rules'] = {
   dir: [{ required: true, message: '盘内路径不能为空' }],
   save_cookie: [{ required: true, message: '企业号CK不能为空' }],
   download_cookie: [{ required: true, message: '普通号CK不能为空' }],
+  cid: [{ required: true, message: '企业ID不能为空' }],
 }
 
 const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   if (validateResult !== true) return
   await accountsStore.addAccount()
+  accountCidInfo.value = []
 }
 
 const parseUrl = () => {
@@ -189,6 +251,17 @@ const parseUrl = () => {
     addAccountInput.value.pwd = pwd
     MessagePlugin.success('已自动填写密码~')
   }
+}
+
+const accountCidInfo = ref<GetAccountCidRes>([])
+
+const getAccountCid = async () => {
+  const cookie = addAccountType.value === 'enterprise_cookie' ? addAccountInput.value.cookie : addAccountInput.value.save_cookie
+  if (!cookie) return
+  addAccountInput.value.cid = 0
+  accountCidInfo.value = []
+  const res = await getAccountCidInfo({ cookie })
+  accountCidInfo.value = res.data
 }
 </script>
 
