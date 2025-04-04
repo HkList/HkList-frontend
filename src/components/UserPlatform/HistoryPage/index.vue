@@ -21,7 +21,10 @@
   </t-card>
 
   <t-card>
-    <t-space direction="vertical">
+    <t-space
+      direction="vertical"
+      class="space"
+    >
       <t-alert>
         下载请推荐使用Aria2下载器,如
         <t-link
@@ -152,4 +155,8 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.space) {
+  width: 100%;
+}
+</style>
