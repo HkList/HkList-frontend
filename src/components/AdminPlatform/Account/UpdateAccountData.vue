@@ -191,7 +191,6 @@ const formRules: FormProps['rules'] = {
   cookie: [{ required: true, message: 'Cookie不能为空' }],
   refresh_token: [{ required: true, message: 'RefreshToken不能为空' }],
   surl: [{ required: true, message: 'Surl不能为空' }],
-  url: [{ required: true, message: '分享链接不能为空' }],
   pwd: [{ required: true, message: '链接密码不能为空' }],
   dir: [{ required: true, message: '盘内路径不能为空' }],
   save_cookie: [{ required: true, message: '企业号CK不能为空' }],
