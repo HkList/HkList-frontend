@@ -160,7 +160,8 @@ export const useFileListStore = defineStore('fileList', () => {
           pwd: GetFileListReq.value.pwd,
           token: GetLimitReq.value.token,
           parse_password: GetFileListReq.value.parse_password,
-          ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
+          vcode_str: vcode.value.vcode_str,
+          vcode_input: vcode.value.vcode_input,
         })
         MessagePlugin.success('重新解析成功')
         return res.data
@@ -185,7 +186,8 @@ export const useFileListStore = defineStore('fileList', () => {
               pwd: GetFileListReq.value.pwd,
               token: GetLimitReq.value.token,
               parse_password: GetFileListReq.value.parse_password,
-              ...(vcode.value.hit_captcha ? { vcode_str: vcode.value.vcode_str, vcode_input: vcode.value.vcode_input } : {}),
+              vcode_str: vcode.value.vcode_str,
+              vcode_input: vcode.value.vcode_input,
             })
             res.push(...link.data)
 
