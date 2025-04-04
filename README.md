@@ -4,7 +4,7 @@
 
 ## 介绍
 
-这是 [HkList](https://github.com/huankong233/HkList) 的前端部分
+这是 [HkList](https://github.com/HkList/HkList) 的前端部分
 
 ## 技术栈
 
