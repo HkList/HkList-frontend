@@ -63,22 +63,6 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
   aria2Store.hideAria2Config()
   MessagePlugin.success('保存成功')
 }
-
-const restoreAria2 = () => {
-  aria2ConfigForm.value = {
-    host: 'ws://localhost:6800/jsonrpc',
-    token: '',
-    dir: '%USERPROFILE%/Downloads',
-  }
-}
-
-const restoreMotrix = () => {
-  aria2ConfigForm.value = {
-    host: 'ws://localhost:16800/jsonrpc',
-    token: '',
-    dir: '%USERPROFILE%/Downloads',
-  }
-}
 </script>
 
 <style lang="scss" scoped></style>

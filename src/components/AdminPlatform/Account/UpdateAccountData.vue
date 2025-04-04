@@ -128,10 +128,9 @@
 </template>
 
 <script lang="ts" setup>
-import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
+import { type FormProps } from 'tdesign-vue-next'
 import { useAccountsStore } from '@/stores/admin/accounts.ts'
 import { storeToRefs } from 'pinia'
-import { getUrlId } from '@/utils/getUrlId.ts'
 
 const accountsStore = useAccountsStore()
 const { isUpdatingAccountData, updateAccountDataInfo } = storeToRefs(accountsStore)

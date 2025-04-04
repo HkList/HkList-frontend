@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MessagePlugin, type CustomValidator, type FormProps } from 'tdesign-vue-next'
+import { type CustomValidator, type FormProps } from 'tdesign-vue-next'
 import { useBlackListStore } from '@/stores/admin/blackList'
 import { storeToRefs } from 'pinia'
 import { ValidateIsIp } from '@/utils/validates.ts'
