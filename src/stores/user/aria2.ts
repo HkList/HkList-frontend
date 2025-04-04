@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { MessagePlugin } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
+import { useConfigStore } from './config.ts'
 import { useFileListStore } from './fileList.ts'
 
 export interface Aria2Config {
@@ -17,6 +18,7 @@ export type DownloadRows = {
 }[]
 
 const fileListStore = useFileListStore()
+const configStore = useConfigStore()
 
 export const useAria2Store = defineStore('aria2', () => {
   const aria2ConfigDialogVisible = ref(false)
@@ -101,7 +103,7 @@ export const useAria2Store = defineStore('aria2', () => {
       [url],
       {
         out: filename,
-        dir: aria2ConfigForm.value.dir === '' ? null : aria2ConfigForm.value.dir,
+        dir: aria2ConfigForm.value.dir === '' ? null : `${configStore.config.name ?? 'hklist'}/${aria2ConfigForm.value.dir}`,
         header: [`User-Agent: ${ua}`],
         split: threadCount.toString(),
       },
