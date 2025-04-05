@@ -63,7 +63,7 @@
 <script lang="tsx" setup>
 import { storeToRefs } from 'pinia'
 import { useFileListStore } from '@/stores/user/fileList.ts'
-import { type TableProps } from 'tdesign-vue-next'
+import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
 import { ref, watch } from 'vue'
 import { copy } from '@/utils/copy.ts'
 import { LinkIcon } from 'tdesign-icons-vue-next'
@@ -71,7 +71,7 @@ import { useAria2Store, type DownloadRows } from '@/stores/user/aria2.ts'
 import type { GetDownLoadLinksRes } from '@/api/user/parse.ts'
 
 const fileListSotre = useFileListStore()
-const { GetDownLoadLinksRes } = storeToRefs(fileListSotre)
+const { GetDownLoadLinksRes, GetFileListRes } = storeToRefs(fileListSotre)
 
 const aria2Store = useAria2Store()
 
@@ -117,7 +117,10 @@ const columns = ref<TableProps['columns']>([
 
 const reGetDownloadLinks = async (event: PointerEvent, row: GetDownLoadLinksRes[number], rowIndex: number) => {
   event.stopPropagation()
-  const res = await fileListSotre.getDownloadLinks(row.fs_id)
+  if (!GetFileListRes.value) return
+  const newRow = GetFileListRes.value.list.find((item) => item.fs_id === row.fs_id)
+  if (!newRow) return MessagePlugin.error('文件未找到,请重新获取文件列表')
+  const res = await fileListSotre.getDownloadLinks(row.fs_id, newRow)
   if (res) GetDownLoadLinksRes.value[rowIndex] = res[0]
 }
 
