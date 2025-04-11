@@ -86,6 +86,25 @@
         <t-switch v-model="formData.allow_folder" />
       </t-form-item>
 
+      <t-form-item
+        name="ddddocr_server"
+        label="DDDDOCR服务器"
+      >
+        <t-input v-model="formData.ddddocr_server" />
+      </t-form-item>
+
+      <t-form-item
+        name="ddddocr_server_github"
+        label="DDDDOCR开源地址"
+      >
+        <t-link
+          href="https://github.com/HkList/ddddocr"
+          target="_blank"
+        >
+          点击打开
+        </t-link>
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
           <t-button type="submit"> 保存 </t-button>
@@ -108,6 +127,7 @@ const formData = ref<UpdateConfigReq>({
   user_agent: '',
   use_exploit: false,
   allow_folder: false,
+  ddddocr_server: '',
 })
 
 const formRules: FormProps['rules'] = {
