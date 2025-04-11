@@ -7,6 +7,7 @@ export interface GetConfigRes {
   user_agent: string
   use_exploit: boolean
   allow_folder: boolean
+  ddddocr_server: string
 }
 
 /** 获取配置文件 */
