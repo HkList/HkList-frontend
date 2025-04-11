@@ -4,7 +4,7 @@
       :data="formData"
       :rules="formRules"
       @submit="submitForm"
-      :labelWidth="150"
+      :labelWidth="200"
     >
       <t-form-item
         name="parser_server"
@@ -105,6 +105,25 @@
         </t-link>
       </t-form-item>
 
+      <t-form-item
+        name="proxy_host"
+        label="下载代理服务器"
+      >
+        <t-input v-model="formData.proxy_host" />
+      </t-form-item>
+
+      <t-form-item
+        name="proxy_host_github"
+        label="下载代理服务器开源地址"
+      >
+        <t-link
+          href="https://github.com/HkList/HkList/blob/master/nginx.conf"
+          target="_blank"
+        >
+          点击打开
+        </t-link>
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
           <t-button type="submit"> 保存 </t-button>
@@ -128,6 +147,7 @@ const formData = ref<UpdateConfigReq>({
   use_exploit: false,
   allow_folder: false,
   ddddocr_server: '',
+  proxy_host: '',
 })
 
 const formRules: FormProps['rules'] = {
