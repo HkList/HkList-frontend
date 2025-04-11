@@ -50,7 +50,7 @@
         />
       </t-form-item>
 
-      <!-- <t-form-item
+      <t-form-item
         name="max_download_daily_pre_account"
         label="单个账号每日最大解析量 (GB)"
         help="不是用户,是后台设置的解析账号"
@@ -60,7 +60,7 @@
           v-model="formData.max_download_daily_pre_account"
           auto-width
         />
-      </t-form-item> -->
+      </t-form-item>
 
       <t-form-item
         name="limit_cn"
