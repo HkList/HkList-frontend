@@ -8,6 +8,7 @@ export interface GetConfigRes {
   use_exploit: boolean
   allow_folder: boolean
   ddddocr_server: string
+  proxy_host: string
 }
 
 /** 获取配置文件 */
