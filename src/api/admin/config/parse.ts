@@ -9,6 +9,8 @@ export interface GetConfigRes {
   allow_folder: boolean
   ddddocr_server: string
   proxy_host: string
+  guest_parse_mode: number
+  guest_use_proxy_host: boolean
 }
 
 /** 获取配置文件 */
