@@ -72,6 +72,7 @@ export const useFileListStore = defineStore('fileList', () => {
 
   const getLimit = async () => {
     try {
+      await configStore.getConfig()
       const res = await _getLimit(GetLimitReq.value)
       GetLimitRes.value = res.data
       GetLimitError.value = ''

@@ -1,5 +1,9 @@
 import { http } from '@/utils/http.ts'
 
+export interface GetConfigReq {
+  token: string
+}
+
 export interface GetConfigRes {
   show_announce: boolean
   announce: string
@@ -18,8 +22,8 @@ export interface GetConfigRes {
 }
 
 /** 获取配置信息 */
-export const getConfig = () => {
-  return http.request<GetConfigRes>('get', '/user/parse/config')
+export const getConfig = (params: GetConfigReq) => {
+  return http.request<GetConfigRes>('get', '/user/parse/config', { params })
 }
 
 export interface GetLimitReq {

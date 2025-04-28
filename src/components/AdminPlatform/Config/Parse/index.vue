@@ -67,14 +67,14 @@
 
       <t-form-item
         name="ddddocr_server"
-        label="DDDDOCR服务器"
+        label="OCR服务器"
       >
         <t-input v-model="formData.ddddocr_server" />
       </t-form-item>
 
       <t-form-item
         name="ddddocr_server_github"
-        label="DDDDOCR开源地址"
+        label="OCR服务器开源地址"
       >
         <t-link
           href="https://github.com/HkList/ddddocr"
@@ -85,10 +85,17 @@
       </t-form-item>
 
       <t-form-item
-        name="proxy_host"
-        label="下载代理服务器"
+        name="token_proxy_host"
+        label="卡密下载代理服务器"
       >
-        <t-input v-model="formData.proxy_host" />
+        <t-input v-model="formData.token_proxy_host" />
+      </t-form-item>
+
+      <t-form-item
+        name="guest_proxy_host"
+        label="游客下载代理服务器"
+      >
+        <t-input v-model="formData.guest_proxy_host" />
       </t-form-item>
 
       <t-form-item
@@ -101,13 +108,6 @@
         >
           点击打开
         </t-link>
-      </t-form-item>
-
-      <t-form-item
-        name="guest_use_proxy_host"
-        label="游客是否允许下载代理服务器"
-      >
-        <t-switch v-model="formData.guest_use_proxy_host" />
       </t-form-item>
 
       <t-form-item>
@@ -131,12 +131,12 @@ const formData = ref<UpdateConfigReq>({
   parser_password: '',
   parse_mode: 1,
   user_agent: '',
-  use_exploit: false,
   allow_folder: false,
   ddddocr_server: '',
   proxy_host: '',
   guest_parse_mode: 1,
-  guest_use_proxy_host: false,
+  guest_proxy_host: '',
+  token_proxy_host: '',
 })
 
 const formRules: FormProps['rules'] = {

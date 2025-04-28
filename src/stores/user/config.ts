@@ -21,7 +21,10 @@ export const useConfigStore = defineStore('config', () => {
     allow_folder: false,
   })
   const getConfig = async () => {
-    const res = await _getConfig()
+    // 动态导入，避免循环引用
+    const { useFileListStore } = await import('@/stores/user/fileList.ts')
+    const fileListStore = useFileListStore()
+    const res = await _getConfig({ token: fileListStore.GetLimitReq.token })
     config.value = res.data
     useSiteInfo(res.data.name, res.data.logo)
   }
