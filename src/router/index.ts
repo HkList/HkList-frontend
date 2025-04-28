@@ -49,7 +49,7 @@ const router = createRouter({
             },
             {
               path: '/admin/config/parse',
-              component: () => import('@/components/AdminPlatform/Config/Parse.vue'),
+              component: () => import('@/components/AdminPlatform/Config/Parse/index.vue'),
             },
             {
               path: '/admin/config/limit',

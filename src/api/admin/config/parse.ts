@@ -4,11 +4,13 @@ export interface GetConfigRes {
   parser_server: string
   parser_password: string
   parse_mode: number
+  guest_parse_mode: number
   user_agent: string
-  use_exploit: boolean
   allow_folder: boolean
   ddddocr_server: string
   proxy_host: string
+  guest_proxy_host: string
+  token_proxy_host: string
 }
 
 /** 获取配置文件 */
