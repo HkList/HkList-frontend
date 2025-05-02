@@ -14,6 +14,7 @@ export interface GetConfigRes {
   version: string
   frontend_version: string
   disable_check_rand: boolean
+  save_histories_day: number
 }
 
 /** 获取配置文件 */
@@ -33,6 +34,7 @@ export interface UpdateConfigReq {
   name: string
   logo: string
   disable_check_rand: boolean
+  save_histories_day: number
 }
 
 /** 更新配置文件 */
