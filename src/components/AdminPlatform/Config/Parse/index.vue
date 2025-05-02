@@ -99,6 +99,13 @@
       </t-form-item>
 
       <t-form-item
+        name="token_proxy_password"
+        label="下载代理服务器密钥"
+      >
+        <t-input v-model="formData.token_proxy_password" />
+      </t-form-item>
+
+      <t-form-item
         name="proxy_host_github"
         label="下载代理服务器开源地址"
       >
@@ -137,6 +144,7 @@ const formData = ref<UpdateConfigReq>({
   guest_parse_mode: 1,
   guest_proxy_host: '',
   token_proxy_host: '',
+  token_proxy_password: '',
 })
 
 const formRules: FormProps['rules'] = {

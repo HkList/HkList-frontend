@@ -11,6 +11,7 @@ export interface GetConfigRes {
   proxy_host: string
   guest_proxy_host: string
   token_proxy_host: string
+  token_proxy_password: string
 }
 
 /** 获取配置文件 */

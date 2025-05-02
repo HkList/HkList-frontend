@@ -113,6 +113,16 @@
         <t-switch v-model="formData.disable_check_rand" />
       </t-form-item>
 
+      <t-form-item
+        name="save_histories_day"
+        label="解析记录保留天数"
+      >
+        <t-input-number
+          :min="7"
+          v-model="formData.save_histories_day"
+        />
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
           <t-button type="submit"> 保存 </t-button>
@@ -143,6 +153,7 @@ const formData = ref<UpdateConfigReq>({
   name: '',
   logo: '',
   disable_check_rand: true,
+  save_histories_day: 7,
 })
 
 const generalConfig = ref<GetConfigRes>({
@@ -159,6 +170,7 @@ const generalConfig = ref<GetConfigRes>({
   name: '',
   logo: '',
   disable_check_rand: true,
+  save_histories_day: 7,
 })
 
 const formRules: FormProps['rules'] = {
