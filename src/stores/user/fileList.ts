@@ -107,10 +107,29 @@ export const useFileListStore = defineStore('fileList', () => {
 
     const { config } = configStore
 
-    if (event && typeof event !== 'number' && row) {
-      event.stopPropagation()
-      selectedRows.value = [row]
+    if (event) {
+      if (typeof event === 'number') {
+        const res = await _getDownloadLinks({
+          randsk: GetFileListRes.value!.randsk,
+          uk: GetFileListRes.value!.uk,
+          shareid: GetFileListRes.value!.shareid,
+          fs_id: [event],
+          surl: GetFileListReq.value.surl,
+          dir: GetFileListReq.value.dir,
+          pwd: GetFileListReq.value.pwd,
+          token: GetLimitReq.value.token,
+          parse_password: GetFileListReq.value.parse_password,
+          vcode_str: vcode.value.vcode_str,
+          vcode_input: vcode.value.vcode_input,
+        })
+        MessagePlugin.success('重新解析成功')
+        return res.data
+      } else {
+        event.stopPropagation()
+      }
     }
+
+    if (row) selectedRows.value = [row]
 
     const isDirFsId: number[] = []
     const filteFolders = selectedRows.value.filter((item) => {
@@ -150,64 +169,46 @@ export const useFileListStore = defineStore('fileList', () => {
       pending.value = true
       vcode.value.hit_captcha = false
 
-      if (typeof event === 'number') {
-        const res = await _getDownloadLinks({
-          randsk: GetFileListRes.value!.randsk,
-          uk: GetFileListRes.value!.uk,
-          shareid: GetFileListRes.value!.shareid,
-          fs_id: [event],
-          surl: GetFileListReq.value.surl,
-          dir: GetFileListReq.value.dir,
-          pwd: GetFileListReq.value.pwd,
-          token: GetLimitReq.value.token,
-          parse_password: GetFileListReq.value.parse_password,
-          vcode_str: vcode.value.vcode_str,
-          vcode_input: vcode.value.vcode_input,
-        })
-        MessagePlugin.success('重新解析成功')
-        return res.data
-      } else {
-        const res: GetDownLoadLinksRes = []
-        let message: MessageInstance | null = null
-        let row: File
+      const res: GetDownLoadLinksRes = []
+      let message: MessageInstance | null = null
+      let row: File
 
-        try {
-          for (const index in rows) {
-            row = rows[index]
-            if (message) message.close()
-            message = await MessagePlugin.loading(`正在解析第${parseFloat(index) + 1}个文件:${row.server_filename}`, 9999999)
-
-            const link = await _getDownloadLinks({
-              randsk: GetFileListRes.value!.randsk,
-              uk: GetFileListRes.value!.uk,
-              shareid: GetFileListRes.value!.shareid,
-              fs_id: [row.fs_id],
-              surl: GetFileListReq.value.surl,
-              dir: GetFileListReq.value.dir,
-              pwd: GetFileListReq.value.pwd,
-              token: GetLimitReq.value.token,
-              parse_password: GetFileListReq.value.parse_password,
-              vcode_str: vcode.value.vcode_str,
-              vcode_input: vcode.value.vcode_input,
-            })
-            res.push(...link.data)
-
-            // 取消选中
-            if (row === null) continue
-            selectedRowKeys.value = selectedRowKeys.value.filter((item) => item !== row.fs_id)
-            selectedRows.value = selectedRows.value.filter((item) => item.fs_id !== row.fs_id)
-          }
-        } catch (error) {
+      try {
+        for (const index in rows) {
+          row = rows[index]
           if (message) message.close()
-          GetDownLoadLinksRes.value = res
-          MessagePlugin.success('部分解析成功,下滑查看解析结果')
-          throw error
-        }
+          message = await MessagePlugin.loading(`正在解析第${parseFloat(index) + 1}个文件:${row.server_filename}`, 9999999)
 
+          const link = await _getDownloadLinks({
+            randsk: GetFileListRes.value!.randsk,
+            uk: GetFileListRes.value!.uk,
+            shareid: GetFileListRes.value!.shareid,
+            fs_id: [row.fs_id],
+            surl: GetFileListReq.value.surl,
+            dir: GetFileListReq.value.dir,
+            pwd: GetFileListReq.value.pwd,
+            token: GetLimitReq.value.token,
+            parse_password: GetFileListReq.value.parse_password,
+            vcode_str: vcode.value.vcode_str,
+            vcode_input: vcode.value.vcode_input,
+          })
+          res.push(...link.data)
+
+          // 取消选中
+          if (row === null) continue
+          selectedRowKeys.value = selectedRowKeys.value.filter((item) => item !== row.fs_id)
+          selectedRows.value = selectedRows.value.filter((item) => item.fs_id !== row.fs_id)
+        }
+      } catch (error) {
         if (message) message.close()
-        MessagePlugin.success('解析成功,下滑查看解析结果')
         GetDownLoadLinksRes.value = res
+        MessagePlugin.success('部分解析成功,下滑查看解析结果')
+        throw error
       }
+
+      if (message) message.close()
+      MessagePlugin.success('解析成功,下滑查看解析结果')
+      GetDownLoadLinksRes.value = res
     } catch (_error) {
       const error = _error as { response: { data: { message: string } } }
       if (error?.response?.data?.message?.includes('-20')) {
