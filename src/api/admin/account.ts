@@ -2,7 +2,22 @@ import type { BasePagenation, PagenationReq } from '@/api/pagenation.ts'
 import { http, type BaseResponse } from '@/utils/http.ts'
 
 export type SelectReq = PagenationReq & {
-  column: 'id' | 'baidu_name' | 'uk' | 'account_type' | 'account_data' | 'switch' | 'reason' | 'prov' | 'created_at' | 'updated_at' | 'deleted_at'
+  column:
+    | 'id'
+    | 'baidu_name'
+    | 'uk'
+    | 'account_type'
+    | 'account_data'
+    | 'switch'
+    | 'reason'
+    | 'prov'
+    | 'used_count'
+    | 'used_size'
+    | 'total_size'
+    | 'total_size_updated_at'
+    | 'created_at'
+    | 'updated_at'
+    | 'deleted_at'
   direction: 'asc' | 'desc'
 }
 

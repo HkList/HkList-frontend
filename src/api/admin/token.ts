@@ -64,9 +64,13 @@ export type InsertReq = {
     }
 )
 
+export interface InsertRes {
+  tokens: string[]
+}
+
 /** 插入 */
 export const insert = (data: InsertReq) => {
-  return http.request<null>('post', '/admin/token', { data })
+  return http.request<InsertRes>('post', '/admin/token', { data })
 }
 
 export interface UpdateReq {

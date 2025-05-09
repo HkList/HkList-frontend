@@ -158,7 +158,7 @@ const columns = ref<TableProps['columns']>([
   },
   {
     colKey: 'today_count',
-    title: '今日解析',
+    title: '今日解析(实时)',
     cell: (h, { row }) => (
       <>
         {row.today_count} ({formatBytes(row.today_size ?? 0)})
@@ -168,11 +168,18 @@ const columns = ref<TableProps['columns']>([
     ellipsis: true,
   },
   {
+    colKey: 'today_count',
+    title: '今日解析(缓存)',
+    cell: (h, { row }) => <>{formatBytes(row.total_size ?? 0)}</>,
+    width: 150,
+    ellipsis: true,
+  },
+  {
     colKey: 'total_count',
     title: '总计解析',
     cell: (h, { row }) => (
       <>
-        {row.total_count} ({formatBytes(row.total_size ?? 0)})
+        {row.used_count} ({formatBytes(row.used_size ?? 0)})
       </>
     ),
     width: 150,
