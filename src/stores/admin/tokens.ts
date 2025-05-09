@@ -1,6 +1,7 @@
 import { insert, remove, select, update, type InsertReq, type SelectReq, type SelectRes, type UpdateReq } from '@/api/admin/token.ts'
 import { copy } from '@/utils/copy.ts'
 import { formatBytes, GB } from '@/utils/format.ts'
+import { saveFile } from '@/utils/saveFile.ts'
 import { useCommonStore } from '@/utils/use/useCommonStore.ts'
 import { defineStore } from 'pinia'
 import { MessagePlugin, type TableProps } from 'tdesign-vue-next'
@@ -36,10 +37,11 @@ export const useTokensStore = defineStore('tokens', () => {
     token_type: 'normal',
   })
   const addToken = async () => {
-    await insert({
+    const res = await insert({
       ...addingTokenReq.value,
       size: addingTokenReq.value.size * GB,
     })
+    saveFile(res.data.tokens.join('\n'))
     MessagePlugin.success('添加成功')
     await getTokens()
   }
