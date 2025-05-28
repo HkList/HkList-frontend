@@ -6,14 +6,14 @@
   >
     <t-form
       @submit="submitForm"
-      :data="addingTokenReq"
+      :data="addTokenReq"
       :rules="formRules"
     >
       <t-form-item
         name="token_type"
         label="卡密类型"
       >
-        <t-select v-model="addingTokenReq.token_type">
+        <t-select v-model="addTokenReq.token_type">
           <t-option
             label="普通模式"
             value="normal"
@@ -29,7 +29,7 @@
         name="type"
         label="添加方式"
       >
-        <t-select v-model="addingTokenReq.type">
+        <t-select v-model="addTokenReq.type">
           <t-option
             label="手动添加"
             value="set"
@@ -41,12 +41,12 @@
         </t-select>
       </t-form-item>
 
-      <template v-if="addingTokenReq.type === 'set'">
+      <template v-if="addTokenReq.type === 'set'">
         <t-form-item
           name="token"
           label="卡密"
         >
-          <t-input v-model="addingTokenReq.token" />
+          <t-input v-model="addTokenReq.token" />
         </t-form-item>
       </template>
       <template v-else>
@@ -56,7 +56,7 @@
         >
           <t-input-number
             :min="1"
-            v-model="addingTokenReq.generate_count"
+            v-model="addTokenReq.generate_count"
           />
         </t-form-item>
       </template>
@@ -67,7 +67,7 @@
       >
         <t-input-number
           :min="1"
-          v-model="addingTokenReq.count"
+          v-model="addTokenReq.count"
         />
       </t-form-item>
 
@@ -77,7 +77,7 @@
       >
         <t-input-number
           :min="1"
-          v-model="addingTokenReq.size"
+          v-model="addTokenReq.size"
         />
       </t-form-item>
 
@@ -87,7 +87,7 @@
       >
         <t-input-number
           :min="1"
-          v-model="addingTokenReq.day"
+          v-model="addTokenReq.day"
         />
       </t-form-item>
 
@@ -97,7 +97,7 @@
       >
         <t-input-number
           :min="1"
-          v-model="addingTokenReq.can_use_ip_count"
+          v-model="addTokenReq.can_use_ip_count"
         />
       </t-form-item>
 
@@ -122,7 +122,7 @@ import { useTokensStore } from '@/stores/admin/tokens.ts'
 import { storeToRefs } from 'pinia'
 
 const tokensStore = useTokensStore()
-const { isAddingToken, addingTokenReq } = storeToRefs(tokensStore)
+const { isAddingToken, addTokenReq } = storeToRefs(tokensStore)
 
 const formRules: FormProps['rules'] = {
   token: [{ required: true, message: '卡密不能为空' }],

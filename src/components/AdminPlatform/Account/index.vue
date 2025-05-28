@@ -127,7 +127,10 @@ import type { SingleAccount } from '@/api/admin/account.ts'
 const accountsStore = useAccountsStore()
 const { selectReq, accountList, pagination, selectedRowKeys } = storeToRefs(accountsStore)
 
-onMounted(accountsStore.getAccounts)
+onMounted(() => {
+  accountList.value = []
+  accountsStore.getAccounts()
+})
 
 const columns = ref<TableProps['columns']>([
   {

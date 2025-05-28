@@ -40,6 +40,26 @@ const router = createRouter({
       redirect: '/admin/account',
       children: [
         {
+          path: '/admin/account',
+          component: () => import('@/components/AdminPlatform/Account/index.vue'),
+        },
+        {
+          path: '/admin/token',
+          component: () => import('@/components/AdminPlatform/Token/index.vue'),
+        },
+        {
+          path: '/admin/blacklist',
+          component: () => import('@/components/AdminPlatform/Blacklist/index.vue'),
+        },
+        {
+          path: '/admin/record',
+          component: () => import('@/components/AdminPlatform/Record/index.vue'),
+        },
+        {
+          path: '/admin/proxy',
+          component: () => import('@/components/AdminPlatform/Proxy/index.vue'),
+        },
+        {
           path: '/admin/config',
           redirect: '/admin/config/general',
           children: [
@@ -64,22 +84,6 @@ const router = createRouter({
               component: () => import('@/components/AdminPlatform/Config/Proxy.vue'),
             },
           ],
-        },
-        {
-          path: '/admin/account',
-          component: () => import('@/components/AdminPlatform/Account/index.vue'),
-        },
-        {
-          path: '/admin/blacklist',
-          component: () => import('@/components/AdminPlatform/Blacklist/index.vue'),
-        },
-        {
-          path: '/admin/record',
-          component: () => import('@/components/AdminPlatform/Record/index.vue'),
-        },
-        {
-          path: '/admin/token',
-          component: () => import('@/components/AdminPlatform/Token/index.vue'),
         },
       ],
     },
