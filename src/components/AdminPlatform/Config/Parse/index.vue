@@ -182,7 +182,7 @@ const matchUserAgent = () => {
     case 5:
     case 6:
     case 7:
-      formData.value.user_agent = 'netdisk;P2SP;3.0.20.88'
+      formData.value.user_agent = 'netdisk;P2SP;3.0.20.138'
       break
     default:
       MessagePlugin.error('未知解析模式')
