@@ -1,7 +1,7 @@
 <template>
   <t-dialog
     v-model:visible="isAddingProxy"
-    header="添加卡密"
+    header="添加代理"
     :footer="false"
   >
     <t-form
@@ -14,16 +14,16 @@
         label="代理类型"
       >
         <t-select v-model="addProxyReq.type">
-          <t-option
+          <!-- <t-option
             label="HTTP静态代理"
             value="http"
           />
           <t-option
             label="API动态代理"
             value="api"
-          />
+          /> -->
           <t-option
-            label="中转代理(ip@password)"
+            label="中转代理"
             value="proxy"
           />
         </t-select>
@@ -32,6 +32,7 @@
       <t-form-item
         name="proxy"
         label="代理信息"
+        help="格式<host@password>例如:<http://a.com@hklist>"
       >
         <t-input v-model="addProxyReq.proxy" />
       </t-form-item>

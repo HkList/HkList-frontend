@@ -11,12 +11,20 @@
             value="id"
           />
           <t-option
-            label="按 token 排序"
-            value="token"
+            label="按 type 排序"
+            value="type"
           />
           <t-option
-            label="按 count 排序"
-            value="count"
+            label="按 proxy 排序"
+            value="proxy"
+          />
+          <t-option
+            label="按 enable 排序"
+            value="enable"
+          />
+          <t-option
+            label="按 reason 排序"
+            value="reason"
           />
           <t-option
             label="按 created_at 排序"
@@ -27,6 +35,7 @@
             value="updated_at"
           />
         </t-select>
+
         <t-select
           v-model="selectReq.direction"
           @change="proxiesStore.getProxies"
@@ -40,6 +49,7 @@
             value="desc"
           />
         </t-select>
+
         <t-input
           v-model="selectReq.keyword"
           @blur="proxiesStore.getProxies"

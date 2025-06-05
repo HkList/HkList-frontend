@@ -26,13 +26,13 @@ export const useProxiesStore = defineStore('proxies', () => {
   const hideAddingProxyDialog = () => {
     isAddingProxy.value = false
     addProxyReq.value = {
-      type: 'http',
+      type: 'proxy',
       proxy: '',
       account_id: undefined,
     }
   }
   const addProxyReq = ref<InsertReq>({
-    type: 'http',
+    type: 'proxy',
     proxy: '',
     account_id: undefined,
   })
@@ -55,7 +55,7 @@ export const useProxiesStore = defineStore('proxies', () => {
     id: [],
     enable: true,
     reason: '',
-    type: 'http',
+    type: 'proxy',
     proxy: '',
   })
   const showEditDialog = (event?: PointerEvent, id?: number) => {

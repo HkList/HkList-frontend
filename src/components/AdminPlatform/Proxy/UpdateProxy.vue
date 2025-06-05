@@ -1,7 +1,7 @@
 <template>
   <t-dialog
     v-model:visible="isEditDialog"
-    header="更新卡密"
+    header="更新代理"
     :footer="false"
   >
     <t-form
@@ -9,7 +9,7 @@
       :data="updateReq"
       :rules="formRules"
     >
-      <t-form-item label="选中的卡密">
+      <t-form-item label="选中的代理">
         <t-input
           :value="JSON.stringify(updateReq.id)"
           disabled
@@ -36,16 +36,16 @@
           label="代理类型"
         >
           <t-select v-model="updateReq.type">
-            <t-option
+            <!-- <t-option
               label="HTTP静态代理"
               value="http"
             />
             <t-option
               label="API获取模式"
               value="api"
-            />
+            /> -->
             <t-option
-              label="中转代理(ip@password)"
+              label="中转代理"
               value="proxy"
             />
           </t-select>
@@ -54,6 +54,7 @@
         <t-form-item
           name="proxy"
           label="代理信息"
+          help="格式<host@password>例如:<http://a.com@hklist>"
         >
           <t-input v-model="updateReq.proxy" />
         </t-form-item>

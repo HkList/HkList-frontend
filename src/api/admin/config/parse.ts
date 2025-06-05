@@ -3,15 +3,20 @@ import { http } from '@/utils/http.ts'
 export interface GetConfigRes {
   parser_server: string
   parser_password: string
-  parse_mode: number
-  guest_parse_mode: number
-  user_agent: string
   allow_folder: boolean
   ddddocr_server: string
-  proxy_host: string
-  guest_proxy_host: string
+
+  token_parse_mode: number
+  token_user_agent: string
+  guest_parse_mode: number
+  guest_user_agent: string
+
   token_proxy_host: string
   token_proxy_password: string
+  guest_proxy_host: string
+  guest_proxy_password: string
+
+  moiu_token: string
 }
 
 /** 获取配置文件 */

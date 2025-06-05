@@ -21,43 +21,6 @@
       </t-form-item>
 
       <t-form-item
-        name="parse_mode"
-        label="解析模式"
-      >
-        <ParseMode
-          v-model="formData.parse_mode"
-          @change="matchUserAgent"
-          @blur="matchUserAgent"
-        />
-      </t-form-item>
-
-      <t-form-item
-        name="guest_parse_mode"
-        label="游客解析模式"
-      >
-        <ParseMode
-          v-model="formData.guest_parse_mode"
-          @change="matchUserAgent"
-          @blur="matchUserAgent"
-        />
-      </t-form-item>
-
-      <t-form-item
-        name="user_agent"
-        label="下载UA"
-      >
-        <t-input v-model="formData.user_agent" />
-      </t-form-item>
-
-      <!-- <t-form-item
-        name="use_exploit"
-        label="启用漏洞模式"
-        help="小于100M的文件使用漏洞模式, 需要准备无会员的CK账号, 不支持V0"
-      >
-        <t-switch v-model="formData.use_exploit" />
-      </t-form-item> -->
-
-      <t-form-item
         name="allow_folder"
         label="允许解析文件夹"
         help="未完工"
@@ -85,10 +48,53 @@
       </t-form-item>
 
       <t-form-item
+        name="token_parse_mode"
+        label="卡密解析模式"
+      >
+        <ParseMode
+          v-model="formData.token_parse_mode"
+          @change="matchUserAgent"
+          @blur="matchUserAgent"
+        />
+      </t-form-item>
+
+      <t-form-item
+        name="token_user_agent"
+        label="卡密解析UA"
+      >
+        <t-input v-model="formData.token_user_agent" />
+      </t-form-item>
+
+      <t-form-item
+        name="guest_parse_mode"
+        label="游客解析模式"
+      >
+        <ParseMode
+          v-model="formData.guest_parse_mode"
+          @change="matchUserAgent"
+          @blur="matchUserAgent"
+        />
+      </t-form-item>
+
+      <t-form-item
+        name="guest_user_agent"
+        label="游客解析UA"
+      >
+        <t-input v-model="formData.guest_user_agent" />
+      </t-form-item>
+
+      <t-form-item
         name="token_proxy_host"
         label="卡密下载代理服务器"
       >
         <t-input v-model="formData.token_proxy_host" />
+      </t-form-item>
+
+      <t-form-item
+        name="token_proxy_password"
+        label="卡密下载代理服务器密钥"
+      >
+        <t-input v-model="formData.token_proxy_password" />
       </t-form-item>
 
       <t-form-item
@@ -100,9 +106,9 @@
 
       <t-form-item
         name="token_proxy_password"
-        label="下载代理服务器密钥"
+        label="游客下载代理服务器密钥"
       >
-        <t-input v-model="formData.token_proxy_password" />
+        <t-input v-model="formData.guest_proxy_password" />
       </t-form-item>
 
       <t-form-item
@@ -136,19 +142,25 @@ import ParseMode from './ParseMode.vue'
 const formData = ref<UpdateConfigReq>({
   parser_server: '',
   parser_password: '',
-  parse_mode: 1,
-  user_agent: '',
   allow_folder: false,
   ddddocr_server: '',
-  proxy_host: '',
+
+  token_parse_mode: 1,
+  token_user_agent: '',
   guest_parse_mode: 1,
-  guest_proxy_host: '',
+  guest_user_agent: '',
+
   token_proxy_host: '',
   token_proxy_password: '',
+  guest_proxy_host: '',
+  guest_proxy_password: '',
+
+  moiu_token: '',
 })
 
 const formRules: FormProps['rules'] = {
-  user_agent: [{ required: true, message: '请输入下载UA' }],
+  token_user_agent: [{ required: true, message: '请输入卡密解析UA' }],
+  guest_user_agent: [{ required: true, message: '请输入游客解析UA' }],
 }
 
 const getForm = async () => {
@@ -167,22 +179,44 @@ const submitForm: FormProps['onSubmit'] = async ({ validateResult }) => {
 }
 
 const matchUserAgent = () => {
-  switch (formData.value.parse_mode) {
+  switch (formData.value.token_parse_mode) {
     case 0:
-      formData.value.user_agent = 'netdisk;7.42.0.5;PC'
+      formData.value.token_user_agent = 'netdisk;7.42.0.5;PC'
       break
     case 3:
-      formData.value.user_agent = 'pan.baidu.com'
+      formData.value.token_user_agent = 'pan.baidu.com'
       break
     case 4:
-      formData.value.user_agent = 'Mozilla/5.0 (hklist-laravel;netdisk;svip)'
+      formData.value.token_user_agent = 'Mozilla/5.0 (hklist;netdisk;svip)'
       break
     case 1:
     case 2:
     case 5:
     case 6:
     case 7:
-      formData.value.user_agent = 'netdisk;P2SP;3.0.20.138'
+      formData.value.token_user_agent = 'netdisk;P2SP;3.0.20.138'
+      break
+    default:
+      MessagePlugin.error('未知解析模式')
+      break
+  }
+
+  switch (formData.value.guest_parse_mode) {
+    case 0:
+      formData.value.guest_user_agent = 'netdisk;7.42.0.5;PC'
+      break
+    case 3:
+      formData.value.guest_user_agent = 'pan.baidu.com'
+      break
+    case 4:
+      formData.value.guest_user_agent = 'Mozilla/5.0 (hklist;netdisk;svip)'
+      break
+    case 1:
+    case 2:
+    case 5:
+    case 6:
+    case 7:
+      formData.value.guest_user_agent = 'netdisk;P2SP;3.0.20.138'
       break
     default:
       MessagePlugin.error('未知解析模式')

@@ -9,7 +9,7 @@ export const typeMap: { [key in SelectRes[0]['type']]: string } = {
 }
 
 export type SelectReq = PagenationReq & {
-  column: 'id' | 'type' | 'proxy' | 'created_at' | 'updated_at'
+  column: 'id' | 'type' | 'proxy' | 'enable' | 'reason' | 'created_at' | 'updated_at'
   direction: 'asc' | 'desc'
   keyword: string
 }
