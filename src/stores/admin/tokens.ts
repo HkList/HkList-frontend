@@ -27,7 +27,7 @@ export const useTokensStore = defineStore('tokens', () => {
   const isAddingToken = ref(false)
   const showAddingTokenDialog = () => (isAddingToken.value = true)
   const hideAddingTokenDialog = () => (isAddingToken.value = false)
-  const addingTokenReq = ref<InsertReq>({
+  const addTokenReq = ref<InsertReq>({
     count: 100,
     size: 1000,
     day: 100,
@@ -38,8 +38,8 @@ export const useTokensStore = defineStore('tokens', () => {
   })
   const addToken = async () => {
     const res = await insert({
-      ...addingTokenReq.value,
-      size: addingTokenReq.value.size * GB,
+      ...addTokenReq.value,
+      size: addTokenReq.value.size * GB,
     })
     saveFile(res.data.tokens.join('\n'))
     MessagePlugin.success('添加成功')
@@ -148,7 +148,7 @@ export const useTokensStore = defineStore('tokens', () => {
     isAddingToken,
     showAddingTokenDialog,
     hideAddingTokenDialog,
-    addingTokenReq,
+    addTokenReq,
     addToken,
 
     isUpdateSwitchDialog,

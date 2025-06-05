@@ -27,6 +27,12 @@
       </template>
       记录管理
     </t-menu-item>
+    <t-menu-item value="proxy">
+      <template #icon>
+        <WorkIcon />
+      </template>
+      代理配置
+    </t-menu-item>
     <t-submenu title="配置管理">
       <template #icon>
         <ToolsIcon />
@@ -41,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KeyIcon, ListIcon, ToolsIcon, UserIcon, UserListIcon } from 'tdesign-icons-vue-next'
+import { KeyIcon, ListIcon, ToolsIcon, UserIcon, UserListIcon, WorkIcon } from 'tdesign-icons-vue-next'
 import Layout from '@/views/Layout.vue'
 </script>
 
