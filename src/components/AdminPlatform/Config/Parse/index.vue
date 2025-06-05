@@ -123,6 +123,14 @@
         </t-link>
       </t-form-item>
 
+      <t-form-item
+        name="moiu_token"
+        label="XiaoMo ShareDownload Token"
+        help="获取方式暂不公开"
+      >
+        <t-input v-model="formData.moiu_token" />
+      </t-form-item>
+
       <t-form-item>
         <t-space size="small">
           <t-button type="submit"> 保存 </t-button>
