@@ -99,7 +99,7 @@
 
         <t-form-item label="获取链接">
           <t-link
-            href="https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=iYCeC9g08h5vuP9UqvPHKKSVrKFXGa1v&redirect_uri=https://alist.nn.ci/tool/baidu/callback&scope=basic,netdisk&qrcode=1"
+            href="https://api.oplist.org/"
             target="_blank"
           >
             点击跳转
@@ -211,11 +211,11 @@
 </template>
 
 <script lang="ts" setup>
-import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
-import { useAccountsStore } from '@/stores/admin/accounts.ts'
-import { storeToRefs } from 'pinia'
-import { getUrlId } from '@/utils/getUrlId.ts'
 import { getAccountCidInfo, type GetAccountCidRes } from '@/api/admin/account.ts'
+import { useAccountsStore } from '@/stores/admin/accounts.ts'
+import { getUrlId } from '@/utils/getUrlId.ts'
+import { storeToRefs } from 'pinia'
+import { MessagePlugin, type FormProps } from 'tdesign-vue-next'
 import { ref } from 'vue'
 
 const accountsStore = useAccountsStore()
