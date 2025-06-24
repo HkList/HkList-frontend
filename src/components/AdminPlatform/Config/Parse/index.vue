@@ -4,7 +4,7 @@
       :data="formData"
       :rules="formRules"
       @submit="submitForm"
-      :labelWidth="200"
+      :labelWidth="220"
     >
       <t-form-item
         name="parser_server"
